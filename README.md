@@ -42,10 +42,8 @@ erDiagram
     
     DOCUMENT ||--|| SENDER : "имеет"
     DOCUMENT ||--|| RECEIVER : "имеет"
-    DOCUMENT ||--o{ DOCUMENTEQUIPMENT : "содержит"
-    EQUIPMENT ||--o{ DOCUMENTEQUIPMENT : "входит"
-    DOCUMENTEQUIPMENT }|--|| DOCUMENT : "ссылается на"
-    DOCUMENTEQUIPMENT }|--|| EQUIPMENT : "ссылается на "
+    DOCUMENT ||--|{ DOCUMENTEQUIPMENT : "содержит"
+    EQUIPMENT ||--o{ DOCUMENTEQUIPMENT : "входит в"
 ```
 
 
