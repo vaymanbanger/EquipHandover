@@ -14,15 +14,14 @@ public class EquipHandoverDesignTimeDbContextFactory : IDesignTimeDbContextFacto
     /// <remarks>
     /// 1) dotnet tool install --global dotnet-ef
     /// 2) dotnet tool update --global dotnet-ef
-    /// 3) dotnet ef migrations add [name] --project EquipHandover.Context\EquipHandover.Context.csproj
-    /// 4) dotnet ef database update --project EquipHandover.Context\EquipHandover.Context.csproj
-    /// 5) dotnet ef database update [targetMigrationName] --project EquipHandover.Context\EquipHandover.Context.csproj
+    /// 3) dotnet ef migrations add [name] --project EquipHandover.Context\EquipHandover.Context.csproj 
+    /// 4) dotnet ef database update --project EquipHandover.Context\EquipHandover.Context.csproj --connection "Host=localhost;Port=5432;Database=equiphandover;Username=postgres;Password=Qwerty123456!"
+    /// 5) dotnet ef database update [targetMigrationName] --project EquipHandover.Context\EquipHandover.Context.csproj --connection "Host=localhost;Port=5432;Database=equiphandover;Username=postgres;Password=Qwerty123456!"
     /// </remarks>
     public EquipHandoverContext CreateDbContext(string[] args)
     {
-        var connectionString = "Host=localhost;Port=5432;Database=equiphandover;Username=postgres;Password=";
         var options = new DbContextOptionsBuilder<EquipHandoverContext>()
-            .UseNpgsql(connectionString)
+            .UseNpgsql()
             .LogTo(Console.WriteLine)
             .Options;
 

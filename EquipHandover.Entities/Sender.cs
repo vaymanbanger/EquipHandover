@@ -5,7 +5,7 @@
 public class Sender  : BaseAuditEntity
 {
     /// <summary>
-    /// ID
+    /// Идентификатор отправителя
     /// </summary>
     public Guid Id { get; set; }
     

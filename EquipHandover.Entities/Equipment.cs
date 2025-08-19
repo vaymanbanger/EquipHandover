@@ -5,7 +5,7 @@
 public class Equipment : BaseAuditEntity
 {
     /// <summary>
-    /// ID
+    /// Идентификатор оборудования
     /// </summary>
     public Guid Id{ get; set; }
 

@@ -6,7 +6,7 @@
 public class Receiver : BaseAuditEntity
 {
     /// <summary>
-    /// ID
+    /// Идентификатор принимающего
     /// </summary>
     public Guid Id { get; set; }
     
