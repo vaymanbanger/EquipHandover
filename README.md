@@ -4,28 +4,28 @@
 ```mermaid
 erDiagram
 DOCUMENT {
-    dateonly rentalDate
-    string signatureNumber
-    string city
+    dateonly RentalDate
+    string SignatureNumber
+    string City
 }
 DOCUMENT ||--o{ SENDER : "имеет"
 SENDER {
-    string fullName
-    string enterprise
-    int inn
+    string FullName
+    string Enterprise
+    int Inn
 }
 DOCUMENT ||--o{ RECEIVER : "имеет"
 RECEIVER {
-    string fullName
-    string enterprise
-    int ogrn
+    string FullName
+    string Enterprise
+    int Ogrn
 }
 DOCUMENT ||--|{ EQUIPMENT : "содержит"
 EQUIPMENT {
-    string name
-    int manufactureDate
-    string serialNumber
-    string equipmentNumber
+    string Name
+    int ManufactureDate
+    string SerialNumber
+    string EquipmentNumber
 }
 
 ```
@@ -44,18 +44,46 @@ EQUIPMENT {
 ```javascript
 // docApiModel
 {
-    id: 1,
-    rentalDate: "16.08.2025",
-    signatureNumber: "АКТ-2025-567",
-    city: "Санкт-Петербург"
+    Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
+    RentalDate: "16.08.2025",
+    SignatureNumber: "АКТ-2025-567",
+    City: "Санкт-Петербург",
+    SenderId: 57ebb48e-3093-4ac3-96ef-43d6dc36c744,
+    SenderFullName: "Иванов Иван Иванович",
+    SenderEnterprise: "ООО ПЕТРОВИЧ",
+    SenderInn: 520205004556,
+    ReceiverId: 79c2b608-3455-4e87-be7d-18807a930505,
+    ReceiverFullName: "Иванов Иннокентий Иванович",
+    ReceiverEnterprise: "ООО Михалыч",
+    ReceiverOgrn: 1147847423899,
+    Equipment: [
+        {
+            EquipmentId: a624c88b-178c-4b9f-a67a-4541d5797f15,
+            Name: "Ноутбук",
+            ManufactureDate: 2025,
+            SerialNumber: "HS235AAA2",
+            EquipmentNumber: "PROD-2025"
+        }
+    ]
 }
 ```
 ```javascript
 // docRequestApiModel
 {
-    rentalDate: "16.08.2025",
-    signatureNumber: "АКТ-2025-567",
-    city: "Санкт-Петербург"
+    RentalDate: "16.08.2025",
+    SignatureNumber: "АКТ-2025-567",
+    City: "Санкт-Петербург",
+    SenderId: 57ebb48e-3093-4ac3-96ef-43d6dc36c744,
+    ReceiverId: 79c2b608-3455-4e87-be7d-18807a930505
+    Equipment: [
+        {
+            EquipmentId: a624c88b-178c-4b9f-a67a-4541d5797f15,
+            Name: "Ноутбук",
+            ManufactureDate: 2025,
+            SerialNumber: "HS235AAA2",
+            EquipmentNumber: "PROD-2025"
+        }
+    ]
 }
 ```
 
@@ -71,20 +99,20 @@ EQUIPMENT {
 ```javascript
 // equipApiModel
 {
-    id: 1,
-    name: "Ноутбук",
-    manufactureDate: 2025,
-    serialNumber: "HS235AAA2",
-    equipmentNumber: "PROD-2025"
+    Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
+    Name: "Ноутбук",
+    ManufactureDate: 2025,
+    SerialNumber: "HS235AAA2",
+    EquipmentNumber: "PROD-2025"
 }
 ```
 ```javascript
 // equipRequestApiModel
 {
-    name: "Ноутбук",
-    manufactureDate: 2025,
-    serialNumber: "HS235AAA2",
-    equipmentNumber: "PROD-2025"
+    Name: "Ноутбук",
+    ManufactureDate: 2025,
+    SerialNumber: "HS235AAA2",
+    EquipmentNumber: "PROD-2025"
 }
 ```
 ### CRUD отправителя
@@ -98,18 +126,18 @@ EQUIPMENT {
 ```javascript
 // senderApiModel
 {
-    id: 1,
-    fullName: "Иванов Иван Иванович",
-    enterprise: "ООО ПЕТРОВИЧ"
-    inn: 520205004556
+    Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
+    FullName: "Иванов Иван Иванович",
+    Enterprise: "ООО ПЕТРОВИЧ"
+    Inn: 520205004556
 }
 ```
 ```javascript
 // senderRequestApiModel
 {
-    fullName: "Иванов Иван Иванович",
-    enterprise: "ООО ПЕТРОВИЧ"
-    inn: 520205004556
+    FullName: "Иванов Иван Иванович",
+    Enterprise: "ООО ПЕТРОВИЧ"
+    Inn: 520205004556
 }
 ```
 ### CRUD принимающего
@@ -123,17 +151,17 @@ EQUIPMENT {
 ```javascript
 // receiverApiModel
 {
-    id: 1,
-    fullName: "Иванов Иван Иванович",
-    enterprise: "ООО ПЕТРОВИЧ"
-    ogrn: 1147847423899
+    Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
+    FullName: "Иванов Иван Иванович",
+    Enterprise: "ООО ПЕТРОВИЧ"
+    Ogrn: 1147847423899
 }
 ```
 ```javascript
 // receiverRequestApiModel
 {
-    fullName: "Иванов Иван Иванович",
-    enterprise: "ООО ПЕТРОВИЧ"
-    ogrn: 1147847423899
+    FullName: "Иванов Иван Иванович",
+    Enterprise: "ООО ПЕТРОВИЧ"
+    Ogrn: 1147847423899
 }
 ```
