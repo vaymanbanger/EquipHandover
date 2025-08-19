@@ -34,7 +34,7 @@ erDiagram
         string EquipmentNumber
     }
     
-    DOCUMENT_EQUIPMENT {
+    DOCUMENTEQUIPMENT {
         uuid DocumentId
         uuid EquipmentId
         int Quantity
@@ -42,10 +42,10 @@ erDiagram
     
     DOCUMENT ||--|| SENDER : "имеет"
     DOCUMENT ||--|| RECEIVER : "имеет"
-    DOCUMENT ||--o{ DOCUMENT_EQUIPMENT : "содержит"
-    EQUIPMENT ||--o{ DOCUMENT_EQUIPMENT : "входит"
-    DOCUMENT_EQUIPMENT }|--|| DOCUMENT : "ссылается на"
-    DOCUMENT_EQUIPMENT }|--|| EQUIPMENT : "ссылается на "
+    DOCUMENT ||--o{ DOCUMENTEQUIPMENT : "содержит"
+    EQUIPMENT ||--o{ DOCUMENTEQUIPMENT : "входит"
+    DOCUMENTEQUIPMENT }|--|| DOCUMENT : "ссылается на"
+    DOCUMENTEQUIPMENT }|--|| EQUIPMENT : "ссылается на "
 ```
 
 
