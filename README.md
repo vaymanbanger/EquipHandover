@@ -37,6 +37,7 @@ EQUIPMENT {
 |-|-|-|-|-|-|
 |GET|api/documents/|Получает список всех документов| |`[docApiModel]`| 200 OK |
 |GET|api/documents/{id}|Получает документ с идентификатором id| fromRoute: id |`docApiModel`| 200 OK<br/>404 Not Found |
+|GET|api/documents/{id}/export|Экспортирует документ в Excel| fromRoute: id |Файл Excel| 200 OK<br/>404 Not Found |
 |POST|api/documents/|Добавляет новый документ| fromBody: `docRequestApiModel`|`docApiModel`| 200 OK |
 |PUT|api/documents/{id}|Редактирует документ с идентификатором id| fromRoute: id <br/>fromBody: `docRequestApiModel`|`docApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/documents/{id}|Удаляет документ с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
@@ -136,7 +137,3 @@ EQUIPMENT {
     ogrn: 1147847423899
 }
 ```
-### Экспорт документа в Excel
-|verb|url|description|request|response|codes|
-|-|-|-|-|-|-|
-|GET|api/documents/{id}/export|Экспортирует документ в Excel| fromRoute: id |Файл Excel| 200 OK<br/>404 Not Found |
