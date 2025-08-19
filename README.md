@@ -3,31 +3,49 @@
 ## Схема базы данных
 ```mermaid
 erDiagram
-DOCUMENT {
-    dateonly RentalDate
-    string SignatureNumber
-    string City
-}
-DOCUMENT ||--o{ SENDER : "имеет"
-SENDER {
-    string FullName
-    string Enterprise
-    int Inn
-}
-DOCUMENT ||--o{ RECEIVER : "имеет"
-RECEIVER {
-    string FullName
-    string Enterprise
-    int Ogrn
-}
-DOCUMENT ||--|{ EQUIPMENT : "содержит"
-EQUIPMENT {
-    string Name
-    int ManufactureDate
-    string SerialNumber
-    string EquipmentNumber
-}
-
+    DOCUMENT {
+        uuid Id
+        dateonly RentalDate
+        string SignatureNumber
+        string City
+        uuid SenderId
+        uuid ReceiverId
+    }
+    
+    SENDER {
+        uuid Id
+        string FullName
+        string Enterprise
+        string Inn
+    }
+    
+    RECEIVER {
+        uuid Id
+        string FullName
+        string Enterprise
+        string Ogrn
+    }
+    
+    EQUIPMENT {
+        uuid Id
+        string Name
+        int ManufactureDate
+        string SerialNumber
+        string EquipmentNumber
+    }
+    
+    DOCUMENT_EQUIPMENT {
+        uuid DocumentId
+        uuid EquipmentId
+        int Quantity
+    }
+    
+    DOCUMENT ||--|| SENDER : "имеет"
+    DOCUMENT ||--|| RECEIVER : "имеет"
+    DOCUMENT ||--o{ DOCUMENT_EQUIPMENT : "содержит"
+    EQUIPMENT ||--o{ DOCUMENT_EQUIPMENT : "входит"
+    DOCUMENT_EQUIPMENT }|--|| DOCUMENT : "ссылается на"
+    DOCUMENT_EQUIPMENT }|--|| EQUIPMENT : "ссылается на "
 ```
 
 
