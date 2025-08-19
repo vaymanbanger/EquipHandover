@@ -42,7 +42,7 @@ erDiagram
     
     DOCUMENT ||--|| SENDER : "имеет"
     DOCUMENT ||--|| RECEIVER : "имеет"
-    DOCUMENT ||--|{ DOCUMENTEQUIPMENT : "содержит"
+    DOCUMENT ||--o{ DOCUMENTEQUIPMENT : "содержит"
     EQUIPMENT ||--o{ DOCUMENTEQUIPMENT : "входит в"
 ```
 
