@@ -2,6 +2,16 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Web", "EquipHandover.Web\EquipHandover.Web.csproj", "{56099C9C-C456-4F44-B197-D432AF67F76B}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DataBase", "DataBase", "{795DD2E0-93F1-4F02-B0E5-3AA46E212781}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Entities", "EquipHandover.Entities\EquipHandover.Entities.csproj", "{6E290BCB-B462-42B8-A4A1-124DFD4AE89D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Context", "EquipHandover.Context\EquipHandover.Context.csproj", "{EC92B913-00C3-43B4-9C0B-3AC09F1AE809}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Entities.Configurations", "EquipHandover.Entities.Configurations\EquipHandover.Entities.Configurations.csproj", "{C914182F-6E91-45A4-A723-838BB4A08768}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Context.Contracts", "EquipHandover.Context.Contracts\EquipHandover.Context.Contracts.csproj", "{C2C23357-9957-422D-B1D3-7F687F95E170}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +22,27 @@ Global
 		{56099C9C-C456-4F44-B197-D432AF67F76B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{56099C9C-C456-4F44-B197-D432AF67F76B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{56099C9C-C456-4F44-B197-D432AF67F76B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC92B913-00C3-43B4-9C0B-3AC09F1AE809}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC92B913-00C3-43B4-9C0B-3AC09F1AE809}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC92B913-00C3-43B4-9C0B-3AC09F1AE809}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC92B913-00C3-43B4-9C0B-3AC09F1AE809}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C914182F-6E91-45A4-A723-838BB4A08768}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C914182F-6E91-45A4-A723-838BB4A08768}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C914182F-6E91-45A4-A723-838BB4A08768}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C914182F-6E91-45A4-A723-838BB4A08768}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2C23357-9957-422D-B1D3-7F687F95E170}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2C23357-9957-422D-B1D3-7F687F95E170}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2C23357-9957-422D-B1D3-7F687F95E170}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2C23357-9957-422D-B1D3-7F687F95E170}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}
+		{EC92B913-00C3-43B4-9C0B-3AC09F1AE809} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}
+		{C914182F-6E91-45A4-A723-838BB4A08768} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}
+		{C2C23357-9957-422D-B1D3-7F687F95E170} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}
 	EndGlobalSection
 EndGlobal
