@@ -12,6 +12,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Entities.Conf
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Context.Contracts", "EquipHandover.Context.Contracts\EquipHandover.Context.Contracts.csproj", "{C2C23357-9957-422D-B1D3-7F687F95E170}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Services.Contracts", "EquipHandover.Services.Contracts\EquipHandover.Services.Contracts.csproj", "{43435A62-164F-44B5-9176-5F04CB50A019}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Services", "EquipHandover.Services\EquipHandover.Services.csproj", "{0546C0BC-74DC-4D99-89D6-4C1F94FB0B17}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +42,14 @@ Global
 		{C2C23357-9957-422D-B1D3-7F687F95E170}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2C23357-9957-422D-B1D3-7F687F95E170}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2C23357-9957-422D-B1D3-7F687F95E170}.Release|Any CPU.Build.0 = Release|Any CPU
+		{43435A62-164F-44B5-9176-5F04CB50A019}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{43435A62-164F-44B5-9176-5F04CB50A019}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{43435A62-164F-44B5-9176-5F04CB50A019}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{43435A62-164F-44B5-9176-5F04CB50A019}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0546C0BC-74DC-4D99-89D6-4C1F94FB0B17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0546C0BC-74DC-4D99-89D6-4C1F94FB0B17}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0546C0BC-74DC-4D99-89D6-4C1F94FB0B17}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0546C0BC-74DC-4D99-89D6-4C1F94FB0B17}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}

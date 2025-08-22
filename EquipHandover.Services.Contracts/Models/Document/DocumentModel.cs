@@ -1,8 +1,12 @@
-﻿namespace EquipHandover.Entities;
+﻿using EquipHandover.Services.Contracts.Models.Equipment;
+using EquipHandover.Services.Contracts.Models.Receiver;
+using EquipHandover.Services.Contracts.Models.Sender;
+
+namespace EquipHandover.Services.Contracts.Models.Document;
 /// <summary>
-/// Сущность документа
+/// Модель документа
 /// </summary>
-public class Document : BaseAuditEntity
+public class DocumentModel
 {
     /// <summary>
     /// Идентификатор документа
@@ -23,29 +27,19 @@ public class Document : BaseAuditEntity
     /// Город
     /// </summary>
     public string City { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Идентификатор <see cref="Sender"/>
-    /// </summary>
-    public Guid SenderId { get; set; }
-    
+
     /// <summary>
     /// Навигационное свойство <see cref="Sender"/>
     /// </summary>
-    public Sender Sender { get; set; }
-    
-    /// <summary>
-    /// Идентификатор <see cref="Receiver"/>
-    /// </summary>
-    public Guid ReceiverId { get; set; }
-    
+    public SenderModel Sender { get; set; } = new SenderModel();
+
     /// <summary>
     /// Навигационное свойство <see cref="Receiver"/>
     /// </summary>
-    public Receiver Receiver { get; set; }
+    public ReceiverModel Receiver { get; set; } = new ReceiverModel();
     
     /// <summary>
-    /// Навигационное свойство списка <see cref="DocumentEquipment"/>
+    /// Навигационное свойство списка <see cref="Equipment"/>
     /// </summary>
-    public List<DocumentEquipment> DocumentEquipments { get; set; } = new List<DocumentEquipment>();
+    public ICollection<EquipmentModel> Equipment { get; set; } = new List<EquipmentModel>();
 }

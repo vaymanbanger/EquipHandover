@@ -3,6 +3,7 @@ using System;
 using EquipHandover.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EquipHandover.Context.Migrations
 {
     [DbContext(typeof(EquipHandoverContext))]
-    partial class EquipHandoverContextModelSnapshot : ModelSnapshot
+    [Migration("20250822125858_TypeChangeSignatureNumber")]
+    partial class TypeChangeSignatureNumber
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -103,6 +106,9 @@ namespace EquipHandover.Context.Migrations
                     b.Property<DateTimeOffset?>("DeletedAt")
                         .HasColumnType("timestamp with time zone");
 
+                    b.Property<Guid?>("DocumentId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("EquipmentNumber")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -127,7 +133,9 @@ namespace EquipHandover.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "Name" }, "IX_Equipment_Name")
+                    b.HasIndex("DocumentId");
+
+                    b.HasIndex(new[] { "Name" }, "IX_Equipment_DeletedAt")
                         .IsUnique()
                         .HasFilter("\"DeletedAt\" IS NULL");
 
@@ -224,13 +232,13 @@ namespace EquipHandover.Context.Migrations
             modelBuilder.Entity("EquipHandover.Entities.DocumentEquipment", b =>
                 {
                     b.HasOne("EquipHandover.Entities.Document", "Document")
-                        .WithMany("DocumentEquipments")
+                        .WithMany()
                         .HasForeignKey("DocumentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("EquipHandover.Entities.Equipment", "Equipment")
-                        .WithMany("DocumentEquipments")
+                        .WithMany()
                         .HasForeignKey("EquipmentId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -240,14 +248,16 @@ namespace EquipHandover.Context.Migrations
                     b.Navigation("Equipment");
                 });
 
-            modelBuilder.Entity("EquipHandover.Entities.Document", b =>
-                {
-                    b.Navigation("DocumentEquipments");
-                });
-
             modelBuilder.Entity("EquipHandover.Entities.Equipment", b =>
                 {
-                    b.Navigation("DocumentEquipments");
+                    b.HasOne("EquipHandover.Entities.Document", null)
+                        .WithMany("Equipment")
+                        .HasForeignKey("DocumentId");
+                });
+
+            modelBuilder.Entity("EquipHandover.Entities.Document", b =>
+                {
+                    b.Navigation("Equipment");
                 });
 #pragma warning restore 612, 618
         }

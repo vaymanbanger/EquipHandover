@@ -1,0 +1,27 @@
+﻿namespace EquipHandover.Services.Contracts.Models.Receiver;
+
+/// <summary>
+/// Модель принимающего
+/// </summary>
+public class ReceiverModel
+{
+    /// <summary>
+    /// Идентификатор принимающего
+    /// </summary>
+    public Guid Id { get; set; }
+    
+    /// <summary>
+    /// ФИО
+    /// </summary>
+    public string FullName { get; set; } = string.Empty;
+
+    /// <summary>
+    /// Предприятие
+    /// </summary>
+    public string Enterprise { get; set; } = string.Empty;
+    
+    /// <summary>
+    /// ОГРН
+    /// </summary>
+    public int Ogrn { get; set; }
+}

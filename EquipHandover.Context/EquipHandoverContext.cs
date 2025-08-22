@@ -8,7 +8,7 @@ namespace EquipHandover.Context;
 public class EquipHandoverContext : DbContext
 {
     /// <summary>
-    /// ctor
+    /// Инициализирует новый экземпляр <see cref="EquipHandoverContext"/>
     /// </summary>
     public EquipHandoverContext(DbContextOptions<EquipHandoverContext> options) : base(options)
     {

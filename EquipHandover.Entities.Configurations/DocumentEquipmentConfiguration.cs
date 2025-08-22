@@ -17,11 +17,11 @@ public class DocumentEquipmentConfiguration  : IEntityTypeConfiguration<Document
         builder.HasKey(x => new { x.DocumentId, x.EquipmentId });
         
         builder.HasOne(x => x.Document)
-            .WithMany()
+            .WithMany(x => x.DocumentEquipments)
             .HasForeignKey(x => x.DocumentId);
         
         builder.HasOne(x => x.Equipment)
-            .WithMany()
+            .WithMany(x => x.DocumentEquipments)
             .HasForeignKey(x => x.EquipmentId);
     }
 }

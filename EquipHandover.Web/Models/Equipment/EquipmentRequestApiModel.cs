@@ -1,14 +1,10 @@
-﻿namespace EquipHandover.Entities;
-/// <summary>
-/// Сущность оборудования
-/// </summary>
-public class Equipment : BaseAuditEntity
-{
-    /// <summary>
-    /// Идентификатор оборудования
-    /// </summary>
-    public Guid Id{ get; set; }
+﻿namespace EquipHandover.Web.Models.Equipment;
 
+/// <summary>
+/// API модель для создания оборудования
+/// </summary>
+public class EquipmentRequestApiModel
+{
     /// <summary>
     /// Наименование
     /// </summary>
@@ -28,9 +24,4 @@ public class Equipment : BaseAuditEntity
     /// Номер оборудования
     /// </summary>
     public string EquipmentNumber { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Навигационное свойство списка <see cref="DocumentEquipment"/>
-    /// </summary>
-    public List<DocumentEquipment> DocumentEquipments { get; set; } = new List<DocumentEquipment>();
 }

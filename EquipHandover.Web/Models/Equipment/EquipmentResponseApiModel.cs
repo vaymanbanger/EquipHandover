@@ -1,8 +1,9 @@
-﻿namespace EquipHandover.Entities;
+﻿namespace EquipHandover.Web.Models.Equipment;
+
 /// <summary>
-/// Сущность оборудования
+/// API модель оборудования
 /// </summary>
-public class Equipment : BaseAuditEntity
+public class EquipmentResponseApiModel
 {
     /// <summary>
     /// Идентификатор оборудования
@@ -28,9 +29,4 @@ public class Equipment : BaseAuditEntity
     /// Номер оборудования
     /// </summary>
     public string EquipmentNumber { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Навигационное свойство списка <see cref="DocumentEquipment"/>
-    /// </summary>
-    public List<DocumentEquipment> DocumentEquipments { get; set; } = new List<DocumentEquipment>();
 }
