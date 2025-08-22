@@ -19,9 +19,7 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Equipment>
         builder.Property(x => x.Name)
             .HasMaxLength(200)
             .IsRequired();
-        builder.HasIndex(x => x.Name, $"IX_{nameof(Equipment)}_{nameof(Equipment.Name)}")
-            .IsUnique()
-            .HasFilter($"\"{nameof(Equipment.DeletedAt)}\" IS NULL");
+        builder.HasIndex(x => x.Name, $"IX_{nameof(Equipment)}_{nameof(Equipment.Name)}");
 
         
         builder.Property(x => x.ManufactureDate)

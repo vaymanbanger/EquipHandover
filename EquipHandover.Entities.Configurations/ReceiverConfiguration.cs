@@ -17,15 +17,16 @@ public class ReceiverConfiguration : IEntityTypeConfiguration<Receiver>
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.FullName)
-            .HasMaxLength(50)
-            .IsRequired();
+            .HasMaxLength(50);
 
         builder.Property(x => x.Enterprise)
-            .HasMaxLength(90)
-            .IsRequired();
-        
-        builder.Property(x => x.Ogrn)
+            .HasMaxLength(90);
+
+        builder.Property(x => x.RegistrationNumber)
             .HasMaxLength(13)
             .IsRequired();
+        builder.HasIndex(x => x.RegistrationNumber, $"IX_{nameof(Receiver)}_{nameof(Receiver.RegistrationNumber)}")
+            .IsUnique()
+            .HasFilter("[Ogrn] IS NOT NULL");
     }
 }

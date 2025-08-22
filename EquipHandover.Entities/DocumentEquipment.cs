@@ -12,7 +12,7 @@ public class DocumentEquipment : BaseAuditEntity
     /// <summary>
     /// Навигационное свойство <see cref="Document"/>
     /// </summary>
-    public Document Document { get; set; }
+    public Document? Document { get; set; }
 
     /// <summary>
     /// Идентификатор оборудования
@@ -22,5 +22,5 @@ public class DocumentEquipment : BaseAuditEntity
     /// <summary>
     /// Навигационное свойство <see cref="Equipment"/>
     /// </summary>
-    public Equipment Equipment { get; set; }
+    public Equipment? Equipment { get; set; }
 }

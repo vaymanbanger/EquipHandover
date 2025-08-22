@@ -27,7 +27,7 @@ public class Document : BaseAuditEntity
     /// <summary>
     /// Навигационное свойство <see cref="Sender"/>
     /// </summary>
-    public Sender Sender { get; set; }
+    public Sender? Sender { get; set; }
     
     /// <summary>
     /// Идентификатор <see cref="Receiver"/>
@@ -37,7 +37,7 @@ public class Document : BaseAuditEntity
     /// <summary>
     /// Навигационное свойство <see cref="Receiver"/>
     /// </summary>
-    public Receiver Receiver { get; set; }
+    public Receiver? Receiver { get; set; } 
     
     /// <summary>
     /// Навигационное свойство списка <see cref="DocumentEquipment"/>

@@ -3,6 +3,7 @@ using System;
 using EquipHandover.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
@@ -11,9 +12,11 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace EquipHandover.Context.Migrations
 {
     [DbContext(typeof(EquipHandoverContext))]
-    partial class EquipHandoverContextModelSnapshot : ModelSnapshot
+    [Migration("20250822173840_SettingConfigurations")]
+    partial class SettingConfigurations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -154,7 +157,7 @@ namespace EquipHandover.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("RegistrationNumber")
+                    b.Property<int>("Ogrn")
                         .HasMaxLength(13)
                         .HasColumnType("integer");
 
@@ -162,10 +165,6 @@ namespace EquipHandover.Context.Migrations
                         .HasColumnType("timestamp with time zone");
 
                     b.HasKey("Id");
-
-                    b.HasIndex(new[] { "RegistrationNumber" }, "IX_Receiver_RegistrationNumber")
-                        .IsUnique()
-                        .HasFilter("[Ogrn] IS NOT NULL");
 
                     b.ToTable("Receivers", (string)null);
                 });
@@ -192,7 +191,7 @@ namespace EquipHandover.Context.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("character varying(50)");
 
-                    b.Property<int>("TaxPayerId")
+                    b.Property<int>("Inn")
                         .HasMaxLength(12)
                         .HasColumnType("integer");
 

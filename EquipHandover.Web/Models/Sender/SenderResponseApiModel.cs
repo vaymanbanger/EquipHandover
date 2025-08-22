@@ -11,7 +11,7 @@ public class SenderResponseApiModel
     public Guid Id { get; set; }
     
     /// <summary>
-    /// ФИО
+    /// Полное имя
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 
@@ -21,7 +21,7 @@ public class SenderResponseApiModel
     public string Enterprise { get; set; } = string.Empty;
     
     /// <summary>
-    /// ИНН
+    /// Идентификационный номер налогоплательщика
     /// </summary>
-    public int Inn { get; set; }
+    public int TaxPayerId { get; set; }
 }

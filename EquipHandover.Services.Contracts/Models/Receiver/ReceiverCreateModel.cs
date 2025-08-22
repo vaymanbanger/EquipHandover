@@ -6,7 +6,7 @@
 public class ReceiverCreateModel
 {
     /// <summary>
-    /// ФИО
+    /// Полное имя принимаюшего
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 
@@ -16,7 +16,7 @@ public class ReceiverCreateModel
     public string Enterprise { get; set; } = string.Empty;
     
     /// <summary>
-    /// ОГРН
+    /// Основной государственный регистрационный номер
     /// </summary>
-    public int Ogrn { get; set; }
+    public int RegistrationNumber { get; set; }
 }

@@ -24,7 +24,7 @@ public class SenderConfiguration : IEntityTypeConfiguration<Sender>
             .HasMaxLength(90)
             .IsRequired();
         
-        builder.Property(x => x.Inn)
+        builder.Property(x => x.TaxPayerId)
             .HasMaxLength(12)
             .IsRequired();
     }

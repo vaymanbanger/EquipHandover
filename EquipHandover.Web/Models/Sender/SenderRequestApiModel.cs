@@ -6,7 +6,7 @@
 public class SenderRequestApiModel
 {
     /// <summary>
-    /// ФИО
+    /// Полное имя
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 
@@ -16,7 +16,7 @@ public class SenderRequestApiModel
     public string Enterprise { get; set; } = string.Empty;
     
     /// <summary>
-    /// ИНН
+    /// Идентификационный номер налогоплательщика
     /// </summary>
-    public int Inn { get; set; }
+    public int TaxPayerId { get; set; }
 }

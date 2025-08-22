@@ -11,7 +11,7 @@ public class ReceiverModel
     public Guid Id { get; set; }
     
     /// <summary>
-    /// ФИО
+    /// Полное имя принимающего
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 
@@ -21,7 +21,7 @@ public class ReceiverModel
     public string Enterprise { get; set; } = string.Empty;
     
     /// <summary>
-    /// ОГРН
+    /// Основной государственный регистрационный номер
     /// </summary>
-    public int Ogrn { get; set; }
+    public int RegistrationNumber { get; set; }
 }
