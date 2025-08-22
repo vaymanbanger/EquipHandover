@@ -16,14 +16,14 @@ erDiagram
         uuid Id
         string FullName
         string Enterprise
-        string Inn
+        string TaxPayerId
     }
     
     RECEIVER {
         uuid Id
         string FullName
         string Enterprise
-        string Ogrn
+        string RegistrationNumber
     }
     
     EQUIPMENT {
@@ -66,11 +66,11 @@ erDiagram
     SenderId: 57ebb48e-3093-4ac3-96ef-43d6dc36c744,
     SenderFullName: "Иванов Иван Иванович",
     SenderEnterprise: "ООО ПЕТРОВИЧ",
-    SenderInn: 520205004556,
+    SenderTaxPayerId: 520205004556,
     ReceiverId: 79c2b608-3455-4e87-be7d-18807a930505,
     ReceiverFullName: "Иванов Иннокентий Иванович",
     ReceiverEnterprise: "ООО Михалыч",
-    ReceiverOgrn: 1147847423899,
+    ReceiverRegistrationNumber: 1147847423899,
     Equipment: [
         {
             EquipmentId: a624c88b-178c-4b9f-a67a-4541d5797f15,
@@ -144,7 +144,7 @@ erDiagram
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
-    Inn: 520205004556
+    TaxPayerId: 520205004556
 }
 ```
 ```javascript
@@ -152,7 +152,7 @@ erDiagram
 {
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
-    Inn: 520205004556
+    TaxPayerId: 520205004556
 }
 ```
 ### CRUD принимающего
@@ -169,7 +169,7 @@ erDiagram
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
-    Ogrn: 1147847423899
+    RegistrationNumber: 1147847423899
 }
 ```
 ```javascript
@@ -177,6 +177,6 @@ erDiagram
 {
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
-    Ogrn: 1147847423899
+    RegistrationNumber: 1147847423899
 }
 ```
