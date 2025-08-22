@@ -5,11 +5,6 @@
 public class Equipment : BaseAuditEntity
 {
     /// <summary>
-    /// Идентификатор оборудования
-    /// </summary>
-    public Guid Id{ get; set; }
-
-    /// <summary>
     /// Наименование
     /// </summary>
     public string Name { get; set; } = string.Empty;

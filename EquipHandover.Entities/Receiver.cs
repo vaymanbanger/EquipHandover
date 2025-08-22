@@ -6,11 +6,6 @@
 public class Receiver : BaseAuditEntity
 {
     /// <summary>
-    /// Идентификатор принимающего
-    /// </summary>
-    public Guid Id { get; set; }
-    
-    /// <summary>
     /// ФИО
     /// </summary>
     public string FullName { get; set; } = string.Empty;

@@ -5,11 +5,6 @@
 public class Sender  : BaseAuditEntity
 {
     /// <summary>
-    /// Идентификатор отправителя
-    /// </summary>
-    public Guid Id { get; set; }
-    
-    /// <summary>
     /// ФИО
     /// </summary>
     public string FullName { get; set; } = string.Empty;

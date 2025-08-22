@@ -5,11 +5,6 @@
 public class Document : BaseAuditEntity
 {
     /// <summary>
-    /// Идентификатор документа
-    /// </summary>
-    public Guid Id { get; set; }
-    
-    /// <summary>
     /// Дата аренды оборудования
     /// </summary>
     public DateOnly RentalDate { get; set; }
