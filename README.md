@@ -6,7 +6,7 @@ erDiagram
     DOCUMENT {
         uuid Id
         dateonly RentalDate
-        string SignatureNumber
+        dateonly SignatureNumber
         string City
         uuid SenderId
         uuid ReceiverId
@@ -37,7 +37,6 @@ erDiagram
     DOCUMENTEQUIPMENT {
         uuid DocumentId
         uuid EquipmentId
-        int Quantity
     }
     
     DOCUMENT ||--|| SENDER : "имеет"
