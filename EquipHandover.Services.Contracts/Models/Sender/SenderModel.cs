@@ -23,5 +23,5 @@ public class SenderModel
     /// <summary>
     /// Идентификационный номер налогоплательщика
     /// </summary>
-    public int TaxPayerId { get; set; }
+    public string TaxPayerId { get; set; } = string.Empty;
 }

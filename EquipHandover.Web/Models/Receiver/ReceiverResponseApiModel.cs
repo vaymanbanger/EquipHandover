@@ -23,5 +23,5 @@ public class ReceiverResponseApiModel
     /// <summary>
     /// Основной государственный регистрационный номер
     /// </summary>
-    public int RegistrationNumber { get; set; }
+    public string RegistrationNumber { get; set; }  = string.Empty;
 }

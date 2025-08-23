@@ -12,15 +12,19 @@ namespace EquipHandover.Web.Controllers;
 public class DocumentController : ControllerBase
 {
     private readonly IDocumentService documentService;
+    private readonly IValidateService validateService;
     private readonly IMapper mapper;
     
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="DocumentController"/>
     /// </summary>
-    public DocumentController(IDocumentService documentService, IMapper mapper)
+    public DocumentController(IDocumentService documentService,
+        IMapper mapper,
+        IValidateService validateService)
     {
         this.documentService = documentService;
         this.mapper = mapper;
+        this.validateService = validateService;
     }
 
     /// <summary>

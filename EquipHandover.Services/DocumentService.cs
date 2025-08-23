@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
 using EquipHandover.Context;
 using EquipHandover.Services.Contracts;
-using EquipHandover.Services.Contracts.Models;
 using EquipHandover.Services.Contracts.Models.Document;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking.Internal;
 
 namespace EquipHandover.Services;
 
@@ -15,7 +13,7 @@ public class DocumentService : IDocumentService
     private readonly IMapper mapper;
     
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="DocumentController"/>
+    /// Инициализирует новый экземпляр <see cref="DocumentService"/>
     /// </summary>
     public DocumentService(EquipHandoverContext context, IMapper mapper)
     {
