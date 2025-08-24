@@ -1,5 +1,4 @@
-﻿using EquipHandover.Services.Contracts.Models;
-using EquipHandover.Services.Contracts.Models.Equipment;
+﻿using EquipHandover.Services.Contracts.Models.Equipment;
 
 namespace EquipHandover.Services.Contracts;
 

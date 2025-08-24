@@ -7,11 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.19" />
+      <ProjectReference Include="..\EquipHandover.Entities\EquipHandover.Entities.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
+      <Folder Include="WriteRepositories\" />
     </ItemGroup>
-    
+
 </Project>

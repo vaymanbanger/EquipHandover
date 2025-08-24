@@ -1,9 +1,12 @@
 using AutoMapper;
+using EquipHandover.Common;
 using EquipHandover.Context;
+using EquipHandover.Context.Contracts;
 using EquipHandover.Services;
 using EquipHandover.Services.AutoMappers;
 using EquipHandover.Services.Contracts;
 using EquipHandover.Web.AutoMappers;
+using EquipHandover.Web.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Web;
@@ -27,6 +30,10 @@ public class Program
         builder.Services.AddDbContext<EquipHandoverContext>(options =>
             options.UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine));
+        builder.Services.AddScoped<IReader>(x => x.GetRequiredService<EquipHandoverContext>());
+        builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<EquipHandoverContext>());
+        builder.Services.AddSingleton<IDateTimeProvider,DateTimeProvider>();
+        
         builder.Services.AddScoped<IDocumentService,DocumentService>();
         builder.Services.AddSingleton<IValidateService, ValidateService>();
         builder.Services.AddSingleton<IMapper>(_ =>

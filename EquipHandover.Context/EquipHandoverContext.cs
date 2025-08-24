@@ -1,11 +1,13 @@
-﻿using EquipHandover.Entities.Configurations;
+﻿using System.Diagnostics.CodeAnalysis;
+using EquipHandover.Context.Contracts;
+using EquipHandover.Entities.Configurations;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Context;
 /// <summary>
 /// Контекст БД
 /// </summary>
-public class EquipHandoverContext : DbContext
+public class EquipHandoverContext : DbContext, IReader, IWriter
 {
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="EquipHandoverContext"/>
@@ -25,4 +27,18 @@ public class EquipHandoverContext : DbContext
         base.OnModelCreating(modelBuilder);
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(IEntityConfigurationAnchor).Assembly);
     }
+
+    IQueryable<TEntity> IReader.Read<TEntity>()
+        where TEntity : class
+        => base.Set<TEntity>()
+            .AsNoTracking()
+            .AsQueryable();
+
+    void IWriter.Add<TEntity>([NotNull] TEntity entity) where TEntity : class
+        => base.Entry(entity).State = EntityState.Added;
+    void IWriter.Update<TEntity>([NotNull] TEntity entity) where TEntity : class
+        => base.Entry(entity).State = EntityState.Modified;
+    void IWriter.Delete<TEntity>([NotNull] TEntity entity) where TEntity : class
+        => base.Entry(entity).State = EntityState.Deleted;
+
 }

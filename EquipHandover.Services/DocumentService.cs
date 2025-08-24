@@ -1,15 +1,12 @@
 ﻿using AutoMapper;
-using EquipHandover.Context;
 using EquipHandover.Services.Contracts;
 using EquipHandover.Services.Contracts.Models.Document;
-using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Services;
 
 /// <inheritdoc cref="IDocumentService"/>
 public class DocumentService : IDocumentService
 {
-    private readonly EquipHandoverContext context;
     private readonly IMapper mapper;
     
     /// <summary>

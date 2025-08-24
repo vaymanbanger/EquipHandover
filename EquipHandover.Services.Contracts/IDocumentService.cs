@@ -1,5 +1,4 @@
-﻿using EquipHandover.Services.Contracts.Models;
-using EquipHandover.Services.Contracts.Models.Document;
+﻿using EquipHandover.Services.Contracts.Models.Document;
 
 namespace EquipHandover.Services.Contracts;
 /// <summary>

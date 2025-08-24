@@ -8,12 +8,10 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EquipHandover.Repositories.Contracts\EquipHandover.Repositories.Contracts.csproj" />
-      <ProjectReference Include="..\EquipHandover.Services.Contracts\EquipHandover.Services.Contracts.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="AutoMapper" Version="12.0.0" />
-      <PackageReference Include="FluentValidation" Version="12.0.0" />
+      <Folder Include="WriteRepositories\" />
     </ItemGroup>
 
 </Project>
