@@ -28,6 +28,7 @@ public class Program
             options.UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine));
         builder.Services.AddScoped<IDocumentService,DocumentService>();
+        builder.Services.AddSingleton<IValidateService, ValidateService>();
         builder.Services.AddSingleton<IMapper>(_ =>
         {
             var mapperConfig = new MapperConfiguration(cfg =>

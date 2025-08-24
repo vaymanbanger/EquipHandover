@@ -35,5 +35,5 @@ public class DocumentCreateModel
     /// <summary>
     /// Идентификаторы <see cref="Equipment"/>
     /// </summary>
-    public ICollection<Guid> EquipmentIds { get; set; } = new List<Guid>();
+    public List<Guid> EquipmentIds { get; set; } = new List<Guid>();
 }

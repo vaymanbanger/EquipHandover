@@ -11,29 +11,34 @@ namespace EquipHandover.Context.Migrations
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<DateOnly>(
+            // Удаляем колонку (безопасно, так как данных нет)
+            migrationBuilder.DropColumn(
+                name: "SignatureNumber",
+                table: "Documents");
+
+            // Добавляем колонку с новым типом
+            migrationBuilder.AddColumn<DateOnly>(
                 name: "SignatureNumber",
                 table: "Documents",
                 type: "date",
                 maxLength: 50,
                 nullable: false,
-                oldClrType: typeof(string),
-                oldType: "character varying(50)",
-                oldMaxLength: 50);
+                defaultValue: new DateOnly(1900, 1, 1));
         }
-
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AlterColumn<string>(
+            migrationBuilder.DropColumn(
+                name: "SignatureNumber",
+                table: "Documents");
+
+            migrationBuilder.AddColumn<string>(
                 name: "SignatureNumber",
                 table: "Documents",
                 type: "character varying(50)",
                 maxLength: 50,
                 nullable: false,
-                oldClrType: typeof(DateOnly),
-                oldType: "date",
-                oldMaxLength: 50);
+                defaultValue: "");
         }
     }
 }

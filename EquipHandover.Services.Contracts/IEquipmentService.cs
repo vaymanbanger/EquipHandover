@@ -3,6 +3,9 @@ using EquipHandover.Services.Contracts.Models.Equipment;
 
 namespace EquipHandover.Services.Contracts;
 
+/// <summary>
+/// Интерфейс сервиса для работы с оборудованием
+/// </summary>
 public interface IEquipmentService
 {
     /// <summary>

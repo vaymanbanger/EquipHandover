@@ -16,9 +16,22 @@ public class ServiceProfile : Profile
     /// </summary>
     public ServiceProfile()
     {
-        CreateMap<Entities.Document, DocumentModel>(MemberList.Destination);
+        CreateMap<DocumentModel, DocumentCreateModel>(MemberList.Destination)
+            .ForMember(dest => dest.EquipmentIds,
+                opt => opt.MapFrom(src => src.Equipment
+                    .Select(x => x.Id)));
+        CreateMap<Entities.Document, DocumentModel>(MemberList.Destination)
+            .ForMember(dest => dest.Equipment,
+                opt => opt.MapFrom(src => src.DocumentEquipments
+                    .Select(x => x.Equipment)));
+
+        CreateMap<EquipmentModel, EquipmentCreateModel>(MemberList.Destination);
         CreateMap<Entities.Equipment, EquipmentModel>(MemberList.Destination);
+
+        CreateMap<ReceiverModel, ReceiverCreateModel>(MemberList.Destination);
         CreateMap<Entities.Receiver, ReceiverModel>(MemberList.Destination);
+
+        CreateMap<SenderModel, SenderCreateModel>(MemberList.Destination);
         CreateMap<Entities.Sender, SenderModel>(MemberList.Destination);
     }
 }

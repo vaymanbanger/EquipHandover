@@ -41,5 +41,5 @@ public class DocumentModel
     /// <summary>
     /// Навигационное свойство списка <see cref="Equipment"/>
     /// </summary>
-    public ICollection<EquipmentModel> Equipment { get; set; } = new List<EquipmentModel>();
+    public List<EquipmentModel> Equipment { get; set; } = new List<EquipmentModel>();
 }

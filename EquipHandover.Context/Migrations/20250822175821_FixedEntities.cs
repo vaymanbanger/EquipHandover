@@ -25,7 +25,7 @@ namespace EquipHandover.Context.Migrations
                 table: "Receivers",
                 column: "RegistrationNumber",
                 unique: true,
-                filter: "[Ogrn] IS NOT NULL");
+                filter: "\"RegistrationNumber\" IS NOT NULL");
         }
 
         /// <inheritdoc />

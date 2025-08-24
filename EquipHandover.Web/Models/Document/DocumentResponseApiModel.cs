@@ -42,5 +42,5 @@ public class DocumentResponseApiModel
     /// <summary>
     /// Навигационное свойство списка <see cref="Equipment"/>
     /// </summary>
-    public ICollection<EquipmentResponseApiModel> Equipment { get; set; } = new List<EquipmentResponseApiModel>();
+    public List<EquipmentResponseApiModel> Equipment { get; set; } = new List<EquipmentResponseApiModel>();
 }

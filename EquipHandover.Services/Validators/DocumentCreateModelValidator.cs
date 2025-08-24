@@ -15,12 +15,12 @@ public class DocumentCreateModelValidator : AbstractValidator<DocumentCreateMode
     {
         RuleFor(x => x.RentalDate)
             .NotEmpty().WithMessage("Дата аренды оборудования не может быть пустым")
-            .LessThan(DateOnly.FromDateTime(DateTime.Now))
+            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now))
             .WithMessage("Дата аренды оборудования не может быть в прошлом");
         
         RuleFor(x => x.SignatureNumber)
             .NotEmpty().WithMessage("Номер подписания договора не может быть пустым")
-            .LessThan(DateOnly.FromDateTime(DateTime.Now))
+            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now))
             .WithMessage("Номер подписания договора не может быть в прошлом");
     
         RuleFor(x => x.City)
