@@ -10,7 +10,7 @@ public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
 {
     private const int MinLength = 3;
     private const int MaxLength = 255;
-    private const int TaxPayerIdLength = 13;
+    private const int TaxPayerIdLength = 10;
     
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="SenderCreateModelValidator"/>

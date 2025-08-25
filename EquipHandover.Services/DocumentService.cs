@@ -12,25 +12,23 @@ public class DocumentService : IDocumentService
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="DocumentService"/>
     /// </summary>
-    public DocumentService(EquipHandoverContext context, IMapper mapper)
+    public DocumentService(IMapper mapper)
     {
-        this.context = context;
         this.mapper = mapper;
     }
     
-    async Task<IReadOnlyCollection<DocumentModel>> IDocumentService.GetAllAsync(CancellationToken cancellationToken)
+    Task<IReadOnlyCollection<DocumentModel>> IDocumentService.GetAllAsync(CancellationToken cancellationToken)
     {
-        var items = await context.Set<Entities.Document>()
-            .AsNoTracking()
-            .AsQueryable()
-            .ToListAsync(cancellationToken);
-        
-        return mapper.Map<IReadOnlyCollection<DocumentModel>>(items);
+        throw new NotImplementedException();
     }
 
     Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel documentCreateModel, CancellationToken cancellationToken)
     { 
         throw new NotImplementedException();
     }
-    
+
+    Task<DocumentModel> IDocumentService.EditAsync(DocumentModel model, CancellationToken cancellationToken)
+    {
+        throw new NotImplementedException();
+    }
 }

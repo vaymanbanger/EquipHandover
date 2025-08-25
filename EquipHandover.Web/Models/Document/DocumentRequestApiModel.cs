@@ -1,7 +1,7 @@
 ﻿namespace EquipHandover.Web.Models.Document;
 
 /// <summary>
-/// API модель для создания документа
+/// API модель для создания/редактирования документа
 /// </summary>
 public class DocumentRequestApiModel
 {

@@ -1,5 +1,7 @@
 ﻿using AutoMapper;
 using EquipHandover.Services.Contracts;
+using EquipHandover.Services.Contracts.Models.Document;
+using EquipHandover.Web.Infrastructure.Exceptions;
 using EquipHandover.Web.Models.Document;
 using Microsoft.AspNetCore.Mvc;
 
@@ -8,7 +10,7 @@ namespace EquipHandover.Web.Controllers;
 /// CRUD контроллер по работе с документом
 /// </summary>
 [ApiController]
-[Route("[controller]")]
+[Route("api/[controller]")]
 public class DocumentController : ControllerBase
 {
     private readonly IDocumentService documentService;
@@ -40,12 +42,35 @@ public class DocumentController : ControllerBase
     }
 
     /// <summary>
-    /// Добавляет новый товар
+    /// Добавляет новый документ
     /// </summary>
     [HttpPost]
     [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     public async Task<IActionResult> Create(DocumentRequestApiModel request, CancellationToken cancellationToken)
     {
-        throw new NotImplementedException();
+        var requestModel = mapper.Map<DocumentCreateModel>(request);
+        await validateService.ValidateAsync(requestModel, cancellationToken);
+        var result = await documentService.CreateAsync(requestModel, cancellationToken);
+        
+        return Ok(mapper.Map<DocumentResponseApiModel>(result));
+    }
+
+    /// <summary>
+    /// Редактирует существующий документ
+    /// </summary>
+    [HttpPut("{id:guid}")]
+    [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] DocumentRequestApiModel request,
+        CancellationToken cancellationToken)
+    {
+        var requestModel = mapper.Map<DocumentModel>(request);
+        requestModel.Id = id;
+        await validateService.ValidateAsync(requestModel, cancellationToken);
+        var result = await documentService.EditAsync(requestModel, cancellationToken);
+        
+        return Ok(mapper.Map<DocumentResponseApiModel>(result));
     }
 }

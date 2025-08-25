@@ -13,7 +13,7 @@ public class ReceiverCreateModelValidator : AbstractValidator<ReceiverCreateMode
     private const int RegistrationNumberLength = 13;
     
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="EquipmentCreateModelValidator"/>
+    /// Инициализирует новый экземпляр <see cref="ReceiverCreateModelValidator"/>
     /// </summary>
     public ReceiverCreateModelValidator()
     {

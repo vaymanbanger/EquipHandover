@@ -21,15 +21,23 @@ public class ApiMapper : Profile
     public ApiMapper()
     {
         CreateMap<DocumentRequestApiModel, DocumentCreateModel>(MemberList.Destination);
-        CreateMap<DocumentModel, DocumentResponseApiModel>(MemberList.Destination);
+        CreateMap<DocumentRequestApiModel, DocumentModel>(MemberList.Destination)
+            .ForMember(x => x.Id, opt => opt.Ignore());
+        CreateMap<DocumentModel, DocumentResponseApiModel>(MemberList.Destination).ReverseMap();
 
         CreateMap<EquipmentRequestApiModel, EquipmentCreateModel>(MemberList.Destination);
-        CreateMap<EquipmentModel, EquipmentResponseApiModel>(MemberList.Destination);
+        CreateMap<EquipmentRequestApiModel, EquipmentModel>(MemberList.Destination)
+            .ForMember(x => x.Id, opt => opt.Ignore());
+        CreateMap<EquipmentModel, EquipmentResponseApiModel>(MemberList.Destination).ReverseMap();
 
         CreateMap<ReceiverRequestApiModel, ReceiverCreateModel>(MemberList.Destination);
-        CreateMap<ReceiverModel, ReceiverResponseApiModel>(MemberList.Destination);
+        CreateMap<ReceiverRequestApiModel, ReceiverModel>(MemberList.Destination)
+            .ForMember(x => x.Id, opt => opt.Ignore());
+        CreateMap<ReceiverModel, ReceiverResponseApiModel>(MemberList.Destination).ReverseMap();
         
         CreateMap<SenderRequestApiModel, SenderCreateModel>(MemberList.Destination);
-        CreateMap<SenderModel, SenderResponseApiModel>(MemberList.Destination);
+        CreateMap<SenderRequestApiModel, SenderModel>(MemberList.Destination)
+            .ForMember(x => x.Id, opt => opt.Ignore());
+        CreateMap<SenderModel, SenderResponseApiModel>(MemberList.Destination).ReverseMap();
     }
 }

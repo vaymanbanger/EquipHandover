@@ -14,5 +14,10 @@ public interface IDocumentService
     /// <summary>
     /// Добавляет новый <see cref="DocumentModel"/>
     /// </summary>
-    Task<DocumentModel> CreateAsync(DocumentCreateModel documentCreateModel, CancellationToken cancellationToken);
+    Task<DocumentModel> CreateAsync(DocumentCreateModel model, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Редактирует существующий <see cref="DocumentModel"/>
+    /// </summary>
+    Task<DocumentModel> EditAsync(DocumentModel model, CancellationToken cancellationToken);
 }

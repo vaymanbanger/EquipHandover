@@ -9,7 +9,7 @@ public class InvalidateItemModel
     /// Создает <see cref="InvalidateItemModel"/>
     /// </summary>
     public static InvalidateItemModel New(string field, string message)
-        => new InvalidateItemModel(field, message);
+        => new (field, message);
 
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="InvalidateItemModel"/>
