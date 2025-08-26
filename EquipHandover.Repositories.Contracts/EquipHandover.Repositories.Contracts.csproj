@@ -10,8 +10,4 @@
       <ProjectReference Include="..\EquipHandover.Entities\EquipHandover.Entities.csproj" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="WriteRepositories\" />
-    </ItemGroup>
-
 </Project>

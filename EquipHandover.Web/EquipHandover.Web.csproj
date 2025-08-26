@@ -13,8 +13,10 @@
     </ItemGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj" />
       <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
       <ProjectReference Include="..\EquipHandover.Context\EquipHandover.Context.csproj" />
+      <ProjectReference Include="..\EquipHandover.Repositories\EquipHandover.Repositories.csproj" />
       <ProjectReference Include="..\EquipHandover.Services\EquipHandover.Services.csproj" />
     </ItemGroup>
  

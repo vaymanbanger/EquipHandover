@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Context;
 /// <summary>
-/// Контекст БД
+/// Контекст базы данных
 /// </summary>
-public class EquipHandoverContext : DbContext, IReader, IWriter
+public class EquipHandoverContext : DbContext, IReader, IWriter, IUnitOfWork
 {
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="EquipHandoverContext"/>
@@ -20,7 +20,7 @@ public class EquipHandoverContext : DbContext, IReader, IWriter
     }
     
     /// <summary>
-    /// Настраивает модели БД
+    /// Настраивает модели базы данных
     /// </summary>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -41,4 +41,14 @@ public class EquipHandoverContext : DbContext, IReader, IWriter
     void IWriter.Delete<TEntity>([NotNull] TEntity entity) where TEntity : class
         => base.Entry(entity).State = EntityState.Deleted;
 
+    async Task<int> IUnitOfWork.SaveChangesAsync(CancellationToken cancellationToken)
+    {
+        var count = await base.SaveChangesAsync(cancellationToken);
+        foreach (var entry in base.ChangeTracker.Entries().ToArray())
+        {
+            entry.State = EntityState.Detached;
+        }
+        
+        return count;
+    }
 }

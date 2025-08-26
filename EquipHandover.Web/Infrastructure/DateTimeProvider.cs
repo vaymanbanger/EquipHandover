@@ -1,4 +1,4 @@
-﻿using EquipHandover.Common;
+﻿using EquipHandover.Common.Contracts;
 
 namespace EquipHandover.Web.Infrastructure;
 

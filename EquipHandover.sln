@@ -22,7 +22,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Repositories"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Repositories.Contracts", "EquipHandover.Repositories.Contracts\EquipHandover.Repositories.Contracts.csproj", "{DE78B325-EC5E-489E-A921-4516FE4F24B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Common", "EquipHandover.Common\EquipHandover.Common.csproj", "{A0CD8F7E-56A0-486F-9BD2-CDE6DB29A167}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Common.Contracts", "EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj", "{A0CD8F7E-56A0-486F-9BD2-CDE6DB29A167}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EquipHandover.Common", "EquipHandover.Common\EquipHandover.Common.csproj", "{304077E6-2268-4807-8EEC-B2EC61E69A49}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -74,6 +76,10 @@ Global
 		{A0CD8F7E-56A0-486F-9BD2-CDE6DB29A167}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0CD8F7E-56A0-486F-9BD2-CDE6DB29A167}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0CD8F7E-56A0-486F-9BD2-CDE6DB29A167}.Release|Any CPU.Build.0 = Release|Any CPU
+		{304077E6-2268-4807-8EEC-B2EC61E69A49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{304077E6-2268-4807-8EEC-B2EC61E69A49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{304077E6-2268-4807-8EEC-B2EC61E69A49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{304077E6-2268-4807-8EEC-B2EC61E69A49}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{6E290BCB-B462-42B8-A4A1-124DFD4AE89D} = {795DD2E0-93F1-4F02-B0E5-3AA46E212781}

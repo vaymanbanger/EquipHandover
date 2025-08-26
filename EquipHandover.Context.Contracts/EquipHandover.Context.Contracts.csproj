@@ -11,7 +11,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
+      <ProjectReference Include="..\EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj" />
     </ItemGroup>
     
 </Project>

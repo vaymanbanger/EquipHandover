@@ -19,11 +19,11 @@ public class ServiceProfile : Profile
         CreateMap<DocumentModel, DocumentCreateModel>(MemberList.Destination)
             .ForMember(dest => dest.EquipmentIds,
                 opt => opt.MapFrom(src => src.Equipment
-                    .Select(x => x.Id)));
+                    .Select(x => x.Id))).ReverseMap();
         CreateMap<Entities.Document, DocumentModel>(MemberList.Destination)
             .ForMember(dest => dest.Equipment,
                 opt => opt.MapFrom(src => src.DocumentEquipments
-                    .Select(x => x.Equipment)));
+                    .Select(x => x.Equipment))).ReverseMap();
 
         CreateMap<EquipmentModel, EquipmentCreateModel>(MemberList.Destination);
         CreateMap<Entities.Equipment, EquipmentModel>(MemberList.Destination);

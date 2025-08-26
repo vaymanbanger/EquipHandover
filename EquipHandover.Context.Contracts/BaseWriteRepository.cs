@@ -1,5 +1,5 @@
 ﻿using System.Diagnostics.CodeAnalysis;
-using EquipHandover.Common;
+using EquipHandover.Common.Contracts;
 
 namespace EquipHandover.Context.Contracts;
 

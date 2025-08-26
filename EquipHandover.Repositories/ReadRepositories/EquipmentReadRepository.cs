@@ -6,27 +6,27 @@ using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Repositories.ReadRepositories;
 
-/// <inheritdoc cref="IDocumentReadRepository"/>
-public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
+/// <inheritdoc cref="IEquipmentReadRepository"/>
+public class EquipmentReadRepository : IEquipmentReadRepository, IRepositoryAnchor
 {
     private readonly IReader reader;
 
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="DocumentReadRepository"/>
+    /// Инициализирует новый экземпляр <see cref="EquipmentReadRepository"/>
     /// </summary>
-    public DocumentReadRepository(IReader reader)
+    public EquipmentReadRepository(IReader reader)
     {
         this.reader = reader;
     }
-    
-    Task<Document?> IDocumentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => reader.Read<Document>()
+
+    Task<Equipment?> IEquipmentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+        => reader.Read<Equipment>()
             .NotDeletedAt()
             .ById(id)
             .FirstOrDefaultAsync(cancellationToken);
 
-    Task<IReadOnlyCollection<Document>> IDocumentReadRepository.GetAllAsync(CancellationToken cancellationToken)
-        => reader.Read<Document>()
+    Task<IReadOnlyCollection<Equipment>> IEquipmentReadRepository.GetAllAsync(CancellationToken cancellationToken)
+        => reader.Read<Equipment>()
             .NotDeletedAt()
             .ToReadOnlyCollectionAsync(cancellationToken);
 }

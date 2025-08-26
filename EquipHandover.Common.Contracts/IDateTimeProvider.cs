@@ -1,4 +1,4 @@
-﻿namespace EquipHandover.Common;
+﻿namespace EquipHandover.Common.Contracts;
 
 /// <summary>
 /// Интерфейс для предоставления текущего времени

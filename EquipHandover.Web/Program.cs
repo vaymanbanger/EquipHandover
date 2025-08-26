@@ -1,11 +1,7 @@
-using AutoMapper;
-using EquipHandover.Common;
 using EquipHandover.Context;
-using EquipHandover.Context.Contracts;
-using EquipHandover.Services;
-using EquipHandover.Services.AutoMappers;
-using EquipHandover.Services.Contracts;
-using EquipHandover.Web.AutoMappers;
+using EquipHandover.Context.Extensions;
+using EquipHandover.Services.Extensions;
+using EquipHandover.Web.Extensions;
 using EquipHandover.Web.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,22 +26,10 @@ public class Program
         builder.Services.AddDbContext<EquipHandoverContext>(options =>
             options.UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine));
-        builder.Services.AddScoped<IReader>(x => x.GetRequiredService<EquipHandoverContext>());
-        builder.Services.AddScoped<IWriter>(x => x.GetRequiredService<EquipHandoverContext>());
-        builder.Services.AddSingleton<IDateTimeProvider,DateTimeProvider>();
         
-        builder.Services.AddScoped<IDocumentService,DocumentService>();
-        builder.Services.AddSingleton<IValidateService, ValidateService>();
-        builder.Services.AddSingleton<IMapper>(_ =>
-        {
-            var mapperConfig = new MapperConfiguration(cfg =>
-            {
-                cfg.AddProfile<ApiMapper>();
-                cfg.AddProfile<ServiceProfile>();
-            });
-            var mapper = mapperConfig.CreateMapper();
-            return mapper;
-        });
+        builder.Services.RegisterServiceDependencies();
+        builder.Services.RegisterContextDependencies();
+        builder.Services.RegisterWebDependencies();
         
         // Add services to the container.
         builder.Services.AddControllers(opt =>
