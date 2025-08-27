@@ -25,6 +25,12 @@ public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
             .ById(id)
             .FirstOrDefaultAsync(cancellationToken);
 
+    Task<IReadOnlyCollection<Document>> IDocumentReadRepository.GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken)
+        => reader.Read<Document>()
+            .NotDeletedAt()
+            .ByIds(id)
+            .ToReadOnlyCollectionAsync(cancellationToken);
+
     Task<IReadOnlyCollection<Document>> IDocumentReadRepository.GetAllAsync(CancellationToken cancellationToken)
         => reader.Read<Document>()
             .NotDeletedAt()

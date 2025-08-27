@@ -1,5 +1,5 @@
 ﻿using EquipHandover.Services.Contracts.Models.Equipment;
-using EquipHandover.Services.Validators;
+using EquipHandover.Services.Validators.CreateModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
@@ -24,7 +24,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на сообщение об ошибке пустых полей
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageEmptyFields()
+    public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()
@@ -49,7 +49,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на отсутствие ошибок
     /// </summary>
     [Fact]
-    public async Task ShouldNotHaveErrorMessageFields()
+    public async Task FieldsShouldNotHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()
@@ -74,7 +74,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на минимальную длину оборудования
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMinLength()
+    public async Task MinLengthShouldHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()
@@ -99,7 +99,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на максимальную длину оборудования
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMaxLength()
+    public async Task MaxLengthShouldHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()
@@ -124,7 +124,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на минимальный год выпуска оборудования ( от 1900 до 2100г. )
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMinManufactureYear()
+    public async Task MinManufactureYearShouldHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()
@@ -143,7 +143,7 @@ public class EquipmentCreateModelValidatorTests
     /// Тест на максимальный год выпуска оборудования ( от 1900 до 2100г. )
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMaxManufactureYear()
+    public async Task MaxManufactureYearShouldHaveErrorMessage()
     {
         // Arrange
         var model = new EquipmentCreateModel()

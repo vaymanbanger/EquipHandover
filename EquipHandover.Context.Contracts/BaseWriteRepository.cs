@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using EquipHandover.Common.Contracts;
+using EquipHandover.Entities.Contracts;
 
 namespace EquipHandover.Context.Contracts;
 
@@ -31,7 +32,7 @@ public abstract class BaseWriteRepository<T> : IDbWriter<T>
     void IDbWriter<T>.Update([NotNull] T entity)
     {
         AuditUpdate(entity);
-        writer.Add(entity);
+        writer.Update(entity);
     }
 
     void IDbWriter<T>.Delete([NotNull] T entity)

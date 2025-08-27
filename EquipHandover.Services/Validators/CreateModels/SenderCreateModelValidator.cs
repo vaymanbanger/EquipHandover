@@ -1,21 +1,21 @@
-﻿using EquipHandover.Services.Contracts.Models.Receiver;
+﻿using EquipHandover.Services.Contracts.Models.Sender;
 using FluentValidation;
 
-namespace EquipHandover.Services.Validators;
+namespace EquipHandover.Services.Validators.CreateModels;
 
 /// <summary>
-/// Валидация <see cref="ReceiverCreateModel"/>
+/// Валидация <see cref="SenderCreateModel"/>
 /// </summary>
-public class ReceiverCreateModelValidator : AbstractValidator<ReceiverCreateModel>
+public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
 {
     private const int MinLength = 3;
     private const int MaxLength = 255;
-    private const int RegistrationNumberLength = 13;
+    private const int TaxPayerIdLength = 10;
     
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="ReceiverCreateModelValidator"/>
+    /// Инициализирует новый экземпляр <see cref="SenderCreateModelValidator"/>
     /// </summary>
-    public ReceiverCreateModelValidator()
+    public SenderCreateModelValidator()
     {
         RuleFor(x => x.FullName)
             .NotEmpty()
@@ -28,11 +28,11 @@ public class ReceiverCreateModelValidator : AbstractValidator<ReceiverCreateMode
             .WithMessage("Предприятие принимающего не может быть пустым")
             .Length(MinLength, MaxLength)
             .WithMessage($"Длина предприятия принимающего должна быть от {MinLength} до {MaxLength}");
-
-        RuleFor(x => x.RegistrationNumber)
+        
+        RuleFor(x => x.TaxPayerId)
             .NotEmpty()
-            .WithMessage("Основной государственный регистрационный номер не может быть пустым")
-            .Must(x => x.ToString().Length == RegistrationNumberLength)
-            .WithMessage($"Основной государственный регистрационный номер должен иметь {RegistrationNumberLength} чисел");
+            .WithMessage("Идентификационный номер налогоплательщика не может быть пустым")
+            .Must(x => x.ToString().Length == TaxPayerIdLength)
+            .WithMessage($"Идентификационный номер налогоплательщика должен иметь {TaxPayerIdLength} чисел");
     }
 }

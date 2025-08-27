@@ -12,6 +12,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj" />
+      <ProjectReference Include="..\EquipHandover.Entities.Contracts\EquipHandover.Entities.Contracts.csproj" />
     </ItemGroup>
     
 </Project>

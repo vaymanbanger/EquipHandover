@@ -1,5 +1,5 @@
 ﻿using EquipHandover.Services.Contracts.Models.Document;
-using EquipHandover.Services.Validators;
+using EquipHandover.Services.Validators.CreateModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
@@ -24,7 +24,7 @@ public class DocumentCreateModelValidatorTests
     /// Тест на сообщение об ошибке пустых полей
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageEmptyFields()
+    public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
         var model = new DocumentCreateModel()
@@ -46,7 +46,7 @@ public class DocumentCreateModelValidatorTests
     /// Тест на сообщение об ошибке c прошлым временем
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageInPast()
+    public async Task InPastShouldHaveErrorMessage()
     {
         // Arrange
         var model = new DocumentCreateModel()
@@ -67,7 +67,7 @@ public class DocumentCreateModelValidatorTests
     /// Тест на отсутствие ошибок c будущим и настоящим временем
     /// </summary>
     [Fact]
-    public async Task ShouldNotHaveErrorMessageForFutureorNow()
+    public async Task ForFutureOrNowShouldNotHaveErrorMessage()
     {
         // Arrange
         var model = new DocumentCreateModel()

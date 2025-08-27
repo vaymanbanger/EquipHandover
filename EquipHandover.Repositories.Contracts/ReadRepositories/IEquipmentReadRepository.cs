@@ -11,6 +11,12 @@ public interface IEquipmentReadRepository
     Task<Entities.Equipment?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
+    /// Получает <see cref="Entities.Equipment"/> по идентификатору
+    /// </summary>
+    Task<IReadOnlyCollection<Entities.Document>> GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken);
+
+    
+    /// <summary>
     /// Получает коллекцию <see cref="Entities.Equipment"/>
     /// </summary>
     Task<IReadOnlyCollection<Entities.Equipment>> GetAllAsync(CancellationToken cancellationToken);

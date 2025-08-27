@@ -24,10 +24,10 @@ public class InvalidateItemModel
     /// Имя инвалидного поля
     /// </summary>
     /// <remarks>Если пустое, значит инвалидация относится ко всей модели</remarks>
-    public string Field { get; } = string.Empty;
+    public string Field { get; }
 
     /// <summary>
     /// Сообщение инвалидации
     /// </summary>
-    public string Message { get; } = string.Empty;
+    public string Message { get; }
 }

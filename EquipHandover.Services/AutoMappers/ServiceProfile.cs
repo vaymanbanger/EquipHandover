@@ -31,7 +31,7 @@ public class ServiceProfile : Profile
         CreateMap<ReceiverModel, ReceiverCreateModel>(MemberList.Destination);
         CreateMap<Entities.Receiver, ReceiverModel>(MemberList.Destination);
 
-        CreateMap<SenderModel, SenderCreateModel>(MemberList.Destination);
-        CreateMap<Entities.Sender, SenderModel>(MemberList.Destination);
+        CreateMap<SenderModel, SenderCreateModel>(MemberList.Destination).ReverseMap();
+        CreateMap<Entities.Sender, SenderModel>(MemberList.Destination).ReverseMap();
     }
 }

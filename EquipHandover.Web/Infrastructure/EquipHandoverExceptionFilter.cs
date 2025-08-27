@@ -22,12 +22,6 @@ public class EquipHandoverExceptionFilter : IExceptionFilter
             case EquipHandoverNotFoundException ex:
                 SetDataToContext(new NotFoundObjectResult(new ApiExceptionDetail(ex.Message)), context);
                 break;
-            case EquipHandoverInvalidOperationException ex:
-                SetDataToContext(new BadRequestObjectResult(new ApiExceptionDetail(ex.Message))
-                {
-                    StatusCode = StatusCodes.Status406NotAcceptable
-                }, context);
-                break;
             case EquipHandoverValidationException ex:
                 SetDataToContext(new BadRequestObjectResult(new ApiValidationExceptionDetail()
                 {

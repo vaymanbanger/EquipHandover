@@ -1,21 +1,21 @@
-﻿using EquipHandover.Services.Contracts.Models.Sender;
+﻿using EquipHandover.Services.Contracts.Models.Receiver;
 using FluentValidation;
 
-namespace EquipHandover.Services.Validators;
+namespace EquipHandover.Services.Validators.ResponseModels;
 
 /// <summary>
-/// Валидация <see cref="SenderCreateModel"/>
+/// Валидация <see cref="ReceiverModel"/>
 /// </summary>
-public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
+public class ReceiverModelValidator : AbstractValidator<ReceiverModel>
 {
     private const int MinLength = 3;
     private const int MaxLength = 255;
-    private const int TaxPayerIdLength = 10;
+    private const int RegistrationNumberLength = 13;
     
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="SenderCreateModelValidator"/>
+    /// Инициализирует новый экземпляр <see cref="ReceiverModelValidator"/>
     /// </summary>
-    public SenderCreateModelValidator()
+    public ReceiverModelValidator()
     {
         RuleFor(x => x.FullName)
             .NotEmpty()
@@ -28,11 +28,11 @@ public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
             .WithMessage("Предприятие принимающего не может быть пустым")
             .Length(MinLength, MaxLength)
             .WithMessage($"Длина предприятия принимающего должна быть от {MinLength} до {MaxLength}");
-        
-        RuleFor(x => x.TaxPayerId)
+
+        RuleFor(x => x.RegistrationNumber)
             .NotEmpty()
-            .WithMessage("Идентификационный номер налогоплательщика не может быть пустым")
-            .Must(x => x.ToString().Length == TaxPayerIdLength)
-            .WithMessage($"Идентификационный номер налогоплательщика должен иметь {TaxPayerIdLength} чисел");
+            .WithMessage("Основной государственный регистрационный номер не может быть пустым")
+            .Must(x => x.ToString().Length == RegistrationNumberLength)
+            .WithMessage($"Основной государственный регистрационный номер должен иметь {RegistrationNumberLength} чисел");
     }
 }

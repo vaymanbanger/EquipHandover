@@ -29,4 +29,5 @@ public class EquipmentModel
     /// Номер оборудования
     /// </summary>
     public string EquipmentNumber { get; set; } = string.Empty;
+    
 }

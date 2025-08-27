@@ -66,11 +66,22 @@ public class DocumentController : ControllerBase
     public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] DocumentRequestApiModel request,
         CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<DocumentModel>(request);
-        requestModel.Id = id;
+        var requestModel = mapper.Map<DocumentCreateModel>(request);
         await validateService.ValidateAsync(requestModel, cancellationToken);
-        var result = await documentService.EditAsync(requestModel, cancellationToken);
+        var result = await documentService.EditAsync(id, requestModel, cancellationToken);
         
         return Ok(mapper.Map<DocumentResponseApiModel>(result));
+    }
+    
+    /// <summary>
+    /// Удаляет документ по идентификатору
+    /// </summary>
+    [HttpDelete("{id:guid}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
+    {
+        await documentService.DeleteAsync(id, cancellationToken);
+        return Ok();
     }
 }

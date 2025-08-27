@@ -1,4 +1,4 @@
-﻿namespace EquipHandover.Context.Contracts;
+﻿namespace EquipHandover.Entities.Contracts;
 
 /// <summary>
 /// Сущность с идентификатором

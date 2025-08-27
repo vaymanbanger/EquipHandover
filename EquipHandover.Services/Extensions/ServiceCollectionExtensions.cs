@@ -16,6 +16,5 @@ public static class ServiceCollectionExtensions
     {
         services.RegisterByInterface<IServiceAnchor>();
         services.AddSingleton<IValidateService, ValidateService>();
-        
     }
 }

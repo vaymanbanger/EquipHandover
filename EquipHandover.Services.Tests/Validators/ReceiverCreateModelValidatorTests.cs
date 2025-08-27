@@ -1,5 +1,5 @@
 ﻿using EquipHandover.Services.Contracts.Models.Receiver;
-using EquipHandover.Services.Validators;
+using EquipHandover.Services.Validators.CreateModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
@@ -24,7 +24,7 @@ public class ReceiverCreateModelValidatorTests
     /// Тест на сообщение об ошибке пустых полей
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageEmptyFields()
+    public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
         var model = new ReceiverCreateModel()
@@ -47,7 +47,7 @@ public class ReceiverCreateModelValidatorTests
     /// Тест на отсутствие ошибок
     /// </summary>
     [Fact]
-    public async Task ShouldNotHaveErrorMessageEmptyFields()
+    public async Task EmptyFieldsShouldNotHaveErrorMessage()
     {
         // Arrange
         var model = new ReceiverCreateModel()
@@ -70,7 +70,7 @@ public class ReceiverCreateModelValidatorTests
     /// Тест на минимальную длину оборудования
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMinLength()
+    public async Task MinLengthShouldHaveErrorMessage()
     {
         // Arrange
         var model = new ReceiverCreateModel()
@@ -93,7 +93,7 @@ public class ReceiverCreateModelValidatorTests
     /// Тест на максимальную длину оборудования
     /// </summary>
     [Fact]
-    public async Task ShouldHaveErrorMessageMaxLength()
+    public async Task MaxLengthShouldHaveErrorMessage()
     {
         // Arrange
         var model = new ReceiverCreateModel()

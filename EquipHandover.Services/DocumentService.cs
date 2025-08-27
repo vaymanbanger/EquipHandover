@@ -16,6 +16,11 @@ public class DocumentService : IDocumentService, IServiceAnchor
     private readonly IMapper mapper;
     private readonly IDocumentReadRepository documentReadRepository;
     private readonly IDocumentWriteRepository documentWriteRepository;
+    private readonly IEquipmentReadRepository equipmentReadRepository;
+    private readonly IReceiverReadRepository receiverReadRepository;
+    private readonly ISenderReadRepository senderReadRepository;
+    private readonly IDocumentEquipmentReadRepository documentEquipmentReadRepository;
+    private readonly IDocumentEquipmentWriteRepository documentEquipmentWriteRepository;
     private readonly IUnitOfWork unitOfWork;
     
     /// <summary>
@@ -24,23 +29,42 @@ public class DocumentService : IDocumentService, IServiceAnchor
     public DocumentService(IMapper mapper,
         IDocumentReadRepository documentReadRepository,
         IDocumentWriteRepository documentWriteRepository,
+        IEquipmentReadRepository equipmentReadRepository,
+        IReceiverReadRepository receiverReadRepository,
+        ISenderReadRepository senderReadRepository,
+        IDocumentEquipmentReadRepository documentEquipmentReadRepository,
+        IDocumentEquipmentWriteRepository documentEquipmentWriteRepository,
         IUnitOfWork unitOfWork)
     {
         this.mapper = mapper;
         this.documentReadRepository = documentReadRepository;
         this.unitOfWork = unitOfWork;
         this.documentWriteRepository = documentWriteRepository;
-    }
-    
-    async Task<IReadOnlyCollection<DocumentModel>> IDocumentService.GetAllAsync(CancellationToken cancellationToken)
-    {
-        var items = await documentReadRepository.GetAllAsync(cancellationToken);
-        return mapper.Map<IReadOnlyCollection<DocumentModel>>(items);
+        this.receiverReadRepository = receiverReadRepository;
+        this.senderReadRepository = senderReadRepository;
+        this.equipmentReadRepository = equipmentReadRepository;
+        this.documentEquipmentReadRepository = documentEquipmentReadRepository;
+        this.documentEquipmentWriteRepository = documentEquipmentWriteRepository;
     }
 
-    async Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel model, CancellationToken cancellationToken)
+    async Task<DocumentModel> IDocumentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        var result = new Document()
+        var document = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
+        return mapper.Map<DocumentModel>(document);
+    }
+
+    async Task<IReadOnlyCollection<DocumentModel>> IDocumentService.GetAllAsync(CancellationToken cancellationToken)
+    {
+        var documents = await documentReadRepository.GetAllAsync(cancellationToken);
+        return mapper.Map<IReadOnlyCollection<DocumentModel>>(documents);
+    }
+
+    async Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel model,
+        CancellationToken cancellationToken)
+    {
+        await ThrowIfNotFoundAsync(model,cancellationToken);
+        
+        var result = new Document
         {
             Id = Guid.NewGuid(),
             RentalDate = model.RentalDate,
@@ -59,19 +83,84 @@ public class DocumentService : IDocumentService, IServiceAnchor
         return mapper.Map<DocumentModel>(result);
     }
 
-    async Task<DocumentModel> IDocumentService.EditAsync(DocumentModel model, CancellationToken cancellationToken)
+    async Task<DocumentModel> IDocumentService.EditAsync(Guid id, DocumentCreateModel model, CancellationToken cancellationToken)
     {
-        var entity = await documentReadRepository.GetByIdAsync(model.Id, cancellationToken);
-        if (entity == null) 
-            throw new EquipHandoverNotFoundException($"Не удалось найти документ с идентификатором {model.Id}");
+        var document = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
+        await ThrowIfNotFoundAsync(model, cancellationToken);
         
-        entity.RentalDate = model.RentalDate;
-        entity.SignatureNumber = model.SignatureNumber;
-        entity.City = model.City;
+        var equipmentToDeleteIds = document.DocumentEquipments
+            .Select(x => x.EquipmentId)
+            .Except(model.EquipmentIds)
+            .ToList();
+        var equipmentToAddIds = model.EquipmentIds
+            .Except(document.DocumentEquipments.Select(x => x.EquipmentId))
+            .ToList();
+
+        var equipmentToDelete = 
+            await documentEquipmentReadRepository.GetByIdsAsync(equipmentToDeleteIds, cancellationToken);
+        foreach (var toDelete in equipmentToDelete)
+        {
+            documentEquipmentWriteRepository.Delete(toDelete);
+        }
+
+        foreach (var toAddId in equipmentToAddIds)
+        {
+            var documentEquipment = new DocumentEquipment
+            {
+                EquipmentId = toAddId,
+                DocumentId = id
+            };
+            documentEquipmentWriteRepository.Add(documentEquipment);
+        }
         
-        documentWriteRepository.Update(entity);
+        document.RentalDate = model.RentalDate;
+        document.SignatureNumber = model.SignatureNumber;
+        document.City = model.City;
+        document.ReceiverId = model.ReceiverId;
+        document.SenderId = model.SenderId;
+        
+        
+        documentWriteRepository.Update(document);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        return mapper.Map<DocumentModel>(entity);
+        return mapper.Map<DocumentModel>(document);
+    }
+
+    
+    async Task IDocumentService.DeleteAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var document = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
+        var documentEquipments = 
+            await documentEquipmentReadRepository.GetByDocumentIdAsync(id, cancellationToken);
+        foreach (var toDelete in documentEquipments)
+        {
+            documentEquipmentWriteRepository.Delete(toDelete);
+        }
+        
+        documentWriteRepository.Delete(document);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
+    }
+
+    /// <summary>
+    /// Метод для выброса ошибки если не удалось найти id по модели
+    /// </summary>
+    private async Task ThrowIfNotFoundAsync(DocumentCreateModel model, CancellationToken cancellationToken)
+    {
+        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ?? 
+                       throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
+        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
+                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.ReceiverId}");
+        var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken) ?? 
+                        throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификаторами");
+    }
+    
+    /// <summary>
+    /// Метод для выброса ошибки если не удалось найти id
+    /// </summary>
+    private async Task<Document> GetDocumentOrThrowIfNotFoundAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var document = await documentReadRepository.GetByIdAsync(id, cancellationToken) ??
+                       throw new EquipHandoverNotFoundException($"Не удалось найти документ с идентификатором {id}");
+        return document;
     }
 }

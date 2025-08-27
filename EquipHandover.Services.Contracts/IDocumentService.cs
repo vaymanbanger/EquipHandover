@@ -7,6 +7,11 @@ namespace EquipHandover.Services.Contracts;
 public interface IDocumentService
 {
     /// <summary>
+    /// Возвращает <see cref="DocumentModel"/> по идентификатору
+    /// </summary>
+    Task<DocumentModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Возвращает список <see cref="DocumentModel"/>
     /// </summary>
     Task<IReadOnlyCollection<DocumentModel>> GetAllAsync(CancellationToken cancellationToken);
@@ -19,5 +24,10 @@ public interface IDocumentService
     /// <summary>
     /// Редактирует существующий <see cref="DocumentModel"/>
     /// </summary>
-    Task<DocumentModel> EditAsync(DocumentModel model, CancellationToken cancellationToken);
+    Task<DocumentModel> EditAsync(Guid id, DocumentCreateModel model, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Удаляет существующий <see cref="DocumentModel"/>
+    /// </summary>
+    Task DeleteAsync(Guid id, CancellationToken cancellationToken);
 }

@@ -1,5 +1,6 @@
 using EquipHandover.Context;
 using EquipHandover.Context.Extensions;
+using EquipHandover.Repositories.Extensions;
 using EquipHandover.Services.Extensions;
 using EquipHandover.Web.Extensions;
 using EquipHandover.Web.Infrastructure;
@@ -19,6 +20,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
+        // https://support.aspnetzero.com/QA/Questions/11011/Cannot-write-DateTime-with-KindLocal-to-PostgreSQL-type-%27timestamp-with-time-zone%27-only-UTC-is-supported
+        AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+        AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+        
         // Получаем строку подключения из конфигурации  
         var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         
@@ -30,6 +35,7 @@ public class Program
         builder.Services.RegisterServiceDependencies();
         builder.Services.RegisterContextDependencies();
         builder.Services.RegisterWebDependencies();
+        builder.Services.RegisterRepositoryDependencies();
         
         // Add services to the container.
         builder.Services.AddControllers(opt =>

@@ -1,23 +1,23 @@
 ﻿using EquipHandover.Services.Contracts.Models.Equipment;
 using FluentValidation;
 
-namespace EquipHandover.Services.Validators;
+namespace EquipHandover.Services.Validators.ResponseModels;
 
 /// <summary>
-/// Валидация <see cref="EquipmentCreateModel"/>
+/// Валидация <see cref="EquipmentModel"/>
 /// </summary>
-public class EquipmentCreateModelValidator : AbstractValidator<EquipmentCreateModel>
+public class EquipmentModelValidator : AbstractValidator<EquipmentModel>
 {
     private const int MinLength = 3;
     private const int MaxLength = 255;
     private const int ManufactureYearLength = 4;
     private const int MinManufactureYear = 1900;
     private const int MaxManufactureYear = 2100;
-    
+
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="EquipmentCreateModelValidator"/>
+    /// Инициализирует новый экземпляр <see cref="EquipmentModelValidator"/>
     /// </summary>
-    public EquipmentCreateModelValidator()
+    public EquipmentModelValidator()
     {
         RuleFor(x => x.Name)
             .NotEmpty()
@@ -38,7 +38,7 @@ public class EquipmentCreateModelValidator : AbstractValidator<EquipmentCreateMo
             .WithMessage("Заводской номер оборудования не может быть пустым")
             .Length(MinLength, MaxLength)
             .WithMessage($"Длина заводской номер оборудования должен быть от {MinLength} до {MaxLength}");
-        
+
         RuleFor(x => x.EquipmentNumber)
             .NotEmpty()
             .WithMessage("Номер оборудования не может быть пустым")

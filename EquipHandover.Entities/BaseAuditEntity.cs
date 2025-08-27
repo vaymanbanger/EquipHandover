@@ -1,4 +1,5 @@
-﻿using EquipHandover.Context.Contracts;
+﻿
+using EquipHandover.Entities.Contracts;
 
 namespace EquipHandover.Entities;
 

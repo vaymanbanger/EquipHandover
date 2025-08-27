@@ -11,7 +11,7 @@ public static class RepositoryCollectionExtensions
     /// <summary>
     /// Регистрация сервисов как Scoped
     /// </summary>
-    public static void AddServiceDependencies(this IServiceCollection services)
+    public static void RegisterRepositoryDependencies(this IServiceCollection services)
     {
         services.RegisterByInterface<IRepositoryAnchor>();
     }

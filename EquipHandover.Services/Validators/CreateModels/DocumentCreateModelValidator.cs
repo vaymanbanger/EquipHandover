@@ -1,7 +1,7 @@
 ﻿using EquipHandover.Services.Contracts.Models.Document;
 using FluentValidation;
 
-namespace EquipHandover.Services.Validators;
+namespace EquipHandover.Services.Validators.CreateModels;
 
 /// <summary>
 /// Валидация <see cref="DocumentCreateModel"/>
@@ -26,6 +26,18 @@ public class DocumentCreateModelValidator : AbstractValidator<DocumentCreateMode
         RuleFor(x => x.City)
             .NotEmpty()
             .WithMessage("Город не может быть пустым");
+
+        RuleFor(x => x.ReceiverId)
+            .NotEmpty()
+            .WithMessage("Поле с принимающем не может быть пустым");
+
+        RuleFor(x => x.EquipmentIds)
+            .NotEmpty()
+            .WithMessage("Поле с оборудованием не может быть пустым");
+
+        RuleFor(x => x.SenderId)
+            .NotEmpty()
+            .WithMessage("Поле с отправителем не может быть пустым");
 
     }
 }

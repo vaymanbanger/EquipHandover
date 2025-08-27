@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using EquipHandover.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Context.Contracts;
@@ -28,8 +29,8 @@ public static class CommonSpecs
     public static IQueryable<TEntity> ByIds<TEntity>(this IQueryable<TEntity> query, IReadOnlyCollection<Guid> ids)
         where TEntity : class, IEntityWithId
     {
-         var qty = ids.Count();
-         return qty switch
+         var quantity = ids.Count();
+         return quantity switch
          {
              0 => query.Where(x => false),
              1 => query.ById(ids.First()),
