@@ -5,15 +5,11 @@
 /// </summary>
 public interface IDocumentEquipmentReadRepository
 {
-    /// <summary>
-    /// Получает <see cref="Entities.DocumentEquipment"/> по идентификатору
-    /// </summary>
-    Task<Entities.DocumentEquipment?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Получает <see cref="Entities.DocumentEquipment"/> по идентификатору
     /// </summary>
-    Task<IReadOnlyCollection<Entities.DocumentEquipment>> GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<Entities.DocumentEquipment>> GetByEquipmentIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken);
     
     /// <summary>
     /// Получает <see cref="Entities.DocumentEquipment"/> по DocumentId

@@ -14,7 +14,6 @@ public class DocumentEquipmentConfiguration  : IEntityTypeConfiguration<Document
     public void Configure(EntityTypeBuilder<DocumentEquipment> builder)
     {
         builder.ToTable("DocumentEquipment");
-        builder.HasKey(x => new { x.DocumentId, x.EquipmentId });
         
         builder.HasOne(x => x.Document)
             .WithMany(x => x.DocumentEquipments)

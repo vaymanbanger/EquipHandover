@@ -27,6 +27,6 @@ public class ReceiverConfiguration : IEntityTypeConfiguration<Receiver>
             .IsRequired();
         builder.HasIndex(x => x.RegistrationNumber, $"IX_{nameof(Receiver)}_{nameof(Receiver.RegistrationNumber)}")
             .IsUnique()
-            .HasFilter("[Ogrn] IS NOT NULL");
+            .HasFilter("[RegistrationNumber] IS NOT NULL");
     }
 }

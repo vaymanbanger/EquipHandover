@@ -11,7 +11,7 @@ public abstract class BaseAuditEntity : IEntitySoftDeleted,  IEntityWithId, IEnt
     /// <summary>
     /// Идентификатор
     /// </summary>
-    public Guid Id { get; set; }
+    public Guid Id { get; set; } = Guid.NewGuid();
 
     /// <summary>
     /// Дата создания записи

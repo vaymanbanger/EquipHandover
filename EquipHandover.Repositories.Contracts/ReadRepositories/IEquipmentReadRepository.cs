@@ -13,7 +13,7 @@ public interface IEquipmentReadRepository
     /// <summary>
     /// Получает <see cref="Entities.Equipment"/> по идентификатору
     /// </summary>
-    Task<IReadOnlyCollection<Entities.Document>> GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<Entities.Equipment>> GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken);
 
     
     /// <summary>

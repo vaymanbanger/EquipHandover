@@ -6,6 +6,7 @@ using EquipHandover.Repositories.Contracts.WriteRepositories;
 using EquipHandover.Services.Contracts;
 using EquipHandover.Services.Contracts.Exceptions;
 using EquipHandover.Services.Contracts.Models.Document;
+using EquipHandover.Services.Contracts.Models.Equipment;
 using EquipHandover.Services.Extensions;
 
 namespace EquipHandover.Services;
@@ -62,7 +63,7 @@ public class DocumentService : IDocumentService, IServiceAnchor
     async Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel model,
         CancellationToken cancellationToken)
     {
-        await ThrowIfNotFoundAsync(model,cancellationToken);
+        await ThrowIfNotFoundLinkedEntitiesAsync(model,cancellationToken);
         
         var result = new Document
         {
@@ -78,26 +79,40 @@ public class DocumentService : IDocumentService, IServiceAnchor
                     EquipmentId = equipmentId
                 }).ToList()
         };
+        
+        
         documentWriteRepository.Add(result);
         await unitOfWork.SaveChangesAsync(cancellationToken);
+        
+        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken);
+        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken);
+        var equipments =
+            await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
+        
+        result.Receiver = receiver;
+        result.Sender = sender;
+        
+        
         return mapper.Map<DocumentModel>(result);
     }
 
     async Task<DocumentModel> IDocumentService.EditAsync(Guid id, DocumentCreateModel model, CancellationToken cancellationToken)
     {
         var document = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
-        await ThrowIfNotFoundAsync(model, cancellationToken);
+        await ThrowIfNotFoundLinkedEntitiesAsync(model, cancellationToken);
+        var dbDocumentEquipments = 
+            await documentEquipmentReadRepository.GetByDocumentIdAsync(id, cancellationToken);
+        var dbDocumentEquipmentIds = dbDocumentEquipments.Select(eq => eq.EquipmentId).ToList();
         
-        var equipmentToDeleteIds = document.DocumentEquipments
-            .Select(x => x.EquipmentId)
+        var equipmentToDeleteIds = dbDocumentEquipmentIds
             .Except(model.EquipmentIds)
             .ToList();
         var equipmentToAddIds = model.EquipmentIds
-            .Except(document.DocumentEquipments.Select(x => x.EquipmentId))
+            .Except(dbDocumentEquipmentIds)
             .ToList();
 
         var equipmentToDelete = 
-            await documentEquipmentReadRepository.GetByIdsAsync(equipmentToDeleteIds, cancellationToken);
+            await documentEquipmentReadRepository.GetByEquipmentIdsAsync(equipmentToDeleteIds, cancellationToken);
         foreach (var toDelete in equipmentToDelete)
         {
             documentEquipmentWriteRepository.Delete(toDelete);
@@ -123,7 +138,17 @@ public class DocumentService : IDocumentService, IServiceAnchor
         documentWriteRepository.Update(document);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        return mapper.Map<DocumentModel>(document);
+        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken);
+        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken);
+        var equipments =
+            await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
+        
+        document.Receiver = receiver;
+        document.Sender = sender;
+        
+        var result = mapper.Map<DocumentModel>(document);
+        result.Equipment = mapper.Map<List<EquipmentModel>>(equipments);
+        return result;
     }
 
     
@@ -144,12 +169,12 @@ public class DocumentService : IDocumentService, IServiceAnchor
     /// <summary>
     /// Метод для выброса ошибки если не удалось найти id по модели
     /// </summary>
-    private async Task ThrowIfNotFoundAsync(DocumentCreateModel model, CancellationToken cancellationToken)
+    private async Task ThrowIfNotFoundLinkedEntitiesAsync(DocumentCreateModel model, CancellationToken cancellationToken)
     {
         var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ?? 
                        throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
         var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
-                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.ReceiverId}");
+                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.SenderId}");
         var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken) ?? 
                         throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификаторами");
     }

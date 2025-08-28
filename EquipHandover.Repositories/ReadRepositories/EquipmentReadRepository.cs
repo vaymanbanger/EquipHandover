@@ -25,8 +25,8 @@ public class EquipmentReadRepository : IEquipmentReadRepository, IRepositoryAnch
             .ById(id)
             .FirstOrDefaultAsync(cancellationToken);
     
-    Task<IReadOnlyCollection<Document>> IEquipmentReadRepository.GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken)
-        => reader.Read<Document>()
+    Task<IReadOnlyCollection<Equipment>> IEquipmentReadRepository.GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken)
+        => reader.Read<Equipment>()
             .NotDeletedAt()
             .ByIds(id)
             .ToReadOnlyCollectionAsync(cancellationToken);

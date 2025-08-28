@@ -27,5 +27,8 @@ public class SenderConfiguration : IEntityTypeConfiguration<Sender>
         builder.Property(x => x.TaxPayerId)
             .HasMaxLength(12)
             .IsRequired();
+        builder.HasIndex(x => x.TaxPayerId, $"IX_{nameof(Sender)}_{nameof(Sender.TaxPayerId)}")
+            .IsUnique()
+            .HasFilter("[TaxPayerId] IS NOT NULL");
     }
 }

@@ -34,10 +34,12 @@ public class ApiMapper : Profile
         CreateMap<ReceiverRequestApiModel, ReceiverModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<ReceiverModel, ReceiverResponseApiModel>(MemberList.Destination).ReverseMap();
+        CreateMap<ReceiverResponseApiModel, ReceiverCreateModel>(MemberList.Destination).ReverseMap();
         
         CreateMap<SenderRequestApiModel, SenderCreateModel>(MemberList.Destination);
         CreateMap<SenderRequestApiModel, SenderModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<SenderModel, SenderResponseApiModel>(MemberList.Destination).ReverseMap();
+        CreateMap<SenderResponseApiModel, SenderCreateModel>(MemberList.Destination).ReverseMap();
     }
 }

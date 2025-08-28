@@ -1,8 +1,8 @@
-﻿using EquipHandover.Context.Contracts;
+﻿using System.Linq.Expressions;
+using EquipHandover.Context.Contracts;
 using EquipHandover.Entities;
 using EquipHandover.Repositories.Contracts.ReadRepositories;
 using EquipHandover.Repositories.Extensions;
-using Microsoft.EntityFrameworkCore;
 
 namespace EquipHandover.Repositories.ReadRepositories;
 
@@ -19,16 +19,10 @@ public class DocumentEquipmentReadRepository : IDocumentEquipmentReadRepository,
         this.reader = reader;
     }
 
-    Task<DocumentEquipment?> IDocumentEquipmentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByEquipmentIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
         => reader.Read<DocumentEquipment>()
             .NotDeletedAt()
-            .ById(id)
-            .FirstOrDefaultAsync(cancellationToken);
-
-    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByIdsAsync(IReadOnlyCollection<Guid> id, CancellationToken cancellationToken)
-        => reader.Read<DocumentEquipment>()
-            .NotDeletedAt()
-            .ByIds(id)
+            .Where(ByEquipmentIds(ids))
             .ToReadOnlyCollectionAsync(cancellationToken);
 
     Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByDocumentIdAsync(Guid id, CancellationToken cancellationToken)
@@ -36,4 +30,15 @@ public class DocumentEquipmentReadRepository : IDocumentEquipmentReadRepository,
             .NotDeletedAt()
             .Where(x => x.DocumentId == id)
             .ToReadOnlyCollectionAsync(cancellationToken);
+    
+    private static Expression<Func<DocumentEquipment, bool>> ByEquipmentIds(IReadOnlyCollection<Guid> ids)
+    {
+        var quantity = ids.Count;
+        return quantity switch
+        {
+            0 => x => false,
+            1 => x => x.EquipmentId == ids.First(),
+            _ => x => ids.Contains(x.EquipmentId)
+        };
+    }
 }
