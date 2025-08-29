@@ -9,7 +9,7 @@ public interface IDocumentEquipmentReadRepository
     /// <summary>
     /// Получает <see cref="Entities.DocumentEquipment"/> по идентификатору
     /// </summary>
-    Task<IReadOnlyCollection<Entities.DocumentEquipment>> GetByEquipmentIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken);
+    Task<IReadOnlyCollection<Entities.DocumentEquipment>> GetByEquipmentIdAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken);
     
     /// <summary>
     /// Получает <see cref="Entities.DocumentEquipment"/> по DocumentId

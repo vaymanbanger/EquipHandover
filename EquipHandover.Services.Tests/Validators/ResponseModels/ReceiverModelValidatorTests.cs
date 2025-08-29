@@ -1,23 +1,23 @@
 ﻿using EquipHandover.Services.Contracts.Models.Receiver;
-using EquipHandover.Services.Validators.CreateModels;
+using EquipHandover.Services.Validators.ResponseModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
-namespace EquipHandover.Services.Tests.Validators;
+namespace EquipHandover.Services.Tests.Validators.ResponseModels;
 
 /// <summary>
-/// Тесты для <see cref="ReceiverCreateModelValidator"/>
+/// Тесты для <see cref="ReceiverModelValidator"/>
 /// </summary>
-public class ReceiverCreateModelValidatorTests
+public class ReceiverModelValidatorTests
 {
-    private readonly ReceiverCreateModelValidator validator;
+    private readonly ReceiverModelValidator validator;
 
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="ReceiverCreateModelValidatorTests"/>
+    /// Инициализирует новый экземпляр <see cref="ReceiverModelValidatorTests"/>
     /// </summary>
-    public ReceiverCreateModelValidatorTests()
+    public ReceiverModelValidatorTests()
     {
-        validator = new ReceiverCreateModelValidator();
+        validator = new ReceiverModelValidator();
     }
     
     /// <summary>
@@ -27,7 +27,7 @@ public class ReceiverCreateModelValidatorTests
     public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new ReceiverCreateModel()
+        var model = new ReceiverModel()
         {
             FullName = string.Empty,
             RegistrationNumber = string.Empty,
@@ -50,7 +50,7 @@ public class ReceiverCreateModelValidatorTests
     public async Task EmptyFieldsShouldNotHaveErrorMessage()
     {
         // Arrange
-        var model = new ReceiverCreateModel()
+        var model = new ReceiverModel()
         {
             FullName = "Карасев Маслина Поймалович",
             RegistrationNumber = "1234567890123",
@@ -73,7 +73,7 @@ public class ReceiverCreateModelValidatorTests
     public async Task MinLengthShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new ReceiverCreateModel()
+        var model = new ReceiverModel()
         {
             FullName = "Ка",
             RegistrationNumber = "1234567890",
@@ -96,7 +96,7 @@ public class ReceiverCreateModelValidatorTests
     public async Task MaxLengthShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new ReceiverCreateModel()
+        var model = new ReceiverModel()
         {
             FullName = new string('Z',299),
             RegistrationNumber = new string('O',14),

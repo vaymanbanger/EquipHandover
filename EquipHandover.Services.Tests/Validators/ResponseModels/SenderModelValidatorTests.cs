@@ -1,33 +1,33 @@
 ﻿using EquipHandover.Services.Contracts.Models.Sender;
-using EquipHandover.Services.Validators.CreateModels;
+using EquipHandover.Services.Validators.ResponseModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
-namespace EquipHandover.Services.Tests.Validators;
+namespace EquipHandover.Services.Tests.Validators.ResponseModels;
 
 /// <summary>
-/// Тесты для <see cref="SenderCreateModelValidator"/>
+/// Тесты для <see cref="SenderModelValidator"/>
 /// </summary>
-public class SenderCreateModelValidatorTests
+public class SenderModelValidatorTests
 {
-     private readonly SenderCreateModelValidator validator;
+    private readonly SenderModelValidator validator;
 
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="SenderCreateModelValidatorTests"/>
+    /// Инициализирует новый экземпляр <see cref="SenderModelValidatorTests"/>
     /// </summary>
-    public SenderCreateModelValidatorTests()
+    public SenderModelValidatorTests()
     {
-        validator = new SenderCreateModelValidator();
+        validator = new SenderModelValidator();
     }
     
-    /// <summary>
+     /// <summary>
     /// Тест на сообщение об ошибке пустых полей
     /// </summary>
     [Fact]
     public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new SenderCreateModel()
+        var model = new SenderModel()
         {
             FullName = string.Empty,
             TaxPayerId = string.Empty,
@@ -50,7 +50,7 @@ public class SenderCreateModelValidatorTests
     public async Task EmptyFieldsShouldNotHaveErrorMessage()
     {
         // Arrange
-        var model = new SenderCreateModel()
+        var model = new SenderModel()
         {
             FullName = "Карасев Маслина Поймалович",
             TaxPayerId = "1234567890",
@@ -73,7 +73,7 @@ public class SenderCreateModelValidatorTests
     public async Task MinLengthShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new SenderCreateModel()
+        var model = new SenderModel()
         {
             FullName = "Ка",
             TaxPayerId = "123456789",
@@ -96,7 +96,7 @@ public class SenderCreateModelValidatorTests
     public async Task MaxLengthShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new SenderCreateModel()
+        var model = new SenderModel()
         {
             FullName = new string('Z',299),
             TaxPayerId = new string('O',11),

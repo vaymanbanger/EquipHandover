@@ -14,6 +14,7 @@ public class EquipHandoverContext : DbContext, IReader, IWriter, IUnitOfWork
     /// </summary>
     public EquipHandoverContext(DbContextOptions<EquipHandoverContext> options) : base(options)
     {
+        
     }
     
     /// <summary>

@@ -63,7 +63,12 @@ public class DocumentService : IDocumentService, IServiceAnchor
     async Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel model,
         CancellationToken cancellationToken)
     {
-        await ThrowIfNotFoundLinkedEntitiesAsync(model,cancellationToken);
+        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ?? 
+                       throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
+        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
+                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.SenderId}");
+        var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken) ?? 
+                        throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификаторами");
         
         var result = new Document
         {
@@ -73,27 +78,28 @@ public class DocumentService : IDocumentService, IServiceAnchor
             City = model.City,
             ReceiverId = model.ReceiverId,
             SenderId = model.SenderId,
-            DocumentEquipments = model.EquipmentIds
-                .Select(equipmentId => new DocumentEquipment
-                {
-                    EquipmentId = equipmentId
-                }).ToList()
         };
         
-        
         documentWriteRepository.Add(result);
-        await unitOfWork.SaveChangesAsync(cancellationToken);
+
+        foreach (var equipmentId in model.EquipmentIds)
+        {
+            var documentEquipment = new DocumentEquipment
+            {
+                EquipmentId = equipmentId,
+                DocumentId = result.Id,
+            };
+            documentEquipmentWriteRepository.Add(documentEquipment);
+        }
         
-        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken);
-        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken);
-        var equipments =
-            await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
+        await unitOfWork.SaveChangesAsync(cancellationToken);
         
         result.Receiver = receiver;
         result.Sender = sender;
         
-        
-        return mapper.Map<DocumentModel>(result);
+        var document = mapper.Map<DocumentModel>(result);
+        document.Equipment = mapper.Map<List<EquipmentModel>>(equipment);
+        return document;
     }
 
     async Task<DocumentModel> IDocumentService.EditAsync(Guid id, DocumentCreateModel model, CancellationToken cancellationToken)
@@ -112,7 +118,7 @@ public class DocumentService : IDocumentService, IServiceAnchor
             .ToList();
 
         var equipmentToDelete = 
-            await documentEquipmentReadRepository.GetByEquipmentIdsAsync(equipmentToDeleteIds, cancellationToken);
+            await documentEquipmentReadRepository.GetByEquipmentIdAsync(equipmentToDeleteIds, cancellationToken);
         foreach (var toDelete in equipmentToDelete)
         {
             documentEquipmentWriteRepository.Delete(toDelete);
@@ -134,20 +140,19 @@ public class DocumentService : IDocumentService, IServiceAnchor
         document.ReceiverId = model.ReceiverId;
         document.SenderId = model.SenderId;
         
-        
         documentWriteRepository.Update(document);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
         var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken);
         var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken);
-        var equipments =
+        var equipment =
             await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
         
         document.Receiver = receiver;
         document.Sender = sender;
         
         var result = mapper.Map<DocumentModel>(document);
-        result.Equipment = mapper.Map<List<EquipmentModel>>(equipments);
+        result.Equipment = mapper.Map<List<EquipmentModel>>(equipment);
         return result;
     }
 

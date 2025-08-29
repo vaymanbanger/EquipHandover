@@ -1,33 +1,33 @@
 ﻿using EquipHandover.Services.Contracts.Models.Document;
-using EquipHandover.Services.Validators.CreateModels;
+using EquipHandover.Services.Validators.ResponseModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
-namespace EquipHandover.Services.Tests.Validators;
+namespace EquipHandover.Services.Tests.Validators.ResponseModels;
 
 /// <summary>
-/// Тесты для <see cref="DocumentCreateModelValidator"/>
+/// Тесты для <see cref="DocumentModelValidator"/>
 /// </summary>
-public class DocumentCreateModelValidatorTests
+public class DocumentModelValidatorTests
 {
-    private readonly DocumentCreateModelValidator validator;
-
+    private readonly DocumentModelValidator validator;
+    
     /// <summary>
-    /// Инициализирует новый экземпляр <see cref="DocumentCreateModelValidatorTests"/>
+    /// Инициализирует новый экземпляр <see cref="DocumentModelValidatorTests"/>
     /// </summary>
-    public DocumentCreateModelValidatorTests()
+    public DocumentModelValidatorTests()
     {
-        validator = new DocumentCreateModelValidator();
+        validator = new DocumentModelValidator();
     }
-
-    /// <summary>
+    
+     /// <summary>
     /// Тест на сообщение об ошибке пустых полей
     /// </summary>
     [Fact]
     public async Task EmptyFieldsShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new DocumentCreateModel()
+        var model = new DocumentModel()
         {
             City = "",
             RentalDate = new DateOnly(),
@@ -49,7 +49,7 @@ public class DocumentCreateModelValidatorTests
     public async Task InPastShouldHaveErrorMessage()
     {
         // Arrange
-        var model = new DocumentCreateModel()
+        var model = new DocumentModel()
         {
             City = "Нью-Йорк",
             RentalDate = DateOnly.FromDateTime(DateTime.Now.AddDays(-3)),
@@ -70,7 +70,7 @@ public class DocumentCreateModelValidatorTests
     public async Task ForFutureOrNowShouldNotHaveErrorMessage()
     {
         // Arrange
-        var model = new DocumentCreateModel()
+        var model = new DocumentModel()
         {
             City = "Нью-Йорк",
             RentalDate = DateOnly.FromDateTime(DateTime.Now),

@@ -3,7 +3,7 @@ using EquipHandover.Services.Validators.CreateModels;
 using FluentValidation.TestHelper;
 using Xunit;
 
-namespace EquipHandover.Services.Tests.Validators;
+namespace EquipHandover.Services.Tests.Validators.CreateModels;
 
 /// <summary>
 /// Тесты для <see cref="EquipmentCreateModelValidator"/>

@@ -19,7 +19,7 @@ public class DocumentEquipmentReadRepository : IDocumentEquipmentReadRepository,
         this.reader = reader;
     }
 
-    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByEquipmentIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
+    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByEquipmentIdAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
         => reader.Read<DocumentEquipment>()
             .NotDeletedAt()
             .Where(ByEquipmentIds(ids))
@@ -31,6 +31,9 @@ public class DocumentEquipmentReadRepository : IDocumentEquipmentReadRepository,
             .Where(x => x.DocumentId == id)
             .ToReadOnlyCollectionAsync(cancellationToken);
     
+    /// <summary>
+    /// Метод для вычисления идентификатора оборудования
+    /// </summary>
     private static Expression<Func<DocumentEquipment, bool>> ByEquipmentIds(IReadOnlyCollection<Guid> ids)
     {
         var quantity = ids.Count;
