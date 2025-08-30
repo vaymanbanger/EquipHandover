@@ -29,7 +29,7 @@ public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
     Task<IReadOnlyCollection<DocumentDbModel>> IDocumentReadRepository.GetAllAsync(CancellationToken cancellationToken)
         => reader.Read<Document>()
             .NotDeletedAt()
-            .Select(x => new DocumentDbModel()
+            .Select(x => new DocumentDbModel
             {
                 SignatureNumber = x.SignatureNumber,
                 RentalDate = x.RentalDate,

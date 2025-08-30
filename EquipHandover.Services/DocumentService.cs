@@ -48,12 +48,6 @@ public class DocumentService : IDocumentService, IServiceAnchor
         this.documentEquipmentWriteRepository = documentEquipmentWriteRepository;
     }
 
-    async Task<DocumentModel> IDocumentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var document = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
-        return mapper.Map<DocumentModel>(document);
-    }
-
     async Task<IReadOnlyCollection<DocumentModel>> IDocumentService.GetAllAsync(CancellationToken cancellationToken)
     {
         var documents = await documentReadRepository.GetAllAsync(cancellationToken);

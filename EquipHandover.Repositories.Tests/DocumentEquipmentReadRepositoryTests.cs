@@ -27,7 +27,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByDocumentIdAsync должен быть пустым
     /// </summary>
     [Fact]
-    public async Task GetByDocumentIdAsyncAsyncShouldBeEmpty()
+    public async Task GetByDocumentIdAsyncShouldBeEmpty()
     {
         // Arrange
         var documentsEquipment1 = TestEntityProvider.Shared.Create<DocumentEquipment>();
@@ -48,7 +48,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByDocumentIdAsync должен быть пустым при мягком удалении
     /// </summary>
     [Fact]
-    public async Task GetByDocumentIdAsyncAsyncShouldBeEmptyBySoftDelete()
+    public async Task GetByDocumentIdAsyncShouldBeEmptyBySoftDelete()
     {
         // Arrange
         var documentsEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(
@@ -68,7 +68,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByDocumentIdAsync должен вернуть значения
     /// </summary>
     [Fact]
-    public async Task GetByDocumentIdAsyncAsyncShouldReturnValues()
+    public async Task GetByDocumentIdAsyncShouldReturnValues()
     {
         // Arrange
         var documentId = Guid.NewGuid();
@@ -120,7 +120,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByEquipmentIdsAsync должен быть пустым
     /// </summary>
     [Fact]
-    public async Task GetByEquipmentIdsAsyncAsyncShouldBeEmpty()
+    public async Task GetByEquipmentIdsAsyncShouldBeEmpty()
     {
         // Arrange
         var documentsEquipment1 = TestEntityProvider.Shared.Create<DocumentEquipment>();
@@ -142,7 +142,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByEquipmentIdsAsync должен вернуть значения
     /// </summary>
     [Fact]
-    public async Task GetByEquipmentIdsAsyncAsyncShouldReturnValues()
+    public async Task GetByEquipmentIdsAsyncShouldReturnValues()
     {
         // Arrange
         var equipmentIds = Guid.NewGuid();

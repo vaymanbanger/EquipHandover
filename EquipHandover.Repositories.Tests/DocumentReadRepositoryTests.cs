@@ -27,11 +27,11 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByIdAsync должен быть null
     /// </summary>
     [Fact]
-    public async Task GetByIdAsyncAsyncShouldBeNull()
+    public async Task GetByIdAsyncShouldBeNull()
     {
         // Arrange
-        var document1 = TestEntityProvider.Shared.Create<Entities.Document>();
-        var document2 = TestEntityProvider.Shared.Create<Entities.Document>();
+        var document1 = TestEntityProvider.Shared.Create<Document>();
+        var document2 = TestEntityProvider.Shared.Create<Document>();
         var documentId = Guid.NewGuid();
         await Context.AddRangeAsync(document1, document2);
         await UnitOfWork.SaveChangesAsync();
@@ -48,10 +48,10 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByIdAsync долежен быть null при мягком удалении
     /// </summary>
     [Fact]
-    public async Task GetByIdAsyncAsyncBeNullBySoftDelete()
+    public async Task GetByIdAsyncShouldBeNullBySoftDelete()
     {
         // Arrange
-        var document = TestEntityProvider.Shared.Create<Entities.Document>(
+        var document = TestEntityProvider.Shared.Create<Document>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
         await Context.AddRangeAsync(document);
         await UnitOfWork.SaveChangesAsync();
@@ -68,10 +68,10 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     /// GetByIdAsync должен вернуть значение
     /// </summary>
     [Fact]
-    public async Task GetByIdAsyncAsyncShouldReturnValue()
+    public async Task GetByIdAsyncShouldReturnValue()
     {
         // Arrange
-        var document = TestEntityProvider.Shared.Create<Entities.Document>();
+        var document = TestEntityProvider.Shared.Create<Document>();
         await Context.AddRangeAsync(document);
         await UnitOfWork.SaveChangesAsync();
         
@@ -104,12 +104,25 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     public async Task GetAllAsyncShouldReturnValues()
     {
         // Arrange
-        var document1 = TestEntityProvider.Shared.Create<Entities.Document>();
-        var document2 = TestEntityProvider.Shared.Create<Entities.Document>(
-            x => x.DeletedAt = DateTimeOffset.UtcNow);
-        var document3 = TestEntityProvider.Shared.Create<Entities.Document>();
-    
-        await Context.AddRangeAsync(document1, document2, document3);
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        var document1 = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.Sender = sender;
+            x.Receiver = receiver;
+        });
+        var document2 = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.Sender = sender;
+            x.Receiver = receiver;
+            x.DeletedAt = DateTimeOffset.UtcNow;
+        });
+        var document3 = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.Sender = sender;
+            x.Receiver = receiver;
+        });
+        await Context.AddRangeAsync(document1, document2, document3, receiver, sender);
         await UnitOfWork.SaveChangesAsync();
     
         // Act
