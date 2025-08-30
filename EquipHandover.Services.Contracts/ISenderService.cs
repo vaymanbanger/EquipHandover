@@ -13,11 +13,6 @@ public interface ISenderService
     Task<IReadOnlyCollection<SenderModel>> GetAllAsync(CancellationToken cancellationToken);
     
     /// <summary>
-    /// Возвращает <see cref="SenderModel"/> по идентификатору
-    /// </summary>
-    Task<SenderModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    
-    /// <summary>
     /// Добавляет новый <see cref="SenderModel"/>
     /// </summary>
     Task<SenderModel> CreateAsync(SenderCreateModel model, CancellationToken cancellationToken);

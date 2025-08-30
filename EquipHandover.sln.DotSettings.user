@@ -12,4 +12,5 @@
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4913e7e5_002D09f8_002D45d5_002Daf43_002D825ce18b37d4/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShouldHaveErrorMessage" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=excludings/@EntryIndexedValue">True</s:Boolean>
 	</wpf:ResourceDictionary>

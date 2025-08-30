@@ -31,17 +31,23 @@ public class Program
         builder.Services.AddDbContext<EquipHandoverContext>(options =>
             options.UseNpgsql(connectionString)
                 .LogTo(Console.WriteLine));
-        
+            
         builder.Services.RegisterServiceDependencies();
         builder.Services.RegisterContextDependencies();
         builder.Services.RegisterWebDependencies();
         builder.Services.RegisterRepositoryDependencies();
         
         // Add services to the container.
-        builder.Services.AddControllers(opt =>
+        var addedControllers = builder.Services.AddControllers(opt =>
         {
             opt.Filters.Add<EquipHandoverExceptionFilter>();
         });
+
+        if (builder.Environment.EnvironmentName == "integration")
+        {
+            addedControllers.AddControllersAsServices();
+        }
+        
         // Learn more about configuring Swagger/OpenAPI     at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
         builder.Services.AddSwaggerGen(c =>

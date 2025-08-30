@@ -2,7 +2,7 @@
 using EquipHandover.Services.AutoMappers;
 using Xunit;
 
-namespace EquipHandover.Services.Tests;
+namespace EquipHandover.Services.Tests.AutoMappers;
 
 /// <summary>
 /// Тесты профилей автомаппера

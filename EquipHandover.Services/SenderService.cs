@@ -38,12 +38,6 @@ public class SenderService : ISenderService, IServiceAnchor
         return mapper.Map<IReadOnlyCollection<SenderModel>>(senders);
     }
 
-    async Task<SenderModel> ISenderService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var sender = await GetSenderOrThrowIfNotFoundAsync(id,cancellationToken);
-        return mapper.Map<SenderModel>(sender);
-    }
-
     async Task<SenderModel> ISenderService.CreateAsync(SenderCreateModel model, CancellationToken cancellationToken)
     {
         var result = new Sender
