@@ -38,12 +38,6 @@ public class ReceiverService : IReceiverService, IServiceAnchor
         return mapper.Map<IReadOnlyCollection<ReceiverModel>>(receivers);
     }
 
-    async Task<ReceiverModel> IReceiverService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var receiver = await GetReceiverOrThrowIfNotFoundAsync(id,cancellationToken);
-        return mapper.Map<ReceiverModel>(receiver);
-    }
-
     async Task<ReceiverModel> IReceiverService.CreateAsync(ReceiverCreateModel model, CancellationToken cancellationToken)
     {
         var result = new Receiver

@@ -61,8 +61,12 @@ public class DocumentService : IDocumentService, IServiceAnchor
                        throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
         var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
                      throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.SenderId}");
-        var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken) ?? 
-                        throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификаторами");
+        var equipment =
+            await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
+        if (equipment.Count != model.EquipmentIds.Count)
+        {
+            throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификатором {model.EquipmentIds}");
+        }
         
         var result = new Document
         {
@@ -168,16 +172,23 @@ public class DocumentService : IDocumentService, IServiceAnchor
     /// <summary>
     /// Метод для выброса ошибки если не удалось найти id по модели
     /// </summary>
-    private async Task ThrowIfNotFoundLinkedEntitiesAsync(DocumentCreateModel model, CancellationToken cancellationToken)
+    private async Task ThrowIfNotFoundLinkedEntitiesAsync(DocumentCreateModel model,
+        CancellationToken cancellationToken)
     {
-        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ?? 
-                       throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
-        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
-                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.SenderId}");
-        var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken) ?? 
-                        throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификаторами");
+        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ??
+                       throw new EquipHandoverNotFoundException(
+                           $"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
+        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ??
+                     throw new EquipHandoverNotFoundException(
+                         $"Не удалось найти отправителя с идентификатором {model.SenderId}");
+        var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
+        if (equipment.Count != model.EquipmentIds.Count)
+        {
+            throw new EquipHandoverNotFoundException(
+                $"Не удалось найти оборудование с идентификатором {model.EquipmentIds}");
+        }
     }
-    
+
     /// <summary>
     /// Метод для выброса ошибки если не удалось найти id
     /// </summary>

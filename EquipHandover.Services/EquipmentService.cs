@@ -38,12 +38,6 @@ public class EquipmentService : IEquipmentService, IServiceAnchor
         return mapper.Map<IReadOnlyCollection<EquipmentModel>>(equipment);
     }
 
-    async Task<EquipmentModel> IEquipmentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-    {
-        var equipment = await GetEquipmentOrThrowIfNotFoundAsync(id,cancellationToken);
-        return mapper.Map<EquipmentModel>(equipment);
-    }
-
     async Task<EquipmentModel> IEquipmentService.CreateAsync(EquipmentCreateModel model, CancellationToken cancellationToken)
     {
         var result = new Equipment

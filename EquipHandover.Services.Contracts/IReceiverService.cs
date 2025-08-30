@@ -13,11 +13,6 @@ public interface IReceiverService
     Task<IReadOnlyCollection<ReceiverModel>> GetAllAsync(CancellationToken cancellationToken);
     
     /// <summary>
-    /// Возвращает <see cref="ReceiverModel"/> по идентификатору
-    /// </summary>
-    Task<ReceiverModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    
-    /// <summary>
     /// Добавляет новый <see cref="ReceiverModel"/>
     /// </summary>
     Task<ReceiverModel> CreateAsync(ReceiverCreateModel model, CancellationToken cancellationToken);
