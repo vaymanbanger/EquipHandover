@@ -8,5 +8,5 @@ public static class TestsConstants
     /// <summary>
     /// Среда выполнения для интеграционных тестов
     /// </summary>
-    public const string IntegrationEnvironment = "integration";
+    public const string IntegrationEnvironment = "integration_tests";
 }

@@ -43,7 +43,7 @@ public class Program
             opt.Filters.Add<EquipHandoverExceptionFilter>();
         });
 
-        if (builder.Environment.EnvironmentName == "integration")
+        if (builder.Environment.EnvironmentName == "integration_tests")
         {
             addedControllers.AddControllersAsServices();
         }

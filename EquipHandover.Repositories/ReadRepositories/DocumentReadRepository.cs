@@ -29,17 +29,14 @@ public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
     Task<IReadOnlyCollection<DocumentDbModel>> IDocumentReadRepository.GetAllAsync(CancellationToken cancellationToken)
         => reader.Read<Document>()
             .NotDeletedAt()
-            .Select(x => new DocumentDbModel
-            {
-                SignatureNumber = x.SignatureNumber,
-                RentalDate = x.RentalDate,
-                Receiver = x.Receiver!,
-                Sender = x.Sender!,
-                Equipment = x.DocumentEquipments
-                    .Where(y => y.DeletedAt == null)
-                    .Select(y => y.Equipment!),
-                City = x.City,
-                Id = x.Id
-            })
+            .SelectFullModel()
             .ToReadOnlyCollectionAsync(cancellationToken);
+
+    Task<DocumentDbModel?> IDocumentReadRepository.GetByIdWithFullModelAsync(Guid id,
+        CancellationToken cancellationToken)
+        => reader.Read<Document>()
+            .NotDeletedAt()
+            .ById(id)
+            .SelectFullModel()
+            .FirstOrDefaultAsync(cancellationToken);
 }

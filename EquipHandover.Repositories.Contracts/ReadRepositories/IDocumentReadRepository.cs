@@ -16,4 +16,9 @@ public interface IDocumentReadRepository
     /// Получает коллекцию <see cref="Entities.Document"/>
     /// </summary>
     Task<IReadOnlyCollection<DocumentDbModel>> GetAllAsync(CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Получает <see cref="Entities.Document"/> по DocumentId с оборудованием
+    /// </summary>
+    Task<DocumentDbModel?> GetByIdWithFullModelAsync(Guid id,CancellationToken cancellationToken);
 }

@@ -1,4 +1,6 @@
 ﻿using EquipHandover.Context;
+using EquipHandover.Context.Contracts;
+using EquipHandover.Web.Tests.Client;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
@@ -12,6 +14,8 @@ public class EquipHandoverApiFixture : IAsyncLifetime
 {
     private readonly TestWebApplicationFactory factory;
     private EquipHandoverContext? context;
+    private IServiceScope? scope;
+    private IUnitOfWork? unitOfWork;
 
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="EquipHandoverApiFixture"/>
@@ -19,6 +23,18 @@ public class EquipHandoverApiFixture : IAsyncLifetime
     public EquipHandoverApiFixture()
     {
         factory = new TestWebApplicationFactory();
+    }
+
+    /// <summary>
+    /// HTTP-клиент для выполнения запросов к тестовому API
+    /// </summary>
+    internal IEquipHandoverApiClient WebClient
+    {
+        get
+        {
+            var client = factory.CreateClient();
+            return new EquipHandoverApiClient(string.Empty, client);
+        }
     }
 
     /// <summary>
@@ -33,9 +49,27 @@ public class EquipHandoverApiFixture : IAsyncLifetime
                 return context;
             }
             
-            var scope = factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            scope ??= factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
             context = scope.ServiceProvider.GetRequiredService<EquipHandoverContext>();
             return context;
+        }
+    }
+    
+    /// <summary>
+    /// Предоставляет доступ к UnitOfWork
+    /// </summary>
+    internal IUnitOfWork UnitOfWork
+    {
+        get
+        {
+            if (unitOfWork != null)
+            {
+                return unitOfWork;
+            }
+            
+            scope ??= factory.Services.GetRequiredService<IServiceScopeFactory>().CreateScope();
+            unitOfWork = scope.ServiceProvider.GetRequiredService<IUnitOfWork>();
+            return unitOfWork;
         }
     }
 

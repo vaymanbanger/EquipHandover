@@ -15,4 +15,5 @@ public interface IDocumentEquipmentReadRepository
     /// Получает <see cref="Entities.DocumentEquipment"/> по DocumentId
     /// </summary>
     Task<IReadOnlyCollection<Entities.DocumentEquipment>> GetByDocumentIdAsync(Guid id,CancellationToken cancellationToken);
+    
 }
