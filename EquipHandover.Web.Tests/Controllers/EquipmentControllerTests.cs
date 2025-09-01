@@ -49,7 +49,9 @@ public class EquipmentControllerTests
         
         // Assert
         response.Should().ContainSingle(x => x.Id == equipment.Id)
-            .And.HaveCount(2);
+            .And.ContainSingle(x => x.Id == equipment1.Id);
+        var newValue = context.Set<Equipment>().Single(x => x.Id == equipment2.Id);
+        newValue.DeletedAt.Should().NotBeNull();
     }
 
     /// <summary>

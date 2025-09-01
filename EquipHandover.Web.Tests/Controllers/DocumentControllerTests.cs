@@ -37,55 +37,52 @@ public class DocumentControllerTests
     public async Task GetAllShouldReturnValue()
     {
         // Arrange
-        var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234262890");
-        var receiver = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0234567890123");
+        var sender = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234262890");
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
         var document = TestEntityProvider.Shared.Create<Document>(x =>
         {
             x.RentalDate = new DateOnly(2015, 1, 1);
             x.SignatureNumber = new DateOnly(2025, 1, 1);
-            x.SenderId =  sender.Id;
+            x.SenderId = sender.Id;
             x.ReceiverId = receiver.Id;
         });
-        
-        var sender1 = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234261891");
-        var receiver1 = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0234567890122");
-        
+
+        var sender1 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234261891");
+        var receiver1 = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890122");
+
         var document1 = TestEntityProvider.Shared.Create<Document>(x =>
         {
             x.RentalDate = new DateOnly(2024, 2, 3);
             x.SignatureNumber = new DateOnly(2025, 2, 1);
-            x.SenderId =  sender1.Id;
+            x.SenderId = sender1.Id;
             x.ReceiverId = receiver1.Id;
         });
-        
-        var sender2 = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234261892");
-        var receiver2 = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0234567890112");
-        
+
+        var sender2 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234261892");
+        var receiver2 = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890112");
+
         var document2 = TestEntityProvider.Shared.Create<Document>(x =>
         {
             x.RentalDate = new DateOnly(2024, 2, 3);
             x.SignatureNumber = new DateOnly(2025, 2, 1);
-            x.SenderId =  sender2.Id;
+            x.SenderId = sender2.Id;
             x.ReceiverId = receiver2.Id;
             x.DeletedAt = DateTimeOffset.UtcNow;
         });
-        
-        await context.AddRangeAsync(document, document1, document2, sender, sender2, sender1, receiver1, receiver2, receiver, equipment);
+
+        await context.AddRangeAsync(document, document1, document2, sender, sender2, sender1, receiver1, receiver2,
+            receiver, equipment);
         await unitOfWork.SaveChangesAsync();
-        
+
         // Act
         var response = await webClient.DocumentAllAsync();
-        
+
         // Assert
         response.Should().ContainSingle(x => x.Id == document.Id)
-            .And.HaveCount(2);
+            .And.ContainSingle(x => x.Id == document1.Id);
+        var newValue = context.Set<Document>().Single(x => x.Id == document2.Id);
+        newValue.DeletedAt.Should().NotBeNull();
     }
 
     /// <summary>
@@ -132,9 +129,9 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234261890");
+            x => x.TaxPayerId = "0234961890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0214227890123");
+            x => x.RegistrationNumber = "0214927890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
         
         var document = TestEntityProvider.Shared.Create<Document>(x =>
@@ -184,9 +181,9 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234261890");
+            x => x.TaxPayerId = "0234269890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0214267890123");
+            x => x.RegistrationNumber = "0214267890193");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
         var document = TestEntityProvider.Shared.Create<Document>(x =>
         {

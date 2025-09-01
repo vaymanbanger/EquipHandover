@@ -53,7 +53,10 @@ public class SenderControllerTests
         var result = await webClient.SenderAllAsync();
         
         // Assert
-        result.Should().HaveCount(2);
+        result.Should().ContainSingle(x => x.Id == sender.Id)
+            .And.ContainSingle(x => x.Id == sender1.Id);
+        var newValue = context.Set<Sender>().Single(x => x.Id == sender2.Id);
+        newValue.DeletedAt.Should().NotBeNull();
     }
     
     /// <summary>
@@ -64,7 +67,7 @@ public class SenderControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<SenderRequestApiModel>(
-            x => x.TaxPayerId = "0234261890");
+            x => x.TaxPayerId = "0234561890");
         
         // Act
         var result = await webClient.SenderPOSTAsync(sender);

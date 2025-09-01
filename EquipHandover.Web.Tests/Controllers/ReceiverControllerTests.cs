@@ -53,7 +53,10 @@ public class ReceiverControllerTests
         var result = await webClient.ReceiverAllAsync();
         
         // Assert
-        result.Should().HaveCount(2);
+        result.Should().ContainSingle(x => x.Id == receiver.Id)
+            .And.ContainSingle(x => x.Id == receiver1.Id);
+        var newValue = context.Set<Receiver>().Single(x => x.Id == receiver2.Id);
+        newValue.DeletedAt.Should().NotBeNull();
     }
 
     /// <summary>
@@ -64,7 +67,7 @@ public class ReceiverControllerTests
     {
         // Arrange
         var receiver = TestEntityProvider.Shared.Create<ReceiverRequestApiModel>(
-            x => x.RegistrationNumber = "1215227890123");
+            x => x.RegistrationNumber = "1215223890123");
         
         // Act
         var result = await webClient.ReceiverPOSTAsync(receiver);
