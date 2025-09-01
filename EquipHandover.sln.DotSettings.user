@@ -12,10 +12,7 @@
 	<s:String x:Key="/Default/CodeInspection/ExcludedFiles/FilesAndFoldersToSkip2/=7020124F_002D9FFC_002D4AC3_002D8F3D_002DAAB8E0240759_002Ff_003AValidatorTestExtensions_002Ecs_002Fl_003A_002E_002E_003F_002E_002E_003FUsers_003FViktor_003FAppData_003FRoaming_003FJetBrains_003FRider2025_002E1_003Fresharper_002Dhost_003FSourcesCache_003F43b6371db2321df194dbb97d7cf379ab9d493d3cba32dc686b4edd478793f_003FValidatorTestExtensions_002Ecs/@EntryIndexedValue">ForceIncluded</s:String>
 	<s:String x:Key="/Default/CodeInspection/Highlighting/SweaWarningsMode/@EntryValue">ShowAndRun</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8abcf877_002De6c8_002D4f19_002Db1b3_002Dbf295e36aa6a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="Session" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;And&gt;&#xD;
-    &lt;Namespace&gt;EquipHandover.Web.Tests&lt;/Namespace&gt;&#xD;
-    &lt;Project Location="C:\Csharp\EquipHandover\EquipHandover.Web.Tests" Presentation="&amp;lt;EquipHandover.Web.Tests&amp;gt;" /&gt;&#xD;
-  &lt;/And&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
 	
 	
