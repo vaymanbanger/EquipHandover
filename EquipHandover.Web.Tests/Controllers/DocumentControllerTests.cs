@@ -6,6 +6,7 @@ using EquipHandover.Web.Controllers;
 using EquipHandover.Web.Tests.Client;
 using EquipHandover.Web.Tests.Infrastructure;
 using FluentAssertions;
+using FluentAssertions.Equivalency;
 using Xunit;
 
 namespace EquipHandover.Web.Tests.Controllers;
@@ -37,7 +38,7 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "023456789012");
+            x => x.TaxPayerId = "0234262890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0234567890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
@@ -50,7 +51,7 @@ public class DocumentControllerTests
         });
         
         var sender1 = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "023456789013");
+            x => x.TaxPayerId = "0234261891");
         var receiver1 = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0234567890122");
         
@@ -63,7 +64,7 @@ public class DocumentControllerTests
         });
         
         var sender2 = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "023456789023");
+            x => x.TaxPayerId = "0234261892");
         var receiver2 = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0234567890112");
         
@@ -95,7 +96,7 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "023426789012");
+            x => x.TaxPayerId = "0234261890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0214267890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
@@ -105,8 +106,8 @@ public class DocumentControllerTests
         
         var document = TestEntityProvider.Shared.Create<DocumentRequestApiModel>(x =>
         {
-            x.RentalDate = DateTimeOffset.UtcNow;
-            x.SignatureNumber = DateTimeOffset.UtcNow;
+            x.RentalDate = DateTimeOffset.UtcNow.Date;
+            x.SignatureNumber = DateTimeOffset.UtcNow.Date;
             x.SenderId = sender.Id;
             x.ReceiverId = receiver.Id;
             x.City = "Буйнакск";
@@ -117,6 +118,100 @@ public class DocumentControllerTests
         var response = await webClient.DocumentPOSTAsync(document);
         
         // Assert
-        response.Should().BeEquivalentTo(document);
+        response.Should().BeEquivalentTo(document, DocumentRequestApiModelExcludings);
+        response.Receiver.Id.Should().Be(document.ReceiverId);
+        response.Sender.Id.Should().Be(document.SenderId);
+        response.Equipment!.Select(x => x.Id).Should().BeEquivalentTo(document.EquipmentIds);
     }
+
+    /// <summary>
+    /// Edit должен отредактировать документ
+    /// </summary>
+    [Fact]
+    public async Task EditShouldEditDocument()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>(
+            x => x.TaxPayerId = "0234261890");
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(
+            x => x.RegistrationNumber = "0214227890123");
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.RentalDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            x.SignatureNumber =DateOnly.FromDateTime(DateTime.UtcNow);
+            x.SenderId = sender.Id;
+            x.ReceiverId = receiver.Id;
+            x.City = "Буйнакск";
+        });
+        
+        var documentEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(x =>
+        {
+            x.DocumentId = document.Id;
+            x.EquipmentId =  equipment.Id;
+        });
+        
+        await context.AddRangeAsync(sender, receiver, equipment, document, documentEquipment);
+        await unitOfWork.SaveChangesAsync();
+        
+        var editDocument = TestEntityProvider.Shared.Create<DocumentRequestApiModel>(x =>
+        {
+            x.RentalDate = DateTimeOffset.UtcNow.Date;
+            x.SignatureNumber = DateTimeOffset.UtcNow.Date;
+            x.SenderId = sender.Id;
+            x.ReceiverId = receiver.Id;
+            x.City = "Таджики";
+            x.EquipmentIds =  [equipment.Id];
+        });
+        
+        // Act
+        var response = await webClient.DocumentPUTAsync(document.Id, editDocument);
+        
+        // Assert
+        response.Should().BeEquivalentTo(editDocument, DocumentRequestApiModelExcludings);
+        response.Receiver.Id.Should().Be(document.ReceiverId);
+        response.Sender.Id.Should().Be(document.SenderId);
+        response.Equipment!.Select(x => x.Id)
+            .Should().BeEquivalentTo(document.DocumentEquipments.Select(x => x.EquipmentId));
+    }
+
+    /// <summary>
+    /// Delete должен удалить документ
+    /// </summary>
+    [Fact]
+    public async Task DeleteShouldDeleteDocument()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>(
+            x => x.TaxPayerId = "0234261890");
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(
+            x => x.RegistrationNumber = "0214267890123");
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.RentalDate = DateOnly.FromDateTime(DateTime.UtcNow);
+            x.SignatureNumber =DateOnly.FromDateTime(DateTime.UtcNow);
+            x.SenderId = sender.Id;
+            x.ReceiverId = receiver.Id;
+            x.City = "Вкараганде";
+        });
+        
+        await context.AddRangeAsync(sender, receiver, equipment, document);
+        await unitOfWork.SaveChangesAsync();
+        
+        // Act
+        await webClient.DocumentDELETEAsync(document.Id);
+        
+        // Assert
+        await unitOfWork.SaveChangesAsync();
+        var newValue = context.Set<Document>().Single(x => x.Id == document.Id);
+        newValue.DeletedAt.Should().NotBeNull();
+    }
+    
+    private static EquivalencyAssertionOptions<DocumentRequestApiModel> DocumentRequestApiModelExcludings(
+        EquivalencyAssertionOptions<DocumentRequestApiModel> opts) =>
+        opts.Excluding(x => x.SenderId)
+            .Excluding(x => x.EquipmentIds)
+            .Excluding(x => x.ReceiverId);
 }

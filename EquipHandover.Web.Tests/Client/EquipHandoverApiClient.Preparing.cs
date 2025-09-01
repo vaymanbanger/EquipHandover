@@ -10,18 +10,18 @@ public partial class EquipHandoverApiClient
     /// <summary>
     /// Пустая заглушка для логики перед отправкой запроса
     /// </summary>
-    private Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, string? url, CancellationToken cancellationToken)
+    private static Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, string? url, CancellationToken cancellationToken)
         => Task.CompletedTask;
 
     /// <summary>
     /// Пустая заглушка для логики перед отправкой запроса ( через StringBuilder )
     /// </summary>
-    private Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, StringBuilder url, CancellationToken cancellationToken)
+    private static Task PrepareRequestAsync(HttpClient client, HttpRequestMessage request, StringBuilder url, CancellationToken cancellationToken)
         => Task.CompletedTask;
 
     /// <summary>
     /// Пустая заглушка для логики после получения ответа
     /// </summary>
-    private Task ProcessResponseAsync(HttpClient client, HttpResponseMessage request, CancellationToken cancellationToken)
+    private static Task ProcessResponseAsync(HttpClient client, HttpResponseMessage request, CancellationToken cancellationToken)
         => Task.CompletedTask;
 }

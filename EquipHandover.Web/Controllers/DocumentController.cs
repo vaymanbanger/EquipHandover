@@ -64,6 +64,7 @@ public class DocumentController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Create(DocumentRequestApiModel request, CancellationToken cancellationToken)
     {
         var requestModel = mapper.Map<DocumentCreateModel>(request);
@@ -74,12 +75,13 @@ public class DocumentController : ControllerBase
     }
 
     /// <summary>
-    /// Редактирует существующий документ
+    /// Редактирует существующий документ по идентификатору 
     /// </summary>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] DocumentRequestApiModel request,
         CancellationToken cancellationToken)
     {
@@ -96,6 +98,8 @@ public class DocumentController : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await documentService.DeleteAsync(id, cancellationToken);

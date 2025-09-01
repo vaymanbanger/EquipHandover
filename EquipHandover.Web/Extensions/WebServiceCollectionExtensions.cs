@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using EquipHandover.Common;
 using EquipHandover.Common.Contracts;
 using EquipHandover.Services.AutoMappers;
 using EquipHandover.Web.AutoMappers;

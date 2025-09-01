@@ -75,7 +75,7 @@ namespace EquipHandover.Web.Tests.Client
         System.Threading.Tasks.Task<DocumentResponseApiModel> DocumentPOSTAsync(DocumentRequestApiModel? body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Редактирует существующий документ
+        /// Редактирует существующий документ по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -83,7 +83,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующий документ
+        /// Редактирует существующий документ по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -135,7 +135,7 @@ namespace EquipHandover.Web.Tests.Client
         System.Threading.Tasks.Task<EquipmentResponseApiModel> EquipmentPOSTAsync(EquipmentRequestApiModel? body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Редактирует существующее оборудование
+        /// Редактирует существующее оборудование по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -143,7 +143,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующее оборудование
+        /// Редактирует существующее оборудование по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -184,7 +184,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverResponseApiModel? body);
+        System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverRequestApiModel? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -192,10 +192,10 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverResponseApiModel? body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverRequestApiModel? body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Редактирует существующего принимающего
+        /// Редактирует существующего принимающего по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -203,7 +203,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующего принимающего
+        /// Редактирует существующего принимающего по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -244,7 +244,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderResponseApiModel? body);
+        System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderRequestApiModel? body);
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
@@ -252,10 +252,10 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderResponseApiModel? body, System.Threading.CancellationToken cancellationToken);
+        System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderRequestApiModel? body, System.Threading.CancellationToken cancellationToken);
 
         /// <summary>
-        /// Редактирует существующего отправителя
+        /// Редактирует существующего отправителя по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -263,7 +263,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующего отправителя
+        /// Редактирует существующего отправителя по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -582,6 +582,16 @@ namespace EquipHandover.Web.Tests.Client
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == 422)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ApiValidationExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -612,7 +622,7 @@ namespace EquipHandover.Web.Tests.Client
         }
 
         /// <summary>
-        /// Редактирует существующий документ
+        /// Редактирует существующий документ по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -623,7 +633,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующий документ
+        /// Редактирует существующий документ по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -682,6 +692,16 @@ namespace EquipHandover.Web.Tests.Client
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -786,6 +806,16 @@ namespace EquipHandover.Web.Tests.Client
                             return;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == 404)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -794,6 +824,16 @@ namespace EquipHandover.Web.Tests.Client
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             throw new ApiException<ApiExceptionDetail>("Not Found", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == 422)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiValidationExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiValidationExceptionDetail>("Unprocessable Content", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         {
@@ -968,6 +1008,16 @@ namespace EquipHandover.Web.Tests.Client
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == 422)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ApiValidationExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -998,7 +1048,7 @@ namespace EquipHandover.Web.Tests.Client
         }
 
         /// <summary>
-        /// Редактирует существующее оборудование
+        /// Редактирует существующее оборудование по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1009,7 +1059,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующее оборудование
+        /// Редактирует существующее оборудование по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1068,6 +1118,16 @@ namespace EquipHandover.Web.Tests.Client
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1170,6 +1230,16 @@ namespace EquipHandover.Web.Tests.Client
                         if (status_ == 200)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1290,7 +1360,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverResponseApiModel? body)
+        public virtual System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverRequestApiModel? body)
         {
             return ReceiverPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1301,7 +1371,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverResponseApiModel? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<ReceiverResponseApiModel> ReceiverPOSTAsync(ReceiverRequestApiModel? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1354,6 +1424,16 @@ namespace EquipHandover.Web.Tests.Client
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == 422)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ApiValidationExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -1384,7 +1464,7 @@ namespace EquipHandover.Web.Tests.Client
         }
 
         /// <summary>
-        /// Редактирует существующего принимающего
+        /// Редактирует существующего принимающего по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1395,7 +1475,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующего принимающего
+        /// Редактирует существующего принимающего по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1454,6 +1534,16 @@ namespace EquipHandover.Web.Tests.Client
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1556,6 +1646,16 @@ namespace EquipHandover.Web.Tests.Client
                         if (status_ == 200)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1676,7 +1776,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderResponseApiModel? body)
+        public virtual System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderRequestApiModel? body)
         {
             return SenderPOSTAsync(body, System.Threading.CancellationToken.None);
         }
@@ -1687,7 +1787,7 @@ namespace EquipHandover.Web.Tests.Client
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public virtual async System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderResponseApiModel? body, System.Threading.CancellationToken cancellationToken)
+        public virtual async System.Threading.Tasks.Task<SenderResponseApiModel> SenderPOSTAsync(SenderRequestApiModel? body, System.Threading.CancellationToken cancellationToken)
         {
             var client_ = _httpClient;
             var disposeClient_ = false;
@@ -1740,6 +1840,16 @@ namespace EquipHandover.Web.Tests.Client
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == 422)
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ApiValidationExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
@@ -1770,7 +1880,7 @@ namespace EquipHandover.Web.Tests.Client
         }
 
         /// <summary>
-        /// Редактирует существующего отправителя
+        /// Редактирует существующего отправителя по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1781,7 +1891,7 @@ namespace EquipHandover.Web.Tests.Client
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <summary>
-        /// Редактирует существующего отправителя
+        /// Редактирует существующего отправителя по идентификатору
         /// </summary>
         /// <returns>OK</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
@@ -1840,6 +1950,16 @@ namespace EquipHandover.Web.Tests.Client
                                 throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
                             }
                             return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)
@@ -1942,6 +2062,16 @@ namespace EquipHandover.Web.Tests.Client
                         if (status_ == 200)
                         {
                             return;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ApiExceptionDetail>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ApiExceptionDetail>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == 404)

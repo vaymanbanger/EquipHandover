@@ -1,9 +1,9 @@
-﻿namespace EquipHandover.Web.Tests;
+﻿namespace EquipHandover.Web;
 
 /// <summary>
 /// Константы для тестирования
 /// </summary>
-public static class TestsConstants
+public static class EnvironmentConstants
 {
     /// <summary>
     /// Среда выполнения для интеграционных тестов

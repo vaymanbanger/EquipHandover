@@ -4,17 +4,16 @@ using Microsoft.Extensions.Configuration;
 namespace EquipHandover.Web.Tests;
 
 /// <summary>
-/// Вспомогательные методы для настройки конфигурации тестового веб-хоста.
+/// Вспомогательные методы для настройки конфигурации тестового веб-хоста
 /// </summary>
 internal static class WebHostBuilderHelper
 {
-    
     /// <summary>
-    /// Настраивает конфигурацию приложения для интеграционных тестов.
+    /// Настраивает конфигурацию приложения для интеграционных тестов
     /// </summary>
     public static void ConfigureTestAppConfiguration(this IWebHostBuilder builder)
     {
-        builder.UseEnvironment(TestsConstants.IntegrationEnvironment);
+        builder.UseEnvironment(EnvironmentConstants.IntegrationEnvironment);
         builder.ConfigureAppConfiguration((_, config) =>
         {
             var projectDir = Directory.GetCurrentDirectory();

@@ -8,7 +8,7 @@ using Xunit;
 namespace EquipHandover.Web.Tests.Infrastructure;
 
 /// <summary>
-/// Фикстура для интеграционных тестов
+/// Модификация фикстуры для интеграционных тестов
 /// </summary>
 public class EquipHandoverApiFixture : IAsyncLifetime
 {

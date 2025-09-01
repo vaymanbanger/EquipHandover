@@ -5,22 +5,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace EquipHandover.Web.Tests.Infrastructure;
 
 /// <summary>
-/// Фибрика для веб приложения с конфигурацией
+/// Фабрика для веб приложения с конфигурацией
 /// </summary>
 public class TestWebApplicationFactory : WebApplicationFactory<Program>
 {
-    /// <inheritdoc cref="WebApplicationFactory{TEntryPoint}.CreateHost"/>
-    protected override IHost CreateHost(IHostBuilder builder)
-    {
-        builder.UseEnvironment(TestsConstants.IntegrationEnvironment);
-        return base.CreateHost(builder);
-    }
-
     /// <inheritdoc cref="WebApplicationFactory{TEntryPoint}.ConfigureWebHost"/>
     protected override void ConfigureWebHost(IWebHostBuilder builder)
     {

@@ -10,4 +10,8 @@
         <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj" />
+    </ItemGroup>
+
 </Project>

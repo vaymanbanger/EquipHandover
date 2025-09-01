@@ -48,7 +48,8 @@ public class ReceiverController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(ReceiverResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create(ReceiverResponseApiModel request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
+    public async Task<IActionResult> Create(ReceiverRequestApiModel request, CancellationToken cancellationToken)
     {
         var requestModel = mapper.Map<ReceiverCreateModel>(request);
         await validateService.ValidateAsync(requestModel, cancellationToken);
@@ -58,12 +59,13 @@ public class ReceiverController : ControllerBase
     }
     
     /// <summary>
-    /// Редактирует существующего принимающего
+    /// Редактирует существующего принимающего по идентификатору
     /// </summary>
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(ReceiverResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] ReceiverRequestApiModel request,
         CancellationToken cancellationToken)
     {
@@ -80,6 +82,7 @@ public class ReceiverController : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await receiverService.DeleteAsync(id, cancellationToken);
