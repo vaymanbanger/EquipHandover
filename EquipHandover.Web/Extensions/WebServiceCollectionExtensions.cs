@@ -3,7 +3,6 @@ using EquipHandover.Common;
 using EquipHandover.Common.Contracts;
 using EquipHandover.Services.AutoMappers;
 using EquipHandover.Web.AutoMappers;
-using EquipHandover.Web.Infrastructure;
 
 namespace EquipHandover.Web.Extensions;
 
