@@ -51,7 +51,6 @@ erDiagram
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
 |GET|api/documents/|Получает список всех документов| |`[docApiModel]`| 200 OK |
-|GET|api/documents/{id}|Получает документ с идентификатором id| fromRoute: id |`docApiModel`| 200 OK<br/>404 Not Found |
 |GET|api/documents/{id}/export|Экспортирует документ в Excel| fromRoute: id |Файл Excel| 200 OK<br/>404 Not Found |
 |POST|api/documents/|Добавляет новый документ| fromBody: `docRequestApiModel`|`docApiModel`| 200 OK |
 |PUT|api/documents/{id}|Редактирует документ с идентификатором id| fromRoute: id <br/>fromBody: `docRequestApiModel`|`docApiModel`| 200 OK<br/>404 Not Found |
@@ -107,7 +106,6 @@ erDiagram
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
 |GET|api/equipment/|Получает список всего оборудования| |`[equipApiModel]`| 200 OK |
-|GET|api/equipment/{id}|Получает оборудование с идентификатором id| fromRoute: id |`equipApiModel`| 200 OK<br/>404 Not Found |
 |POST|api/equipment/|Добавляет новое оборудование| fromBody: `equipRequestApiModel`|`equipApiModel`| 200 OK |
 |PUT|api/equipment/{id}|Редактирует оборудование с идентификатором id| fromRoute: id <br/>fromBody: `equipRequestApiModel`|`equipApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/equipment/{id}|Удаляет оборудование с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
@@ -134,7 +132,6 @@ erDiagram
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
 |GET|api/senders/|Получает список всех отправителей| |`[senderApiModel]`| 200 OK |
-|GET|api/senders/{id}|Получает отправителя с идентификатором id| fromRoute: id |`senderApiModel`| 200 OK<br/>404 Not Found |
 |POST|api/senders/|Добавляет нового отправителя| fromBody: `senderRequestApiModel`|`senderApiModel`| 200 OK |
 |PUT|api/senders/{id}|Редактирует отправителя с идентификатором id| fromRoute: id <br/>fromBody: `senderRequestApiModel`|`senderApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/senders/{id}|Удаляет отправителя с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
@@ -159,7 +156,6 @@ erDiagram
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
 |GET|api/receivers/|Получает список всех принимающих| |`[receiverApiModel]`| 200 OK |
-|GET|api/receivers/{id}|Получает принимающего с идентификатором id| fromRoute: id |`receiverApiModel`| 200 OK<br/>404 Not Found |
 |POST|api/receivers/|Добавляет нового принимающего| fromBody: `receiverRequestApiModel`|`receiverApiModel`| 200 OK |
 |PUT|api/receivers/{id}|Редактирует принимающего с идентификатором id| fromRoute: id <br/>fromBody: `receiverRequestApiModel`|`receiverApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/receivers/{id}|Удаляет принимающего с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
