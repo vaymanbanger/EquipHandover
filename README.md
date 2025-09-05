@@ -50,13 +50,13 @@ erDiagram
 ### CRUD документов
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
-|GET|api/documents/|Получает список всех документов| |`[docApiModel]`| 200 OK |
+|GET|api/documents/|Получает список всех документов| |`IReadOnlyCollection<DocumentResponseApiModel>`| 200 OK |
 |GET|api/documents/{id}/export|Экспортирует документ в Excel| fromRoute: id |Файл Excel| 200 OK<br/>404 Not Found |
-|POST|api/documents/|Добавляет новый документ| fromBody: `docRequestApiModel`|`docApiModel`| 200 OK |
-|PUT|api/documents/{id}|Редактирует документ с идентификатором id| fromRoute: id <br/>fromBody: `docRequestApiModel`|`docApiModel`| 200 OK<br/>404 Not Found |
+|POST|api/documents/|Добавляет новый документ| fromBody: `DocumentRequestApiModel`|`DocumentResponseApiModel`| 200 OK<br/>422 Unprocessable Entity |
+|PUT|api/documents/{id}|Редактирует документ с идентификатором id| fromRoute: id <br/>fromBody: `DocumentRequestApiModel`|`DocumentResponseApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/documents/{id}|Удаляет документ с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
 ```javascript
-// docApiModel
+// DocumentResponseApiModel
 {
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     RentalDate: "16.08.2025",
@@ -82,7 +82,7 @@ erDiagram
 }
 ```
 ```javascript
-// docRequestApiModel
+// DocumentRequestApiModel
 {
     RentalDate: "16.08.2025",
     SignatureNumber: "АКТ-2025-567",
@@ -105,12 +105,12 @@ erDiagram
 ### CRUD оборудования
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
-|GET|api/equipment/|Получает список всего оборудования| |`[equipApiModel]`| 200 OK |
-|POST|api/equipment/|Добавляет новое оборудование| fromBody: `equipRequestApiModel`|`equipApiModel`| 200 OK |
-|PUT|api/equipment/{id}|Редактирует оборудование с идентификатором id| fromRoute: id <br/>fromBody: `equipRequestApiModel`|`equipApiModel`| 200 OK<br/>404 Not Found |
+|GET|api/equipment/|Получает список всего оборудования| |`[IReadOnlyCollection<EquipmentResponseApiModel>]`| 200 OK |
+|POST|api/equipment/|Добавляет новое оборудование| fromBody: `EquipmentRequestApiModel`|`EquipmentResponseApiModel`| 200 OK<br/>422 Unprocessable Entity |
+|PUT|api/equipment/{id}|Редактирует оборудование с идентификатором id| fromRoute: id <br/>fromBody: `EquipmentRequestApiModel`|`EquipmentResponseApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/equipment/{id}|Удаляет оборудование с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
 ```javascript
-// equipApiModel
+// EquipmentResponseApiModel
 {
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     Name: "Ноутбук",
@@ -120,7 +120,7 @@ erDiagram
 }
 ```
 ```javascript
-// equipRequestApiModel
+// EquipmentRequestApiModel
 {
     Name: "Ноутбук",
     ManufactureDate: 2025,
@@ -131,12 +131,12 @@ erDiagram
 ### CRUD отправителя
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
-|GET|api/senders/|Получает список всех отправителей| |`[senderApiModel]`| 200 OK |
-|POST|api/senders/|Добавляет нового отправителя| fromBody: `senderRequestApiModel`|`senderApiModel`| 200 OK |
-|PUT|api/senders/{id}|Редактирует отправителя с идентификатором id| fromRoute: id <br/>fromBody: `senderRequestApiModel`|`senderApiModel`| 200 OK<br/>404 Not Found |
+|GET|api/senders/|Получает список всех отправителей| |`IReadOnlyCollection<SenderResponseApiModel>`| 200 OK |
+|POST|api/senders/|Добавляет нового отправителя| fromBody: `SenderRequestApiModel`|`SenderResponseApiModel`| 200 OK<br/>422 Unprocessable Entity |
+|PUT|api/senders/{id}|Редактирует отправителя с идентификатором id| fromRoute: id <br/>fromBody: `SenderRequestApiModel`|`SenderResponseApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/senders/{id}|Удаляет отправителя с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
 ```javascript
-// senderApiModel
+// SenderResponseApiModel
 {
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     FullName: "Иванов Иван Иванович",
@@ -145,7 +145,7 @@ erDiagram
 }
 ```
 ```javascript
-// senderRequestApiModel
+// SenderRequestApiModel
 {
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
@@ -155,12 +155,12 @@ erDiagram
 ### CRUD принимающего
 |verb|url|description|request|response|codes|
 |-|-|-|-|-|-|
-|GET|api/receivers/|Получает список всех принимающих| |`[receiverApiModel]`| 200 OK |
-|POST|api/receivers/|Добавляет нового принимающего| fromBody: `receiverRequestApiModel`|`receiverApiModel`| 200 OK |
-|PUT|api/receivers/{id}|Редактирует принимающего с идентификатором id| fromRoute: id <br/>fromBody: `receiverRequestApiModel`|`receiverApiModel`| 200 OK<br/>404 Not Found |
+|GET|api/receivers/|Получает список всех принимающих| |`IReadOnlyCollection<ReceiverResponseApiModel>`| 200 OK |
+|POST|api/receivers/|Добавляет нового принимающего| fromBody: `ReceiverRequestApiModel`|`ReceiverResponseApiModel`| 200 OK<br/>422 Unprocessable Entity |
+|PUT|api/receivers/{id}|Редактирует принимающего с идентификатором id| fromRoute: id <br/>fromBody: `ReceiverRequestApiModel`|`ReceiverResponseApiModel`| 200 OK<br/>404 Not Found |
 |DELETE|api/receivers/{id}|Удаляет принимающего с идентификатором id| fromRoute: id | | 200 OK<br/>404 Not Found |
 ```javascript
-// receiverApiModel
+// ReceiverResponseApiModel
 {
     Id: 1fba52c2-17c5-4731-aca0-e52247f2629,
     FullName: "Иванов Иван Иванович",
@@ -169,7 +169,7 @@ erDiagram
 }
 ```
 ```javascript
-// receiverRequestApiModel
+// ReceiverRequestApiModel
 {
     FullName: "Иванов Иван Иванович",
     Enterprise: "ООО ПЕТРОВИЧ"
