@@ -9,6 +9,7 @@ using EquipHandover.Services.AutoMappers;
 using EquipHandover.Services.Contracts;
 using EquipHandover.Services.Contracts.Exceptions;
 using EquipHandover.Services.Contracts.Models.Document;
+using EquipHandover.Services.Export;
 using FluentAssertions;
 using FluentAssertions.Equivalency;
 using Moq;
@@ -42,7 +43,8 @@ public class DocumentServiceTests : EquipHandoverContextInMemory
             new SenderReadRepository(Context),
             new DocumentEquipmentReadRepository(Context),
             new DocumentEquipmentWriteRepository(Context, Mock.Of<IDateTimeProvider>()),
-            UnitOfWork
+            UnitOfWork, 
+            new ExcelService()
         );
     }
 

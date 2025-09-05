@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using EquipHandover.Services.Contracts;
-using EquipHandover.Services.Contracts.Export;
 using EquipHandover.Services.Contracts.Models.Document;
 using EquipHandover.Web.Infrastructure.Exceptions;
 using EquipHandover.Web.Models.Document;
@@ -16,7 +15,6 @@ public class DocumentController : ControllerBase
 {
     private readonly IDocumentService documentService;
     private readonly IValidateService validateService;
-    private readonly IExportService exportService;
     private readonly IMapper mapper;
     
     /// <summary>
@@ -24,13 +22,11 @@ public class DocumentController : ControllerBase
     /// </summary>
     public DocumentController(IDocumentService documentService,
         IMapper mapper,
-        IValidateService validateService,
-        IExportService exportService)
+        IValidateService validateService)
     {
         this.documentService = documentService;
         this.mapper = mapper;
         this.validateService = validateService;
-        this.exportService = exportService;
     }
 
     /// <summary>
@@ -41,7 +37,7 @@ public class DocumentController : ControllerBase
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
     public async Task<IActionResult> ExportById([FromRoute] Guid id, CancellationToken cancellationToken)
     {
-        var bytes = await exportService.ExportByIdAsync(id, cancellationToken);
+        var bytes = await documentService.ExportByIdAsync(id, cancellationToken);
         
         return File(bytes, "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "export.xlsx");
     }

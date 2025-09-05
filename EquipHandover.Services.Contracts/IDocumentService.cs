@@ -26,4 +26,9 @@ public interface IDocumentService
     /// Удаляет существующий <see cref="DocumentModel"/>
     /// </summary>
     Task DeleteAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
+    /// Экспортирует <see cref="DocumentModel"/> по идентификатору
+    /// </summary> 
+    Task<Stream> ExportByIdAsync(Guid id, CancellationToken cancellationToken);
 }

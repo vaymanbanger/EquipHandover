@@ -5,6 +5,7 @@ using EquipHandover.Repositories.Contracts.ReadRepositories;
 using EquipHandover.Repositories.Contracts.WriteRepositories;
 using EquipHandover.Services.Contracts;
 using EquipHandover.Services.Contracts.Exceptions;
+using EquipHandover.Services.Contracts.Export;
 using EquipHandover.Services.Contracts.Models.Document;
 using EquipHandover.Services.Contracts.Models.Equipment;
 using EquipHandover.Services.Extensions;
@@ -23,6 +24,7 @@ public class DocumentService : IDocumentService, IServiceAnchor
     private readonly IDocumentEquipmentReadRepository documentEquipmentReadRepository;
     private readonly IDocumentEquipmentWriteRepository documentEquipmentWriteRepository;
     private readonly IUnitOfWork unitOfWork;
+    private readonly IExcelService excelService;
     
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="DocumentService"/>
@@ -35,11 +37,13 @@ public class DocumentService : IDocumentService, IServiceAnchor
         ISenderReadRepository senderReadRepository,
         IDocumentEquipmentReadRepository documentEquipmentReadRepository,
         IDocumentEquipmentWriteRepository documentEquipmentWriteRepository,
-        IUnitOfWork unitOfWork)
+        IUnitOfWork unitOfWork, 
+        IExcelService excelService)
     {
         this.mapper = mapper;
         this.documentReadRepository = documentReadRepository;
         this.unitOfWork = unitOfWork;
+        this.excelService = excelService;
         this.documentWriteRepository = documentWriteRepository;
         this.receiverReadRepository = receiverReadRepository;
         this.senderReadRepository = senderReadRepository;
@@ -169,18 +173,28 @@ public class DocumentService : IDocumentService, IServiceAnchor
         await unitOfWork.SaveChangesAsync(cancellationToken);
     }
 
+
+    async Task<Stream> IDocumentService.ExportByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var document = await documentReadRepository.GetByIdWithFullModelAsync(id, cancellationToken) ?? 
+                       throw new EquipHandoverNotFoundException($"Не удалось найти документ с идентификатором {id}");
+        
+        var result = mapper.Map<DocumentModel>(document);
+        return excelService.Export(result, cancellationToken);
+    }
+
     /// <summary>
     /// Метод для выброса ошибки если не удалось найти id по модели
     /// </summary>
     private async Task ThrowIfNotFoundLinkedEntitiesAsync(DocumentCreateModel model,
         CancellationToken cancellationToken)
     {
-        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ??
-                       throw new EquipHandoverNotFoundException(
-                           $"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
-        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ??
-                     throw new EquipHandoverNotFoundException(
-                         $"Не удалось найти отправителя с идентификатором {model.SenderId}");
+        _ = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ??
+            throw new EquipHandoverNotFoundException(
+                $"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
+        _ = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ??
+            throw new EquipHandoverNotFoundException(
+                $"Не удалось найти отправителя с идентификатором {model.SenderId}");
         var equipment = await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
         if (equipment.Count != model.EquipmentIds.Count)
         {
