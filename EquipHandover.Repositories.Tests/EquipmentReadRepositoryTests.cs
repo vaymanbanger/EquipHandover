@@ -33,7 +33,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var equipment1 = TestEntityProvider.Shared.Create<Equipment>();
         var equipment2 = TestEntityProvider.Shared.Create<Equipment>();
         var equipmentId = Guid.NewGuid();
-        await Context.AddRangeAsync(equipment1, equipment2);
+        Context.AddRange(equipment1, equipment2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -53,7 +53,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var equipment1 = TestEntityProvider.Shared.Create<Equipment>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(equipment1);
+        Context.AddRange(equipment1);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -72,7 +72,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
     {
         // Arrange
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
-        await Context.AddRangeAsync(equipment);
+        Context.AddRange(equipment);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -92,7 +92,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var equipment = TestEntityProvider.Shared.Create<Equipment>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(equipment);
+        Context.AddRange(equipment);
         await UnitOfWork.SaveChangesAsync();
 
         // Act
@@ -113,7 +113,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var equipment1 = TestEntityProvider.Shared.Create<Equipment>();
         var equipment2 = TestEntityProvider.Shared.Create<Equipment>();
         var equipmentIds = Guid.NewGuid();
-        await Context.AddRangeAsync(equipment1, equipment2);
+        Context.AddRange(equipment1, equipment2);
         await UnitOfWork.SaveChangesAsync();
 
         // Act
@@ -135,7 +135,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var equipment2 = TestEntityProvider.Shared.Create<Equipment>();
         var equipment3 = TestEntityProvider.Shared.Create<Equipment>(x =>
             x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(equipment1, equipment2, equipment3);
+        Context.AddRange(equipment1, equipment2, equipment3);
         await UnitOfWork.SaveChangesAsync();
 
         // Act
@@ -171,7 +171,7 @@ public class EquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var equipment2 = TestEntityProvider.Shared.Create<Equipment>();
         var equipment3 = TestEntityProvider.Shared.Create<Equipment>(x =>
             x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(equipment1, equipment2, equipment3);
+        Context.AddRange(equipment1, equipment2, equipment3);
         await UnitOfWork.SaveChangesAsync();
     
         // Act

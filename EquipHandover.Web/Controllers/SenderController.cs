@@ -48,8 +48,7 @@ public class SenderController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(SenderResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(SenderRequestApiModel request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] SenderRequestApiModel request, CancellationToken cancellationToken)
     {
         var requestModel = mapper.Map<SenderCreateModel>(request);
         await validateService.ValidateAsync(requestModel, cancellationToken);
@@ -65,7 +64,6 @@ public class SenderController : ControllerBase
     [ProducesResponseType(typeof(SenderResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] SenderRequestApiModel request,
         CancellationToken cancellationToken)
     {
@@ -82,7 +80,6 @@ public class SenderController : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await senderService.DeleteAsync(id, cancellationToken);

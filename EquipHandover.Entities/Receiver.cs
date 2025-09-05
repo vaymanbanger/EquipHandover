@@ -1,4 +1,6 @@
-﻿namespace EquipHandover.Entities;
+﻿using EquipHandover.Entities.Contracts;
+
+namespace EquipHandover.Entities;
 
 /// <summary>
 /// Сущность принимающего

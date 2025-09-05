@@ -10,5 +10,5 @@ public interface IExportService
     /// <summary>
     /// Экспортирует <see cref="Document"/> по идентификатору
     /// </summary> 
-    Task<byte[]> ExportByIdAsync(Guid id, CancellationToken cancellationToken);
+    Task<Stream> ExportByIdAsync(Guid id, CancellationToken cancellationToken);
 }

@@ -1,7 +1,5 @@
 ﻿
-using EquipHandover.Entities.Contracts;
-
-namespace EquipHandover.Entities;
+namespace EquipHandover.Entities.Contracts;
 
 /// <summary>
 /// Модель сущности с аудитом

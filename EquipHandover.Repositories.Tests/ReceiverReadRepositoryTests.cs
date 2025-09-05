@@ -33,7 +33,7 @@ public class ReceiverReadRepositoryTests : EquipHandoverContextInMemory
         var receiver1 = TestEntityProvider.Shared.Create<Receiver>();
         var receiver2 = TestEntityProvider.Shared.Create<Receiver>();
         var receiverId = Guid.NewGuid();
-        await Context.AddRangeAsync(receiver1, receiver2);
+        Context.AddRange(receiver1, receiver2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -53,7 +53,7 @@ public class ReceiverReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var receiver1 = TestEntityProvider.Shared.Create<Receiver>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(receiver1);
+        Context.AddRange(receiver1);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -72,7 +72,7 @@ public class ReceiverReadRepositoryTests : EquipHandoverContextInMemory
     {
         // Arrange
         var receiver = TestEntityProvider.Shared.Create<Receiver>();
-        await Context.AddRangeAsync(receiver);
+        Context.AddRange(receiver);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -108,7 +108,7 @@ public class ReceiverReadRepositoryTests : EquipHandoverContextInMemory
         var receiver2 = TestEntityProvider.Shared.Create<Receiver>();
         var receiver3 = TestEntityProvider.Shared.Create<Receiver>(x =>
             x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(receiver1, receiver2, receiver3);
+        Context.AddRange(receiver1, receiver2, receiver3);
         await UnitOfWork.SaveChangesAsync();
     
         // Act

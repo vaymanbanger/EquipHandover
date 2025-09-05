@@ -26,7 +26,7 @@ public class ExportService : IExportService, IServiceAnchor
         this.mapper = mapper;
     }
 
-    async Task<byte[]> IExportService.ExportByIdAsync(Guid id, CancellationToken cancellationToken)
+    async Task<Stream> IExportService.ExportByIdAsync(Guid id, CancellationToken cancellationToken)
     {
         var document = await documentReadRepository.GetByIdWithFullModelAsync(id, cancellationToken) ?? 
                        throw new EquipHandoverNotFoundException($"Не удалось найти документ с идентификатором {id}");

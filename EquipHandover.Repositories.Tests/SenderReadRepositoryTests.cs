@@ -33,7 +33,7 @@ public class SenderReadRepositoryTests : EquipHandoverContextInMemory
         var sender1 = TestEntityProvider.Shared.Create<Sender>();
         var sender2 = TestEntityProvider.Shared.Create<Sender>();
         var senderId = Guid.NewGuid();
-        await Context.AddRangeAsync(sender1, sender2);
+        Context.AddRange(sender1, sender2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -53,7 +53,7 @@ public class SenderReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var sender1 = TestEntityProvider.Shared.Create<Sender>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(sender1);
+        Context.AddRange(sender1);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -72,7 +72,7 @@ public class SenderReadRepositoryTests : EquipHandoverContextInMemory
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>();
-        await Context.AddRangeAsync(sender);
+        Context.AddRange(sender);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -108,7 +108,7 @@ public class SenderReadRepositoryTests : EquipHandoverContextInMemory
         var sender2 = TestEntityProvider.Shared.Create<Sender>();
         var sender3 = TestEntityProvider.Shared.Create<Sender>(x =>
             x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(sender1, sender2, sender3);
+        Context.AddRange(sender1, sender2, sender3);
         await UnitOfWork.SaveChangesAsync();
     
         // Act

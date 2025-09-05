@@ -33,7 +33,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var documentsEquipment1 = TestEntityProvider.Shared.Create<DocumentEquipment>();
         var documentsEquipment2 = TestEntityProvider.Shared.Create<DocumentEquipment>();
         var documentId = Guid.NewGuid();
-        await Context.AddRangeAsync(documentsEquipment1, documentsEquipment2);
+        Context.AddRange(documentsEquipment1, documentsEquipment2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -53,7 +53,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var documentsEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(documentsEquipment);
+        Context.AddRange(documentsEquipment);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -85,7 +85,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
             x.DocumentId = documentId;
             x.DeletedAt = DateTimeOffset.UtcNow;
         });
-        await Context.AddRangeAsync(documentsEquipment1, documentsEquipment2, documentsEquipment3);
+        Context.AddRange(documentsEquipment1, documentsEquipment2, documentsEquipment3);
         await UnitOfWork.SaveChangesAsync();
 
         // Act
@@ -105,7 +105,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var documentsEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(
                 x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(documentsEquipment);
+        Context.AddRange(documentsEquipment);
         await UnitOfWork.SaveChangesAsync();
 
         // Act
@@ -126,7 +126,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         var documentsEquipment1 = TestEntityProvider.Shared.Create<DocumentEquipment>();
         var documentsEquipment2 = TestEntityProvider.Shared.Create<DocumentEquipment>();
         var equipmentIds = Guid.NewGuid();
-        await Context.AddRangeAsync(documentsEquipment1, documentsEquipment2);
+        Context.AddRange(documentsEquipment1, documentsEquipment2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -159,7 +159,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
             x.EquipmentId = equipmentIds;
             x.DeletedAt = DateTimeOffset.UtcNow;
         });
-        await Context.AddRangeAsync(documentsEquipment1, documentsEquipment2, documentsEquipment3);
+        Context.AddRange(documentsEquipment1, documentsEquipment2, documentsEquipment3);
         await UnitOfWork.SaveChangesAsync();
 
         // Act

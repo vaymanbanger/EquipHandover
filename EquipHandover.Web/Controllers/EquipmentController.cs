@@ -48,8 +48,7 @@ public class EquipmentController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(EquipmentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
-    public async Task<IActionResult> Create(EquipmentRequestApiModel request, CancellationToken cancellationToken)
+    public async Task<IActionResult> Create([FromBody] EquipmentRequestApiModel request, CancellationToken cancellationToken)
     {
         var requestModel = mapper.Map<EquipmentCreateModel>(request);
         await validateService.ValidateAsync(requestModel, cancellationToken);
@@ -65,7 +64,6 @@ public class EquipmentController : ControllerBase
     [ProducesResponseType(typeof(EquipmentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] EquipmentRequestApiModel request,
         CancellationToken cancellationToken)
     {
@@ -82,7 +80,6 @@ public class EquipmentController : ControllerBase
     [HttpDelete("{id:guid}")]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cancellationToken)
     {
         await equipmentService.DeleteAsync(id, cancellationToken);

@@ -33,7 +33,7 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
         var document1 = TestEntityProvider.Shared.Create<Document>();
         var document2 = TestEntityProvider.Shared.Create<Document>();
         var documentId = Guid.NewGuid();
-        await Context.AddRangeAsync(document1, document2);
+        Context.AddRange(document1, document2);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -53,7 +53,7 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
         // Arrange
         var document = TestEntityProvider.Shared.Create<Document>(
             x => x.DeletedAt = DateTimeOffset.UtcNow);
-        await Context.AddRangeAsync(document);
+        Context.AddRange(document);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -72,7 +72,7 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     {
         // Arrange
         var document = TestEntityProvider.Shared.Create<Document>();
-        await Context.AddRangeAsync(document);
+        Context.AddRange(document);
         await UnitOfWork.SaveChangesAsync();
         
         // Act
@@ -122,7 +122,7 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
             x.Sender = sender;
             x.Receiver = receiver;
         });
-        await Context.AddRangeAsync(document1, document2, document3, receiver, sender);
+        Context.AddRange(document1, document2, document3, receiver, sender);
         await UnitOfWork.SaveChangesAsync();
     
         // Act

@@ -10,9 +10,9 @@ namespace EquipHandover.Services.Export;
 /// <inheritdoc cref="IExcelService"/>
 public class ExcelService : IExcelService, IServiceAnchor
 {
-    byte[] IExcelService.Export(DocumentModel document, CancellationToken cancellationToken)
+    Stream IExcelService.Export(DocumentModel document, CancellationToken cancellationToken)
     {
-        using var stream = new MemoryStream();
+        var stream = new MemoryStream();
 
         using (var spreadsheetDocument = SpreadsheetDocument.Create(stream, SpreadsheetDocumentType.Workbook))
         {
@@ -54,12 +54,14 @@ public class ExcelService : IExcelService, IServiceAnchor
             AddRow(sheetData, rowIndex++, "");
             AddRow(sheetData, rowIndex++, "",
                 $"Сдал    «{document.Sender.Enterprise}»     {document.Sender.FullName}");
-            AddRow(sheetData, rowIndex++, "",
+            AddRow(sheetData, rowIndex, "",
                 $"Принял    «{document.Receiver.Enterprise}»     {document.Receiver.FullName}");
 
             workbookPart.Workbook.Save();
         }
-        return stream.ToArray();
+
+        stream.Position = 0;
+        return stream;
     }
     
     private static void AddRow(SheetData sheetData, uint rowIndex, params string[] columns)

@@ -10,5 +10,5 @@ public interface IExcelService
     /// <summary>
     /// Экспортирует <see cref="DocumentModel"/> в Excel
     /// </summary>
-    byte[] Export(DocumentModel document, CancellationToken cancellationToken);
+    Stream Export(DocumentModel document, CancellationToken cancellationToken);
 }
