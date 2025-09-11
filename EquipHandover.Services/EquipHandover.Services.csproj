@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
+      <ProjectReference Include="..\EquipHandover.Context\EquipHandover.Context.csproj" />
+      <ProjectReference Include="..\EquipHandover.Repositories.Contracts\EquipHandover.Repositories.Contracts.csproj" />
+      <ProjectReference Include="..\EquipHandover.Services.Contracts\EquipHandover.Services.Contracts.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="AutoMapper" Version="12.0.0" />
+      <PackageReference Include="DocumentFormat.OpenXml" Version="3.3.0" />
+      <PackageReference Include="FluentValidation" Version="12.0.0" />
+    </ItemGroup>
+
+</Project>
