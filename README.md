@@ -1,4 +1,5 @@
 # Автоматизация акта о приеме-передачи оборудования
+Автор: Колобов Виктор
 ![Изображение](https://guravskoe.ru/wp-content/images/akt-priema-peredachi-oborudovaniya-mezhdu-fizicheskimi-litsami-prostoj-obra.jpg)
 ## Схема базы данных
 ```mermaid
