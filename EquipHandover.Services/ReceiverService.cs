@@ -47,13 +47,8 @@ public class ReceiverService : IReceiverService, IServiceAnchor
 
     async Task<ReceiverModel> IReceiverService.CreateAsync(ReceiverCreateModel model, CancellationToken cancellationToken)
     {
-        var result = new Receiver
-        {
-            Id = Guid.NewGuid(),
-            FullName = model.FullName,
-            Enterprise = model.Enterprise,
-            RegistrationNumber = model.RegistrationNumber,
-        };
+        var result = mapper.Map<Receiver>(model);
+        
         receiverWriteRepository.Add(result);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return mapper.Map<ReceiverModel>(result);

@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace EquipHandover.Context.Contracts;
+namespace EquipHandover.Repositories.Contracts;
 
 /// <summary>
 /// Интерфейс создания и модификации записей в хранилище

@@ -29,9 +29,9 @@ public class EquipmentCreateModelValidatorTests
         // Arrange
         var model = new EquipmentCreateModel()
         {
-            Name = String.Empty,
+            Name = string.Empty,
             ManufacturedYear = 0,
-            SerialNumber = String.Empty,
+            SerialNumber = string.Empty,
         };
         
         // Act

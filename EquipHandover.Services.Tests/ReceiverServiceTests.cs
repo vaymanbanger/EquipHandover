@@ -173,7 +173,7 @@ public class ReceiverServiceTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
-    /// EditAsync должен бросить оишибку о несуществующем Id принимающего
+    /// EditAsync должен бросить ошибку о несуществующем Id принимающего
     /// </summary>
     [Fact]
     public async Task EditAsyncShouldThrowExceptionByReceiverId()

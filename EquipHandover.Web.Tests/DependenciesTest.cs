@@ -40,7 +40,7 @@ public class DependenciesTest : IClassFixture<WebApplicationFactory<Program>>
     }
 
     /// <summary>
-    /// Возвращает все контроллеры, носледуемые от <see cref="DocumentController"/>
+    /// Возвращает все контроллеры, наследуемые от <see cref="DocumentController"/>
     /// </summary>
     public static TheoryData<Type> WebControllerCore => GetControllers<DocumentController>();
 

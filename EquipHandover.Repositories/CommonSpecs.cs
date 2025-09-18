@@ -2,7 +2,7 @@
 using EquipHandover.Entities.Contracts;
 using Microsoft.EntityFrameworkCore;
 
-namespace EquipHandover.Context.Contracts;
+namespace EquipHandover.Repositories;
 
 /// <summary>
 /// Общие спецификации чтения

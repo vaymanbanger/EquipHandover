@@ -47,13 +47,7 @@ public class EquipmentService : IEquipmentService, IServiceAnchor
 
     async Task<EquipmentModel> IEquipmentService.CreateAsync(EquipmentCreateModel model, CancellationToken cancellationToken)
     {
-        var result = new Equipment
-        {
-            Id = Guid.NewGuid(),
-            Name = model.Name,
-            ManufacturedYear = model.ManufacturedYear,
-            SerialNumber = model.SerialNumber,
-        };
+        var result = mapper.Map<Equipment>(model);
         
         equipmentWriteRepository.Add(result);
         await unitOfWork.SaveChangesAsync(cancellationToken);

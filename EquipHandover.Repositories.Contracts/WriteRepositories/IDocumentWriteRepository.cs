@@ -1,5 +1,4 @@
-﻿using EquipHandover.Context.Contracts;
-
+﻿
 namespace EquipHandover.Repositories.Contracts.WriteRepositories;
 
 /// <summary>

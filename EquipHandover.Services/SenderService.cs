@@ -47,13 +47,7 @@ public class SenderService : ISenderService, IServiceAnchor
 
     async Task<SenderModel> ISenderService.CreateAsync(SenderCreateModel model, CancellationToken cancellationToken)
     {
-        var result = new Sender
-        {
-            Id = Guid.NewGuid(),
-            FullName = model.FullName,
-            Enterprise = model.Enterprise,
-            TaxPayerNum = model.TaxPayerNum
-        };
+        var result = mapper.Map<Sender>(model);
         senderWriteRepository.Add(result);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         return mapper.Map<SenderModel>(result);

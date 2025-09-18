@@ -1,8 +1,10 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using EquipHandover.Common.Contracts;
+using EquipHandover.Context.Contracts;
 using EquipHandover.Entities.Contracts;
+using EquipHandover.Repositories.Contracts;
 
-namespace EquipHandover.Context.Contracts;
+namespace EquipHandover.Repositories;
 
 /// <summary>
 /// Базовый класс репозитория записи данных
