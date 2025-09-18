@@ -5,7 +5,6 @@ using EquipHandover.Services.Contracts.Models.Equipment;
 using EquipHandover.Services.Contracts.Models.Receiver;
 using EquipHandover.Services.Contracts.Models.Sender;
 using EquipHandover.Services.Validators.CreateModels;
-using EquipHandover.Services.Validators.ResponseModels;
 using FluentValidation;
 
 
@@ -26,11 +25,6 @@ public class ValidateService : IValidateService
         validators.TryAdd(typeof(SenderCreateModel), new SenderCreateModelValidator());
         validators.TryAdd(typeof(ReceiverCreateModel), new ReceiverCreateModelValidator());
         validators.TryAdd(typeof(EquipmentCreateModel), new EquipmentCreateModelValidator());
-        
-        validators.TryAdd(typeof(DocumentModel), new DocumentModelValidator());
-        validators.TryAdd(typeof(SenderModel), new SenderModelValidator());
-        validators.TryAdd(typeof(ReceiverModel), new ReceiverModelValidator());
-        validators.TryAdd(typeof(EquipmentModel), new EquipmentModelValidator());
     }
     
     async Task IValidateService.ValidateAsync<TModel>(TModel model, CancellationToken cancellationToken)

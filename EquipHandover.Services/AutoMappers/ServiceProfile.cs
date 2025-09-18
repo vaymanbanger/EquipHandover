@@ -27,7 +27,11 @@ public class ServiceProfile : Profile
                 opt => opt.MapFrom(src => src.DocumentEquipments
                     .Select(x => x.Equipment))).ReverseMap();
         CreateMap<DocumentDbModel, DocumentModel>(MemberList.Destination).ReverseMap();
-
+        CreateMap<Document, DocumentDbModel>()
+            .ForMember(dest => dest.Equipment,
+                opt => opt.MapFrom(src => src.DocumentEquipments
+                    .Select(x => x.Equipment))).ReverseMap();
+        
         CreateMap<EquipmentModel, EquipmentCreateModel>(MemberList.Destination).ReverseMap();
         CreateMap<Equipment, EquipmentModel>(MemberList.Destination).ReverseMap();
 

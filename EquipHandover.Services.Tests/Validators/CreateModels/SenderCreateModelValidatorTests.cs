@@ -30,7 +30,7 @@ public class SenderCreateModelValidatorTests
         var model = new SenderCreateModel()
         {
             FullName = string.Empty,
-            TaxPayerId = string.Empty,
+            TaxPayerNum = string.Empty,
             Enterprise = string.Empty,
         };
         
@@ -39,7 +39,7 @@ public class SenderCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.FullName);
-        result.ShouldHaveValidationErrorFor(x => x.TaxPayerId);
+        result.ShouldHaveValidationErrorFor(x => x.TaxPayerNum);
         result.ShouldHaveValidationErrorFor(x => x.Enterprise);
     }
     
@@ -53,7 +53,7 @@ public class SenderCreateModelValidatorTests
         var model = new SenderCreateModel()
         {
             FullName = "Карасев Маслина Поймалович",
-            TaxPayerId = "1234567890",
+            TaxPayerNum = "1234567890",
             Enterprise = "ООО Пердович",
         };
         
@@ -62,7 +62,7 @@ public class SenderCreateModelValidatorTests
         
         // Assert
         result.ShouldNotHaveValidationErrorFor(x => x.FullName);
-        result.ShouldNotHaveValidationErrorFor(x => x.TaxPayerId);
+        result.ShouldNotHaveValidationErrorFor(x => x.TaxPayerNum);
         result.ShouldNotHaveValidationErrorFor(x => x.Enterprise);
     }
     
@@ -76,7 +76,7 @@ public class SenderCreateModelValidatorTests
         var model = new SenderCreateModel()
         {
             FullName = "Ка",
-            TaxPayerId = "123456789",
+            TaxPayerNum = "123456789",
             Enterprise = "О",
         };
             
@@ -85,7 +85,7 @@ public class SenderCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.FullName);
-        result.ShouldHaveValidationErrorFor(x => x.TaxPayerId);
+        result.ShouldHaveValidationErrorFor(x => x.TaxPayerNum);
         result.ShouldHaveValidationErrorFor(x => x.Enterprise);
     }
     
@@ -99,7 +99,7 @@ public class SenderCreateModelValidatorTests
         var model = new SenderCreateModel()
         {
             FullName = new string('Z',299),
-            TaxPayerId = new string('O',11),
+            TaxPayerNum = new string('O',11),
             Enterprise = new string('V',299),
         };
             
@@ -108,7 +108,7 @@ public class SenderCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.FullName);
-        result.ShouldHaveValidationErrorFor(x => x.TaxPayerId);
+        result.ShouldHaveValidationErrorFor(x => x.TaxPayerNum);
         result.ShouldHaveValidationErrorFor(x => x.Enterprise);
     }
 }

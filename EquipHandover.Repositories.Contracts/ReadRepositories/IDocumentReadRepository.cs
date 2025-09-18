@@ -8,11 +8,6 @@ namespace EquipHandover.Repositories.Contracts.ReadRepositories;
 public interface IDocumentReadRepository
 {
     /// <summary>
-    /// Получает <see cref="Entities.Document"/> по идентификатору
-    /// </summary>
-    Task<Entities.Document?> GetByIdAsync(Guid id, CancellationToken cancellationToken);
-    
-    /// <summary>
     /// Получает коллекцию <see cref="Entities.Document"/>
     /// </summary>
     Task<IReadOnlyCollection<DocumentDbModel>> GetAllAsync(CancellationToken cancellationToken);
@@ -20,5 +15,5 @@ public interface IDocumentReadRepository
     /// <summary>
     /// Получает <see cref="Entities.Document"/> по DocumentId с оборудованием
     /// </summary>
-    Task<DocumentDbModel?> GetByIdWithFullModelAsync(Guid id,CancellationToken cancellationToken);
+    Task<DocumentDbModel?> GetByIdAsync(Guid id,CancellationToken cancellationToken);
 }

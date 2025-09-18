@@ -30,8 +30,7 @@ public class EquipmentCreateModelValidatorTests
         var model = new EquipmentCreateModel()
         {
             Name = String.Empty,
-            ManufactureDate = 0,
-            EquipmentNumber = String.Empty,
+            ManufacturedYear = 0,
             SerialNumber = String.Empty,
         };
         
@@ -40,8 +39,7 @@ public class EquipmentCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Name);
-        result.ShouldHaveValidationErrorFor(x => x.ManufactureDate);
-        result.ShouldHaveValidationErrorFor(x => x.EquipmentNumber);
+        result.ShouldHaveValidationErrorFor(x => x.ManufacturedYear);
         result.ShouldHaveValidationErrorFor(x => x.SerialNumber);
     }
 
@@ -55,8 +53,7 @@ public class EquipmentCreateModelValidatorTests
         var model = new EquipmentCreateModel()
         {
             Name = "Насрудин",
-            ManufactureDate = 2024,
-            EquipmentNumber = "ZO342VVV",
+            ManufacturedYear = 2024,
             SerialNumber = "ZZ35122324VV",
         };
             
@@ -65,8 +62,7 @@ public class EquipmentCreateModelValidatorTests
         
         // Assert
         result.ShouldNotHaveValidationErrorFor(x => x.Name);
-        result.ShouldNotHaveValidationErrorFor(x => x.ManufactureDate);
-        result.ShouldNotHaveValidationErrorFor(x => x.EquipmentNumber);
+        result.ShouldNotHaveValidationErrorFor(x => x.ManufacturedYear);
         result.ShouldNotHaveValidationErrorFor(x => x.SerialNumber);
     }
     
@@ -80,8 +76,7 @@ public class EquipmentCreateModelValidatorTests
         var model = new EquipmentCreateModel()
         {
             Name = "На",
-            ManufactureDate = 202,
-            EquipmentNumber = "ZO",
+            ManufacturedYear = 202,
             SerialNumber = "ZZ",
         };
             
@@ -90,8 +85,7 @@ public class EquipmentCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Name);
-        result.ShouldHaveValidationErrorFor(x => x.ManufactureDate);
-        result.ShouldHaveValidationErrorFor(x => x.EquipmentNumber);
+        result.ShouldHaveValidationErrorFor(x => x.ManufacturedYear);
         result.ShouldHaveValidationErrorFor(x => x.SerialNumber);
     }
     
@@ -105,8 +99,7 @@ public class EquipmentCreateModelValidatorTests
         var model = new EquipmentCreateModel()
         {
             Name = new string('Z',299),
-            ManufactureDate = 023456,
-            EquipmentNumber = new string('O',299),
+            ManufacturedYear = 023456,
             SerialNumber = new string('V',299),
         };
             
@@ -115,8 +108,7 @@ public class EquipmentCreateModelValidatorTests
         
         // Assert
         result.ShouldHaveValidationErrorFor(x => x.Name);
-        result.ShouldHaveValidationErrorFor(x => x.ManufactureDate);
-        result.ShouldHaveValidationErrorFor(x => x.EquipmentNumber);
+        result.ShouldHaveValidationErrorFor(x => x.ManufacturedYear);
         result.ShouldHaveValidationErrorFor(x => x.SerialNumber);
     }
     
@@ -129,14 +121,14 @@ public class EquipmentCreateModelValidatorTests
         // Arrange
         var model = new EquipmentCreateModel()
         {
-            ManufactureDate = 1899,
+            ManufacturedYear = 1899,
         };
             
         // Act
         var result = await validator.TestValidateAsync(model);
         
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.ManufactureDate);
+        result.ShouldHaveValidationErrorFor(x => x.ManufacturedYear);
     }
     
     /// <summary>
@@ -148,13 +140,13 @@ public class EquipmentCreateModelValidatorTests
         // Arrange
         var model = new EquipmentCreateModel()
         {
-            ManufactureDate = 2101,
+            ManufacturedYear = 2101,
         };
             
         // Act
         var result = await validator.TestValidateAsync(model);
         
         // Assert
-        result.ShouldHaveValidationErrorFor(x => x.ManufactureDate);
+        result.ShouldHaveValidationErrorFor(x => x.ManufacturedYear);
     }
 }

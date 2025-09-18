@@ -32,6 +32,13 @@ public class SenderService : ISenderService, IServiceAnchor
         this.senderWriteRepository = senderWriteRepository;
     }
     
+    async Task<SenderModel> ISenderService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var sender = await GetSenderOrThrowIfNotFoundAsync(id, cancellationToken);
+        
+        return mapper.Map<SenderModel>(sender);
+    }
+    
     async Task<IReadOnlyCollection<SenderModel>> ISenderService.GetAllAsync(CancellationToken cancellationToken)
     {
         var senders = await senderReadRepository.GetAllAsync(cancellationToken);
@@ -45,7 +52,7 @@ public class SenderService : ISenderService, IServiceAnchor
             Id = Guid.NewGuid(),
             FullName = model.FullName,
             Enterprise = model.Enterprise,
-            TaxPayerId = model.TaxPayerId
+            TaxPayerNum = model.TaxPayerNum
         };
         senderWriteRepository.Add(result);
         await unitOfWork.SaveChangesAsync(cancellationToken);
@@ -56,7 +63,7 @@ public class SenderService : ISenderService, IServiceAnchor
     {
         var sender = await GetSenderOrThrowIfNotFoundAsync(id,cancellationToken);
         
-        sender.TaxPayerId = model.TaxPayerId;
+        sender.TaxPayerNum = model.TaxPayerNum;
         sender.FullName = model.FullName;
         sender.Enterprise = model.Enterprise;
         

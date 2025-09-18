@@ -47,6 +47,69 @@ public class DocumentServiceTests : EquipHandoverContextInMemory
             new ExcelService()
         );
     }
+    
+    /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id документа с мягким удалением
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionBySoftDelete()
+    {
+        // Arrange
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.DeletedAt = DateTimeOffset.UtcNow;
+        });
+        await Context.AddRangeAsync(document);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => documentService.GetByIdAsync(document.Id, CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+    
+    /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id документа
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionByDocumentId()
+    {
+        // Arrange
+        var document = TestEntityProvider.Shared.Create<Document>();
+        await Context.AddRangeAsync(document);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => documentService.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+
+    /// <summary>
+    /// GetByIdAsync должен вернуть значение
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldReturnValue()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.Sender = sender;
+            x.Receiver = receiver;
+        });
+        await Context.AddRangeAsync(document, sender, receiver);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result = await documentService.GetByIdAsync(document.Id, CancellationToken.None);
+        
+        // Assert
+        result.Should().BeEquivalentTo(document, options => options.ExcludingMissingMembers());
+    }
 
     /// <summary>
     /// GetAllAsync должен вернуть значения
@@ -405,8 +468,14 @@ public class DocumentServiceTests : EquipHandoverContextInMemory
     public async Task DeleteAsyncShouldDeleteDocument()
     {
         // Arrange
-        var document = TestEntityProvider.Shared.Create<Document>();
-        await Context.AddAsync(document);
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.ReceiverId = receiver.Id;
+            x.SenderId = sender.Id;
+        });
+        await Context.AddRangeAsync(document, sender, receiver);
         await UnitOfWork.SaveChangesAsync();
         
         // Act

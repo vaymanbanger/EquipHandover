@@ -1,7 +1,7 @@
 ﻿namespace EquipHandover.Services.Contracts.Models.Equipment;
 
 /// <summary>
-/// Модель создания оборудования
+/// Модель создания/редактирования оборудования
 /// </summary>
 public class EquipmentCreateModel
 {
@@ -13,15 +13,10 @@ public class EquipmentCreateModel
     /// <summary>
     /// Год выпуска
     /// </summary>
-    public int ManufactureDate { get; set; }
+    public int ManufacturedYear { get; set; }
     
     /// <summary>
     /// Заводской номер
     /// </summary>
     public string SerialNumber { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Номер оборудования
-    /// </summary>
-    public string EquipmentNumber { get; set; } = string.Empty;
 }

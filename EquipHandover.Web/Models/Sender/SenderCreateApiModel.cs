@@ -1,9 +1,9 @@
 ﻿namespace EquipHandover.Web.Models.Sender;
 
 /// <summary>
-/// API модель для создания отправителя
+/// API модель для создания/редактирования отправителя
 /// </summary>
-public class SenderRequestApiModel
+public class SenderCreateApiModel
 {
     /// <summary>
     /// Полное имя
@@ -18,5 +18,5 @@ public class SenderRequestApiModel
     /// <summary>
     /// Идентификационный номер налогоплательщика
     /// </summary>
-    public string TaxPayerId { get; set; }  = string.Empty;
+    public string TaxPayerNum { get; set; }  = string.Empty;
 }

@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using EquipHandover.Entities;
+using EquipHandover.Repositories.Contracts.Models;
 using EquipHandover.Services.Contracts.Models.Document;
 using EquipHandover.Services.Contracts.Models.Equipment;
 using EquipHandover.Services.Contracts.Models.Receiver;
@@ -20,24 +22,25 @@ public class ApiMapper : Profile
     /// </summary>
     public ApiMapper()
     {
-        CreateMap<DocumentRequestApiModel, DocumentCreateModel>(MemberList.Destination);
-        CreateMap<DocumentRequestApiModel, DocumentModel>(MemberList.Destination)
+        CreateMap<DocumentCreateApiModel, DocumentCreateModel>(MemberList.Destination);
+        CreateMap<DocumentCreateApiModel, DocumentModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<DocumentModel, DocumentResponseApiModel>(MemberList.Destination).ReverseMap();
+        CreateMap<DocumentDbModel, Document>(MemberList.Destination).ReverseMap();
 
-        CreateMap<EquipmentRequestApiModel, EquipmentCreateModel>(MemberList.Destination);
-        CreateMap<EquipmentRequestApiModel, EquipmentModel>(MemberList.Destination)
+        CreateMap<EquipmentCreateApiModel, EquipmentCreateModel>(MemberList.Destination);
+        CreateMap<EquipmentCreateApiModel, EquipmentModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<EquipmentModel, EquipmentResponseApiModel>(MemberList.Destination).ReverseMap();
 
-        CreateMap<ReceiverRequestApiModel, ReceiverCreateModel>(MemberList.Destination);
-        CreateMap<ReceiverRequestApiModel, ReceiverModel>(MemberList.Destination)
+        CreateMap<ReceiverCreateApiModel, ReceiverCreateModel>(MemberList.Destination);
+        CreateMap<ReceiverCreateApiModel, ReceiverModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<ReceiverModel, ReceiverResponseApiModel>(MemberList.Destination).ReverseMap();
         CreateMap<ReceiverResponseApiModel, ReceiverCreateModel>(MemberList.Destination).ReverseMap();
         
-        CreateMap<SenderRequestApiModel, SenderCreateModel>(MemberList.Destination);
-        CreateMap<SenderRequestApiModel, SenderModel>(MemberList.Destination)
+        CreateMap<SenderCreateApiModel, SenderCreateModel>(MemberList.Destination);
+        CreateMap<SenderCreateApiModel, SenderModel>(MemberList.Destination)
             .ForMember(x => x.Id, opt => opt.Ignore());
         CreateMap<SenderModel, SenderResponseApiModel>(MemberList.Destination).ReverseMap();
         CreateMap<SenderResponseApiModel, SenderCreateModel>(MemberList.Destination).ReverseMap();

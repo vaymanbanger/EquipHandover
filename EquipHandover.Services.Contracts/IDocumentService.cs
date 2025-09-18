@@ -6,6 +6,10 @@ namespace EquipHandover.Services.Contracts;
 /// </summary>
 public interface IDocumentService
 {
+    /// <summary>
+    /// Возвращает <see cref="DocumentModel"/> по идентификатору
+    /// </summary>
+    Task<DocumentModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
     
     /// <summary>
     /// Возвращает список <see cref="DocumentModel"/>

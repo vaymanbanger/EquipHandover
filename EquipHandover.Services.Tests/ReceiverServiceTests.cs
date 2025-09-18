@@ -40,6 +40,63 @@ public class ReceiverServiceTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id принимающего с мягким удалением
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionBySoftDelete()
+    {
+        // Arrange
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(x =>
+        {
+            x.DeletedAt = DateTimeOffset.UtcNow;
+        });
+        await Context.AddRangeAsync(receiver);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => receiverService.GetByIdAsync(receiver.Id, CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+    
+    /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id принимающего
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionByReceiverId()
+    {
+        // Arrange
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        await Context.AddRangeAsync(receiver);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => receiverService.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+
+    /// <summary>
+    /// GetByIdAsync должен вернуть значение
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldReturnValue()
+    {
+        // Arrange
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        await Context.AddRangeAsync(receiver);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result = await receiverService.GetByIdAsync(receiver.Id, CancellationToken.None);
+        
+        // Assert
+        result.Should().BeEquivalentTo(receiver, options => options.ExcludingMissingMembers());
+    }
+    
+    /// <summary>
     /// GetAllAsync должен вернуть значения
     /// </summary>
     [Fact]

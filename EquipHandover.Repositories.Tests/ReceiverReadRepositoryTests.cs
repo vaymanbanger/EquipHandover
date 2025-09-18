@@ -45,7 +45,7 @@ public class ReceiverReadRepositoryTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
-    /// GetByIdAsync долежен быть null при мягком удалении
+    /// GetByIdAsync должен быть null при мягком удалении
     /// </summary>
     [Fact]
     public async Task GetByIdAsyncShouldBeNullBySoftDelete()

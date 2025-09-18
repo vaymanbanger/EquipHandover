@@ -29,7 +29,7 @@ public static class CommonSpecs
     public static IQueryable<TEntity> ByIds<TEntity>(this IQueryable<TEntity> query, IReadOnlyCollection<Guid> ids)
         where TEntity : class, IEntityWithId
     {
-         var quantity = ids.Count();
+         var quantity = ids.Count;
          return quantity switch
          {
              0 => query.Where(x => false),

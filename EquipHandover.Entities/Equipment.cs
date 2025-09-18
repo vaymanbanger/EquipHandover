@@ -14,17 +14,12 @@ public class Equipment : BaseAuditEntity
     /// <summary>
     /// Год выпуска
     /// </summary>
-    public int ManufactureDate { get; set; }
+    public int ManufacturedYear { get; set; }
     
     /// <summary>
     /// Заводской номер
     /// </summary>
     public string SerialNumber { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Номер оборудования
-    /// </summary>
-    public string EquipmentNumber { get; set; } = string.Empty;
     
     /// <summary>
     /// Навигационное свойство списка <see cref="DocumentEquipment"/>

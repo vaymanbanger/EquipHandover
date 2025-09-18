@@ -20,6 +20,7 @@ public class DocumentControllerTests
     private readonly IEquipHandoverApiClient webClient;
     private readonly EquipHandoverContext context;
     private readonly IUnitOfWork unitOfWork;
+    
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="DocumentControllerTests"/>
     /// </summary>
@@ -29,6 +30,51 @@ public class DocumentControllerTests
         context = fixture.Context;
         unitOfWork = fixture.UnitOfWork;
     }
+    
+    /// <summary>
+    /// GetById должен получить документ по идентификатору
+    /// </summary>
+    [Fact]
+    public async Task GetByIdShouldReturnValue()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>(
+            x => x.TaxPayerNum = "0234961890");
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(
+            x => x.RegistrationNumber = "0214927890123");
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.RentalDate = new DateOnly(2024, 2, 3);
+            x.SignatureNumber = new DateOnly(2025, 2, 1);
+            x.SenderId = sender.Id;
+            x.Sender = sender;
+            x.ReceiverId = receiver.Id;
+            x.Receiver = receiver;
+            x.City = "Буйнакс";
+        });
+        
+        var documentEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(x =>
+        {
+            x.DocumentId = document.Id;
+            x.EquipmentId =  equipment.Id;
+        });
+        
+        await context.AddRangeAsync(sender, receiver, equipment, document, documentEquipment);
+        await unitOfWork.SaveChangesAsync();
+        
+        // Act
+        var response = await webClient.DocumentGETAsync(document.Id);
+        
+        // Assert
+        response.Should().BeEquivalentTo(document, options => options.ExcludingMissingMembers()
+            .Excluding(x => x.RentalDate)
+            .Excluding(x => x.SignatureNumber));
+        response.Equipment!.Select(x => x.Id).Should().BeEquivalentTo(document.DocumentEquipments.Select(x => x.EquipmentId));
+        response.Receiver.Id.Should().Be(document.ReceiverId);
+        response.Sender.Id.Should().Be(document.SenderId);
+    }
 
     /// <summary>
     /// GetAll должен вернуть не пустую коллекцию
@@ -37,7 +83,7 @@ public class DocumentControllerTests
     public async Task GetAllShouldReturnValue()
     {
         // Arrange
-        var sender = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234262890");
+        var sender = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerNum = "0234262890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
         var document = TestEntityProvider.Shared.Create<Document>(x =>
@@ -48,7 +94,7 @@ public class DocumentControllerTests
             x.ReceiverId = receiver.Id;
         });
 
-        var sender1 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234261891");
+        var sender1 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerNum = "0234261891");
         var receiver1 = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890122");
 
         var document1 = TestEntityProvider.Shared.Create<Document>(x =>
@@ -59,7 +105,7 @@ public class DocumentControllerTests
             x.ReceiverId = receiver1.Id;
         });
 
-        var sender2 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerId = "0234261892");
+        var sender2 = TestEntityProvider.Shared.Create<Sender>(x => x.TaxPayerNum = "0234261892");
         var receiver2 = TestEntityProvider.Shared.Create<Receiver>(x => x.RegistrationNumber = "0234567890112");
 
         var document2 = TestEntityProvider.Shared.Create<Document>(x =>
@@ -93,7 +139,7 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234261890");
+            x => x.TaxPayerNum = "0234261890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0214267890123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
@@ -101,7 +147,7 @@ public class DocumentControllerTests
         await context.AddRangeAsync(sender, receiver, equipment);
         await unitOfWork.SaveChangesAsync();
         
-        var document = TestEntityProvider.Shared.Create<DocumentRequestApiModel>(x =>
+        var document = TestEntityProvider.Shared.Create<DocumentCreateApiModel>(x =>
         {
             x.RentalDate = DateTimeOffset.UtcNow.Date;
             x.SignatureNumber = DateTimeOffset.UtcNow.Date;
@@ -115,7 +161,7 @@ public class DocumentControllerTests
         var response = await webClient.DocumentPOSTAsync(document);
         
         // Assert
-        response.Should().BeEquivalentTo(document, DocumentRequestApiModelExcludings);
+        response.Should().BeEquivalentTo(document, DocumentCreateApiModelExcludings);
         response.Receiver.Id.Should().Be(document.ReceiverId);
         response.Sender.Id.Should().Be(document.SenderId);
         response.Equipment!.Select(x => x.Id).Should().BeEquivalentTo(document.EquipmentIds);
@@ -129,9 +175,9 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234961890");
+            x => x.TaxPayerNum = "0234551890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
-            x => x.RegistrationNumber = "0214927890123");
+            x => x.RegistrationNumber = "0273227330123");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
         
         var document = TestEntityProvider.Shared.Create<Document>(x =>
@@ -152,7 +198,7 @@ public class DocumentControllerTests
         await context.AddRangeAsync(sender, receiver, equipment, document, documentEquipment);
         await unitOfWork.SaveChangesAsync();
         
-        var editDocument = TestEntityProvider.Shared.Create<DocumentRequestApiModel>(x =>
+        var editDocument = TestEntityProvider.Shared.Create<DocumentCreateApiModel>(x =>
         {
             x.RentalDate = DateTimeOffset.UtcNow.Date;
             x.SignatureNumber = DateTimeOffset.UtcNow.Date;
@@ -166,7 +212,7 @@ public class DocumentControllerTests
         var response = await webClient.DocumentPUTAsync(document.Id, editDocument);
         
         // Assert
-        response.Should().BeEquivalentTo(editDocument, DocumentRequestApiModelExcludings);
+        response.Should().BeEquivalentTo(editDocument, DocumentCreateApiModelExcludings);
         response.Receiver.Id.Should().Be(document.ReceiverId);
         response.Sender.Id.Should().Be(document.SenderId);
         response.Equipment!.Select(x => x.Id)
@@ -181,7 +227,7 @@ public class DocumentControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "0234269890");
+            x => x.TaxPayerNum = "0234269890");
         var receiver = TestEntityProvider.Shared.Create<Receiver>(
             x => x.RegistrationNumber = "0214267890193");
         var equipment = TestEntityProvider.Shared.Create<Equipment>();
@@ -206,8 +252,8 @@ public class DocumentControllerTests
         newValue.DeletedAt.Should().NotBeNull();
     }
     
-    private static EquivalencyAssertionOptions<DocumentRequestApiModel> DocumentRequestApiModelExcludings(
-        EquivalencyAssertionOptions<DocumentRequestApiModel> opts) =>
+    private static EquivalencyAssertionOptions<DocumentCreateApiModel> DocumentCreateApiModelExcludings(
+        EquivalencyAssertionOptions<DocumentCreateApiModel> opts) =>
         opts.Excluding(x => x.SenderId)
             .Excluding(x => x.EquipmentIds)
             .Excluding(x => x.ReceiverId);

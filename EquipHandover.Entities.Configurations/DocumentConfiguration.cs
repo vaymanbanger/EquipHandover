@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EquipHandover.Entities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EquipHandover.Entities.Configurations;
@@ -20,10 +21,10 @@ public class DocumentConfiguration : IEntityTypeConfiguration<Document>
         
         builder.Property(x => x.SignatureNumber)
             .IsRequired()
-            .HasMaxLength(50);
+            .HasMaxLength(EntitiesConstants.MaxLengthSignatureNumber);
         
         builder.Property(x => x.City)
             .IsRequired()
-            .HasMaxLength(100);
+            .HasMaxLength(EntitiesConstants.MaxLengthCity);
     }
 }

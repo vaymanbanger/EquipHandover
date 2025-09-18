@@ -31,6 +31,18 @@ public class SenderController : ControllerBase
     }
     
     /// <summary>
+    /// Получает отправителя по идентификатору
+    /// </summary>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(SenderResponseApiModel),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdAsync([FromRoute]Guid id, CancellationToken cancellationToken)
+    {
+        var result =  await senderService.GetByIdAsync(id, cancellationToken);
+        return Ok(mapper.Map<SenderResponseApiModel>(result));
+    }
+    
+    /// <summary>
     /// Получает список всех отправителей
     /// </summary>
     [HttpGet]
@@ -48,9 +60,10 @@ public class SenderController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(SenderResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromBody] SenderRequestApiModel request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Create([FromBody] SenderCreateApiModel create, CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<SenderCreateModel>(request);
+        var requestModel = mapper.Map<SenderCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await senderService.CreateAsync(requestModel, cancellationToken);
         
@@ -64,10 +77,10 @@ public class SenderController : ControllerBase
     [ProducesResponseType(typeof(SenderResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] SenderRequestApiModel request,
+    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] SenderCreateApiModel create,
         CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<SenderCreateModel>(request);
+        var requestModel = mapper.Map<SenderCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await senderService.EditAsync(id, requestModel, cancellationToken);
         

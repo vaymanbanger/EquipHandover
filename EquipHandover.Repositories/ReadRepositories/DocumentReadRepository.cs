@@ -19,12 +19,6 @@ public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
     {
         this.reader = reader;
     }
-    
-    Task<Document?> IDocumentReadRepository.GetByIdAsync(Guid id, CancellationToken cancellationToken)
-        => reader.Read<Document>()
-            .NotDeletedAt()
-            .ById(id)
-            .FirstOrDefaultAsync(cancellationToken);
 
     Task<IReadOnlyCollection<DocumentDbModel>> IDocumentReadRepository.GetAllAsync(CancellationToken cancellationToken)
         => reader.Read<Document>()
@@ -32,7 +26,7 @@ public class DocumentReadRepository : IDocumentReadRepository, IRepositoryAnchor
             .SelectFullModel()
             .ToReadOnlyCollectionAsync(cancellationToken);
 
-    Task<DocumentDbModel?> IDocumentReadRepository.GetByIdWithFullModelAsync(Guid id,
+    Task<DocumentDbModel?> IDocumentReadRepository.GetByIdAsync(Guid id,
         CancellationToken cancellationToken)
         => reader.Read<Document>()
             .NotDeletedAt()

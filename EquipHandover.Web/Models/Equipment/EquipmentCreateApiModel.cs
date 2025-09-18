@@ -1,9 +1,9 @@
 ﻿namespace EquipHandover.Web.Models.Equipment;
 
 /// <summary>
-/// API модель для создания оборудования
+/// API модель для создания/редактирования оборудования
 /// </summary>
-public class EquipmentRequestApiModel
+public class EquipmentCreateApiModel
 {
     /// <summary>
     /// Наименование
@@ -13,15 +13,10 @@ public class EquipmentRequestApiModel
     /// <summary>
     /// Год выпуска
     /// </summary>
-    public int ManufactureDate { get; set; }
+    public int ManufacturedYear { get; set; }
     
     /// <summary>
     /// Заводской номер
     /// </summary>
     public string SerialNumber { get; set; } = string.Empty;
-    
-    /// <summary>
-    /// Номер оборудования
-    /// </summary>
-    public string EquipmentNumber { get; set; } = string.Empty;
 }

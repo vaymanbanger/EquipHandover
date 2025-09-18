@@ -18,5 +18,5 @@ public class SenderCreateModel
     /// <summary>
     /// Идентификационный номер налогоплательщика
     /// </summary>
-    public string TaxPayerId { get; set; } = string.Empty;
+    public string TaxPayerNum { get; set; } = string.Empty;
 }

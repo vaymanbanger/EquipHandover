@@ -8,6 +8,11 @@ namespace EquipHandover.Services.Contracts;
 public interface IEquipmentService
 {
     /// <summary>
+    /// Возвращает <see cref="EquipmentModel"/> по идентификатору
+    /// </summary>
+    Task<EquipmentModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Возвращает список <see cref="EquipmentModel"/>
     /// </summary>
     Task<IReadOnlyCollection<EquipmentModel>> GetAllAsync(CancellationToken cancellationToken);

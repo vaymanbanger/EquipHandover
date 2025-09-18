@@ -7,27 +7,12 @@ namespace EquipHandover.Web.Models.Document;
 /// <summary>
 /// API модель документа
 /// </summary>
-public class DocumentResponseApiModel
+public class DocumentResponseApiModel : DocumentBaseApiModel
 {
     /// <summary>
     /// Идентификатор документа
     /// </summary>
     public Guid Id { get; set; }
-    
-    /// <summary>
-    /// Дата аренды оборудования
-    /// </summary>
-    public DateOnly RentalDate { get; set; }
-    
-    /// <summary>
-    /// Номер подписания договора
-    /// </summary>
-    public DateOnly SignatureNumber { get; set; }
-    
-    /// <summary>
-    /// Город
-    /// </summary>
-    public string City { get; set; } = string.Empty;
 
     /// <summary>
     /// Навигационное свойство <see cref="Sender"/>

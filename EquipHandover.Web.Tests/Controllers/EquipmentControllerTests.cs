@@ -31,6 +31,24 @@ public class EquipmentControllerTests
     }
 
     /// <summary>
+    /// GetById должен получить оборудование по идентификатору
+    /// </summary>
+    [Fact]
+    public async Task GetByIdShouldReturnValue()
+    {
+        // Arrange
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        await context.AddRangeAsync(equipment);
+        await unitOfWork.SaveChangesAsync();
+
+        // Act
+        var response = await webClient.EquipmentGETAsync(equipment.Id);
+
+        // Assert
+        response.Should().BeEquivalentTo(equipment, options => options.ExcludingMissingMembers());
+    }
+
+    /// <summary>
     /// GetAll должен вернуть не пустую коллекцию
     /// </summary>
     [Fact]
@@ -61,8 +79,8 @@ public class EquipmentControllerTests
     public async Task CreateShouldCreateEquipment()
     {
         // Arrange
-        var equipment = TestEntityProvider.Shared.Create<EquipmentRequestApiModel>(
-            x => x.ManufactureDate = 2024);
+        var equipment = TestEntityProvider.Shared.Create<EquipmentCreateApiModel>(
+            x => x.ManufacturedYear = 2024);
         
         // Act
         var result = await webClient.EquipmentPOSTAsync(equipment);
@@ -81,15 +99,15 @@ public class EquipmentControllerTests
         var equipment = TestEntityProvider.Shared.Create<Equipment>(x =>
         {
             x.Name = "Барашек3000";
-            x.ManufactureDate = 2025;
+            x.ManufacturedYear = 2025;
         });
         await context.AddRangeAsync(equipment);
         await unitOfWork.SaveChangesAsync();
 
-        var editEquipment = TestEntityProvider.Shared.Create<EquipmentRequestApiModel>(x =>
+        var editEquipment = TestEntityProvider.Shared.Create<EquipmentCreateApiModel>(x =>
         {
             x.Name = "Пряник домашний2000";
-            x.ManufactureDate = 2020;
+            x.ManufacturedYear = 2020;
         });
         
         // Act
@@ -107,7 +125,7 @@ public class EquipmentControllerTests
     {
         // Arrange
         var equipment = TestEntityProvider.Shared.Create<Equipment>(
-            x => x.ManufactureDate = 2020);
+            x => x.ManufacturedYear = 2020);
         await context.AddRangeAsync(equipment);
         await unitOfWork.SaveChangesAsync();
         

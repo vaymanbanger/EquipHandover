@@ -29,6 +29,19 @@ public class DocumentController : ControllerBase
         this.validateService = validateService;
     }
 
+
+    /// <summary>
+    /// Получает документ по идентификатору
+    /// </summary>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(DocumentResponseApiModel),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdAsync([FromRoute]Guid id, CancellationToken cancellationToken)
+    {
+        var result =  await documentService.GetByIdAsync(id, cancellationToken);
+        return Ok(mapper.Map<DocumentResponseApiModel>(result));
+    }
+    
     /// <summary>
     /// Экспортирует документ по идентификатору
     /// </summary>
@@ -60,9 +73,10 @@ public class DocumentController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromBody] DocumentRequestApiModel request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Create([FromBody] DocumentCreateApiModel create, CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<DocumentCreateModel>(request);
+        var requestModel = mapper.Map<DocumentCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await documentService.CreateAsync(requestModel, cancellationToken);
         
@@ -75,10 +89,11 @@ public class DocumentController : ControllerBase
     [HttpPut("{id:guid}")]
     [ProducesResponseType(typeof(DocumentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] DocumentRequestApiModel request,
+    [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
+    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] DocumentCreateApiModel create,
         CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<DocumentCreateModel>(request);
+        var requestModel = mapper.Map<DocumentCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await documentService.EditAsync(id, requestModel, cancellationToken);
         

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EquipHandover.Entities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EquipHandover.Entities.Configurations;
@@ -17,13 +18,13 @@ public class ReceiverConfiguration : IEntityTypeConfiguration<Receiver>
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.FullName)
-            .HasMaxLength(50);
+            .HasMaxLength(EntitiesConstants.MaxLengthFullName);
 
         builder.Property(x => x.Enterprise)
-            .HasMaxLength(90);
+            .HasMaxLength(EntitiesConstants.MaxLengthEnterprise);
 
         builder.Property(x => x.RegistrationNumber)
-            .HasMaxLength(13)
+            .HasMaxLength(EntitiesConstants.RegistrationNumberLength)
             .IsRequired();
         builder.HasIndex(x => x.RegistrationNumber, $"IX_{nameof(Receiver)}_{nameof(Receiver.RegistrationNumber)}")
             .IsUnique()

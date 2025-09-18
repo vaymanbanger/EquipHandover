@@ -31,7 +31,14 @@ public class ReceiverService : IReceiverService, IServiceAnchor
         this.receiverReadRepository = receiverReadRepository;
         this.receiverWriteRepository = receiverWriteRepository;
     }
-    
+
+    async Task<ReceiverModel> IReceiverService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var receiver = await GetReceiverOrThrowIfNotFoundAsync(id, cancellationToken);
+        
+        return mapper.Map<ReceiverModel>(receiver);
+    }
+
     async Task<IReadOnlyCollection<ReceiverModel>> IReceiverService.GetAllAsync(CancellationToken cancellationToken)
     {
         var receivers = await receiverReadRepository.GetAllAsync(cancellationToken);

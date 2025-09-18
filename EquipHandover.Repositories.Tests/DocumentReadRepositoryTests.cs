@@ -24,66 +24,6 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
-    /// GetByIdAsync должен быть null
-    /// </summary>
-    [Fact]
-    public async Task GetByIdAsyncShouldBeNull()
-    {
-        // Arrange
-        var document1 = TestEntityProvider.Shared.Create<Document>();
-        var document2 = TestEntityProvider.Shared.Create<Document>();
-        var documentId = Guid.NewGuid();
-        Context.AddRange(document1, document2);
-        await UnitOfWork.SaveChangesAsync();
-        
-        // Act
-        var result =
-            await documentReadRepository.GetByIdAsync(documentId, CancellationToken.None);
-
-        // Assert
-        result.Should().BeNull();
-    }
-    
-    /// <summary>
-    /// GetByIdAsync долежен быть null при мягком удалении
-    /// </summary>
-    [Fact]
-    public async Task GetByIdAsyncShouldBeNullBySoftDelete()
-    {
-        // Arrange
-        var document = TestEntityProvider.Shared.Create<Document>(
-            x => x.DeletedAt = DateTimeOffset.UtcNow);
-        Context.AddRange(document);
-        await UnitOfWork.SaveChangesAsync();
-        
-        // Act
-        var result =
-            await documentReadRepository.GetByIdAsync(document.Id, CancellationToken.None);
-
-        // Assert
-        result.Should().BeNull();
-    }
-    
-    /// <summary>
-    /// GetByIdAsync должен вернуть значение
-    /// </summary>
-    [Fact]
-    public async Task GetByIdAsyncShouldReturnValue()
-    {
-        // Arrange
-        var document = TestEntityProvider.Shared.Create<Document>();
-        Context.AddRange(document);
-        await UnitOfWork.SaveChangesAsync();
-        
-        // Act
-        var result =
-            await documentReadRepository.GetByIdAsync(document.Id, CancellationToken.None);
-
-        // Assert
-        result.Should().BeEquivalentTo(document);
-    }
-
-    /// <summary>
     /// GetAllAsync должен вернуть пустой список
     /// </summary>
     [Fact]
@@ -130,5 +70,80 @@ public class DocumentReadRepositoryTests : EquipHandoverContextInMemory
 
         // Assert
         result.Should().HaveCount(2);
+    }
+    
+    /// <summary>
+    /// GetByIdWithFullModelAsync должен быть null
+    /// </summary>
+    [Fact]
+    public async Task GetByIdWithFullModelAsyncShouldBeNull()
+    {
+        // Arrange
+        var document1 = TestEntityProvider.Shared.Create<Document>();
+        var document2 = TestEntityProvider.Shared.Create<Document>();
+        var documentId = Guid.NewGuid();
+        Context.AddRange(document1, document2);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result =
+            await documentReadRepository.GetByIdAsync(documentId, CancellationToken.None);
+
+        // Assert
+        result.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// GetByIdWithFullModelAsync должен быть null при мягком удалении
+    /// </summary>
+    [Fact]
+    public async Task GetByIdWithFullModelAsyncShouldBeNullBySoftDelete()
+    {
+        // Arrange
+        var document = TestEntityProvider.Shared.Create<Document>(
+            x => x.DeletedAt = DateTimeOffset.UtcNow);
+        Context.AddRange(document);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result =
+            await documentReadRepository.GetByIdAsync(document.Id, CancellationToken.None);
+
+        // Assert
+        result.Should().BeNull();
+    }
+    
+    /// <summary>
+    /// GetByIdWithFullModelAsync должен вернуть значение
+    /// </summary>
+    [Fact]
+    public async Task GetByIdWithFullModelAsyncShouldReturnValue()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        var receiver = TestEntityProvider.Shared.Create<Receiver>();
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        var document = TestEntityProvider.Shared.Create<Document>(x =>
+        {
+            x.SenderId = sender.Id;
+            x.Sender = sender;
+            x.ReceiverId = receiver.Id;
+            x.Receiver = receiver;
+        });
+        var documentEquipment = TestEntityProvider.Shared.Create<DocumentEquipment>(x =>
+        {
+            x.DocumentId = document.Id;
+            x.EquipmentId =  equipment.Id;
+        });
+        Context.AddRange(receiver, sender, equipment, documentEquipment, document);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result =
+            await documentReadRepository.GetByIdAsync(document.Id, CancellationToken.None);
+
+        // Assert
+        result.Should().BeEquivalentTo(document, 
+            options => options.ExcludingMissingMembers());
     }
 }

@@ -1,12 +1,12 @@
 ﻿namespace EquipHandover.Services.Contracts.Models.Receiver;
 
 /// <summary>
-/// Модель создания принимающего
+/// Модель создания/редактирования принимающего
 /// </summary>
 public class ReceiverCreateModel
 {
     /// <summary>
-    /// Полное имя принимаюшего
+    /// Полное имя принимащшего
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 

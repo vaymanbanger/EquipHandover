@@ -31,6 +31,25 @@ public class SenderControllerTests
     }
     
     /// <summary>
+    /// GetById должен получить отправителя по идентификатору
+    /// </summary>
+    [Fact]
+    public async Task GetByIdShouldReturnValue()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>(
+            x => x.TaxPayerNum = "1252221190");
+        await context.AddRangeAsync(sender);
+        await unitOfWork.SaveChangesAsync();
+
+        // Act
+        var response = await webClient.SenderGETAsync(sender.Id);
+
+        // Assert
+        response.Should().BeEquivalentTo(sender, options => options.ExcludingMissingMembers());
+    }
+    
+    /// <summary>
     /// GetAll должен вернуть не пустую коллекцию
     /// </summary>
     [Fact]
@@ -38,12 +57,12 @@ public class SenderControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "1454261890");
+            x => x.TaxPayerNum = "1454261890");
         var sender1= TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "3234261890");
+            x => x.TaxPayerNum = "3234261890");
         var sender2 = TestEntityProvider.Shared.Create<Sender>(x =>
         {
-            x.TaxPayerId = "0234261110";
+            x.TaxPayerNum = "0234261110";
             x.DeletedAt = DateTimeOffset.UtcNow;
         });
         await context.AddRangeAsync(sender, sender1, sender2);
@@ -66,8 +85,8 @@ public class SenderControllerTests
     public async Task CreateShouldCreateSender()
     {
         // Arrange
-        var sender = TestEntityProvider.Shared.Create<SenderRequestApiModel>(
-            x => x.TaxPayerId = "0234561890");
+        var sender = TestEntityProvider.Shared.Create<SenderCreateApiModel>(
+            x => x.TaxPayerNum = "0234561890");
         
         // Act
         var result = await webClient.SenderPOSTAsync(sender);
@@ -86,15 +105,15 @@ public class SenderControllerTests
         var sender = TestEntityProvider.Shared.Create<Sender>(x =>
         {
             x.FullName = "Хачевский Вадим Викторович";
-            x.TaxPayerId = "0254261890";
+            x.TaxPayerNum = "0254261890";
         });
         await context.AddRangeAsync(sender);
         await unitOfWork.SaveChangesAsync();
 
-        var editSender = TestEntityProvider.Shared.Create<SenderRequestApiModel>(x =>
+        var editSender = TestEntityProvider.Shared.Create<SenderCreateApiModel>(x =>
         {
             x.FullName = "Налакомилсявский Виктор Алексеевич";
-            x.TaxPayerId = "0232221890";
+            x.TaxPayerNum = "0232221890";
         });
         
         // Act
@@ -112,7 +131,7 @@ public class SenderControllerTests
     {
         // Arrange
         var sender = TestEntityProvider.Shared.Create<Sender>(
-            x => x.TaxPayerId = "143426789012");
+            x => x.TaxPayerNum = "143426789012");
         await context.AddRangeAsync(sender);
         await unitOfWork.SaveChangesAsync();
         

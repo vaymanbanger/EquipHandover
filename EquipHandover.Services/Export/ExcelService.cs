@@ -94,7 +94,7 @@ public class ExcelService : IExcelService, IServiceAnchor
             AddRow(sheetData, rowIndex++,
                 $"{numberEquipment.ToString()}",
                 $"{equipment.Name}",
-                $"{equipment.ManufactureDate}",
+                $"{equipment.ManufacturedYear}",
                 $"{equipment.SerialNumber}");
             numberEquipment++;
         }

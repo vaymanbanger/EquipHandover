@@ -31,6 +31,18 @@ public class EquipmentController : ControllerBase
     }
     
     /// <summary>
+    /// Получает оборудование по идентификатору
+    /// </summary>
+    [HttpGet("{id:guid}")]
+    [ProducesResponseType(typeof(EquipmentResponseApiModel),StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ApiExceptionDetail),StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetByIdAsync([FromRoute]Guid id, CancellationToken cancellationToken)
+    {
+        var result =  await equipmentService.GetByIdAsync(id, cancellationToken);
+        return Ok(mapper.Map<EquipmentResponseApiModel>(result));
+    }
+    
+    /// <summary>
     /// Получает список всего оборудования
     /// </summary>
     [HttpGet]
@@ -48,9 +60,10 @@ public class EquipmentController : ControllerBase
     [HttpPost]
     [ProducesResponseType(typeof(EquipmentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
-    public async Task<IActionResult> Create([FromBody] EquipmentRequestApiModel request, CancellationToken cancellationToken)
+    [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> Create([FromBody] EquipmentCreateApiModel create, CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<EquipmentCreateModel>(request);
+        var requestModel = mapper.Map<EquipmentCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await equipmentService.CreateAsync(requestModel, cancellationToken);
         
@@ -64,10 +77,10 @@ public class EquipmentController : ControllerBase
     [ProducesResponseType(typeof(EquipmentResponseApiModel), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ApiValidationExceptionDetail), StatusCodes.Status422UnprocessableEntity)]
     [ProducesResponseType(typeof(ApiExceptionDetail), StatusCodes.Status404NotFound)]
-    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] EquipmentRequestApiModel request,
+    public async Task<IActionResult> Edit([FromRoute] Guid id, [FromBody] EquipmentCreateApiModel create,
         CancellationToken cancellationToken)
     {
-        var requestModel = mapper.Map<EquipmentCreateModel>(request);
+        var requestModel = mapper.Map<EquipmentCreateModel>(create);
         await validateService.ValidateAsync(requestModel, cancellationToken);
         var result = await equipmentService.EditAsync(id, requestModel, cancellationToken);
         

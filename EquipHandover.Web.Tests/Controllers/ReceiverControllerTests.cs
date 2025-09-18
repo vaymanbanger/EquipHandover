@@ -29,6 +29,25 @@ public class ReceiverControllerTests
         context = fixture.Context;
         unitOfWork = fixture.UnitOfWork;
     }
+    
+    /// <summary>
+    /// GetById должен получить принимающего по идентификатору
+    /// </summary>
+    [Fact]
+    public async Task GetByIdShouldReturnValue()
+    {
+        // Arrange
+        var receiver = TestEntityProvider.Shared.Create<Receiver>(
+            x => x.RegistrationNumber = "1214527850125");
+        await context.AddRangeAsync(receiver);
+        await unitOfWork.SaveChangesAsync();
+
+        // Act
+        var response = await webClient.ReceiverGETAsync(receiver.Id);
+
+        // Assert
+        response.Should().BeEquivalentTo(receiver, options => options.ExcludingMissingMembers());
+    }
 
     /// <summary>
     /// GetAll должен вернуть не пустую коллекцию
@@ -66,7 +85,7 @@ public class ReceiverControllerTests
     public async Task CreateShouldCreateReceiver()
     {
         // Arrange
-        var receiver = TestEntityProvider.Shared.Create<ReceiverRequestApiModel>(
+        var receiver = TestEntityProvider.Shared.Create<ReceiverCreateApiModel>(
             x => x.RegistrationNumber = "1215223890123");
         
         // Act
@@ -91,7 +110,7 @@ public class ReceiverControllerTests
         await context.AddRangeAsync(receiver);
         await unitOfWork.SaveChangesAsync();
 
-        var editReceiver = TestEntityProvider.Shared.Create<ReceiverRequestApiModel>(x =>
+        var editReceiver = TestEntityProvider.Shared.Create<ReceiverCreateApiModel>(x =>
         {
             x.FullName = "Налакомилсявский Виктор Алексеевич";
             x.RegistrationNumber = "1215227890123";

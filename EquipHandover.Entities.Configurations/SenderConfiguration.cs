@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EquipHandover.Entities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EquipHandover.Entities.Configurations;
@@ -17,17 +18,17 @@ public class SenderConfiguration : IEntityTypeConfiguration<Sender>
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.FullName)
-            .HasMaxLength(50)
+            .HasMaxLength(EntitiesConstants.MaxLengthFullName)
             .IsRequired();
 
         builder.Property(x => x.Enterprise)
-            .HasMaxLength(90)
+            .HasMaxLength(EntitiesConstants.MaxLengthEnterprise)
             .IsRequired();
         
-        builder.Property(x => x.TaxPayerId)
-            .HasMaxLength(12)
+        builder.Property(x => x.TaxPayerNum)
+            .HasMaxLength(EntitiesConstants.TaxPayerNumLength)
             .IsRequired();
-        builder.HasIndex(x => x.TaxPayerId, $"IX_{nameof(Sender)}_{nameof(Sender.TaxPayerId)}")
+        builder.HasIndex(x => x.TaxPayerNum, $"IX_{nameof(Sender)}_{nameof(Sender.TaxPayerNum)}")
             .IsUnique()
             .HasFilter("[TaxPayerId] IS NOT NULL");
     }

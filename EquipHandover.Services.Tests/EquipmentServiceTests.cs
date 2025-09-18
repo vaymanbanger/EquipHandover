@@ -40,6 +40,63 @@ public class EquipmentServiceTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id обудования с мягким удалением
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionBySoftDelete()
+    {
+        // Arrange
+        var equipment = TestEntityProvider.Shared.Create<Equipment>(x =>
+        {
+            x.DeletedAt = DateTimeOffset.UtcNow;
+        });
+        await Context.AddRangeAsync(equipment);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => equipmentService.GetByIdAsync(equipment.Id, CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+    
+    /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id оборудования
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionByEquipmentId()
+    {
+        // Arrange
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        await Context.AddRangeAsync(equipment);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => equipmentService.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+
+    /// <summary>
+    /// GetByIdAsync должен вернуть значение
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldReturnValue()
+    {
+        // Arrange
+        var equipment = TestEntityProvider.Shared.Create<Equipment>();
+        await Context.AddRangeAsync(equipment);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result = await equipmentService.GetByIdAsync(equipment.Id, CancellationToken.None);
+        
+        // Assert
+        result.Should().BeEquivalentTo(equipment, options => options.ExcludingMissingMembers());
+    }
+    
+    /// <summary>
     /// GetAllAsync должен вернуть значения
     /// </summary>
     [Fact]

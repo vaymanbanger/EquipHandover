@@ -32,6 +32,13 @@ public class EquipmentService : IEquipmentService, IServiceAnchor
         this.equipmentWriteRepository = equipmentWriteRepository;
     }
 
+    async Task<EquipmentModel> IEquipmentService.GetByIdAsync(Guid id, CancellationToken cancellationToken)
+    {
+        var equipment = await GetEquipmentOrThrowIfNotFoundAsync(id, cancellationToken);
+        
+        return mapper.Map<EquipmentModel>(equipment);
+    }
+
     async Task<IReadOnlyCollection<EquipmentModel>> IEquipmentService.GetAllAsync(CancellationToken cancellationToken)
     {
         var equipment = await equipmentReadRepository.GetAllAsync(cancellationToken);
@@ -44,8 +51,7 @@ public class EquipmentService : IEquipmentService, IServiceAnchor
         {
             Id = Guid.NewGuid(),
             Name = model.Name,
-            EquipmentNumber = model.EquipmentNumber,
-            ManufactureDate = model.ManufactureDate,
+            ManufacturedYear = model.ManufacturedYear,
             SerialNumber = model.SerialNumber,
         };
         
@@ -59,8 +65,7 @@ public class EquipmentService : IEquipmentService, IServiceAnchor
         var equipment = await GetEquipmentOrThrowIfNotFoundAsync(id,cancellationToken);
         
         equipment.Name = model.Name;
-        equipment.EquipmentNumber = model.EquipmentNumber;
-        equipment.ManufactureDate = model.ManufactureDate;
+        equipment.ManufacturedYear = model.ManufacturedYear;
         equipment.SerialNumber = model.SerialNumber;
         
         equipmentWriteRepository.Update(equipment);

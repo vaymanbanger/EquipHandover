@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using EquipHandover.Entities.Constants;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace EquipHandover.Entities.Configurations;
@@ -17,21 +18,16 @@ public class EquipmentConfiguration : IEntityTypeConfiguration<Equipment>
         
         builder.HasKey(x => x.Id);
         builder.Property(x => x.Name)
-            .HasMaxLength(200)
+            .HasMaxLength(EntitiesConstants.MaxLength)
             .IsRequired();
         builder.HasIndex(x => x.Name, $"IX_{nameof(Equipment)}_{nameof(Equipment.Name)}");
 
         
-        builder.Property(x => x.ManufactureDate)
-            .HasMaxLength(4)
+        builder.Property(x => x.ManufacturedYear)
             .IsRequired();
 
         builder.Property(x => x.SerialNumber)
-            .HasMaxLength(200)
-            .IsRequired();
-        
-        builder.Property(x => x.EquipmentNumber)
-            .HasMaxLength(200)
+            .HasMaxLength(EntitiesConstants.MaxLength)
             .IsRequired();
     }
 }

@@ -7,6 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
+      <ProjectReference Include="..\EquipHandover.Entities.Constants\EquipHandover.Entities.Constants.csproj" />
       <ProjectReference Include="..\EquipHandover.Entities\EquipHandover.Entities.csproj" />
     </ItemGroup>
 

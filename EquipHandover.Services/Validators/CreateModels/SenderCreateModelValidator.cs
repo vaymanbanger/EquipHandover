@@ -1,4 +1,5 @@
-﻿using EquipHandover.Services.Contracts.Models.Sender;
+﻿using EquipHandover.Entities.Constants;
+using EquipHandover.Services.Contracts.Models.Sender;
 using FluentValidation;
 
 namespace EquipHandover.Services.Validators.CreateModels;
@@ -8,10 +9,6 @@ namespace EquipHandover.Services.Validators.CreateModels;
 /// </summary>
 public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
 {
-    private const int MinLength = 3;
-    private const int MaxLength = 255;
-    private const int TaxPayerIdLength = 10;
-    
     /// <summary>
     /// Инициализирует новый экземпляр <see cref="SenderCreateModelValidator"/>
     /// </summary>
@@ -20,19 +17,19 @@ public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
         RuleFor(x => x.FullName)
             .NotEmpty()
             .WithMessage("Полное имя принимающего не может быть пустым")
-            .Length(MinLength, MaxLength)
-            .WithMessage($"Длина полного имя принимающего должна быть от {MinLength} до {MaxLength}");
+            .Length(EntitiesConstants.MinLength, EntitiesConstants.MaxLength)
+            .WithMessage($"Длина полного имя принимающего должна быть от {EntitiesConstants.MinLength} до {EntitiesConstants.MaxLength}");
         
         RuleFor(x => x.Enterprise)
             .NotEmpty()
             .WithMessage("Предприятие принимающего не может быть пустым")
-            .Length(MinLength, MaxLength)
-            .WithMessage($"Длина предприятия принимающего должна быть от {MinLength} до {MaxLength}");
+            .Length(EntitiesConstants.MinLength, EntitiesConstants.MaxLength)
+            .WithMessage($"Длина предприятия принимающего должна быть от {EntitiesConstants.MinLength} до {EntitiesConstants.MaxLength}");
         
-        RuleFor(x => x.TaxPayerId)
+        RuleFor(x => x.TaxPayerNum)
             .NotEmpty()
             .WithMessage("Идентификационный номер налогоплательщика не может быть пустым")
-            .Must(x => x.ToString().Length == TaxPayerIdLength)
-            .WithMessage($"Идентификационный номер налогоплательщика должен иметь {TaxPayerIdLength} чисел");
+            .Must(x => x.ToString().Length == EntitiesConstants.TaxPayerNumLength)
+            .WithMessage($"Идентификационный номер налогоплательщика должен иметь {EntitiesConstants.TaxPayerNumLength} чисел");
     }
 }

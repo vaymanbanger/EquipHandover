@@ -6,27 +6,12 @@ namespace EquipHandover.Services.Contracts.Models.Document;
 /// <summary>
 /// Модель документа
 /// </summary>
-public class DocumentModel
+public class DocumentModel : DocumentBaseModel
 {
     /// <summary>
     /// Идентификатор документа
     /// </summary>
     public Guid Id { get; set; }
-    
-    /// <summary>
-    /// Дата аренды оборудования
-    /// </summary>
-    public DateOnly RentalDate { get; set; }
-    
-    /// <summary>
-    /// Номер подписания договора
-    /// </summary>
-    public DateOnly SignatureNumber { get; set; }
-    
-    /// <summary>
-    /// Город
-    /// </summary>
-    public string City { get; set; } = string.Empty;
 
     /// <summary>
     /// Навигационное свойство <see cref="Sender"/>

@@ -40,6 +40,63 @@ public class SenderServiceTests : EquipHandoverContextInMemory
     }
     
     /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id отправителя с мягким удалением
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionBySoftDelete()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>(x =>
+        {
+            x.DeletedAt = DateTimeOffset.UtcNow;
+        });
+        await Context.AddRangeAsync(sender);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => senderService.GetByIdAsync(sender.Id, CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+    
+    /// <summary>
+    /// GetByIdAsync должен выбросить ошибку о несуществующем Id отправителя
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldThrowExceptionBySenderId()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        await Context.AddRangeAsync(sender);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result= () => senderService.GetByIdAsync(Guid.NewGuid(), CancellationToken.None);
+        
+        // Assert
+        await result.Should().ThrowAsync<EquipHandoverNotFoundException>();
+    }
+
+    /// <summary>
+    /// GetByIdAsync должен вернуть значение
+    /// </summary>
+    [Fact]
+    public async Task GetByIdAsyncShouldReturnValue()
+    {
+        // Arrange
+        var sender = TestEntityProvider.Shared.Create<Sender>();
+        await Context.AddRangeAsync(sender);
+        await UnitOfWork.SaveChangesAsync();
+        
+        // Act
+        var result = await senderService.GetByIdAsync(sender.Id, CancellationToken.None);
+        
+        // Assert
+        result.Should().BeEquivalentTo(sender, options => options.ExcludingMissingMembers());
+    }
+    
+    /// <summary>
     /// GetAllAsync должен вернуть значения
     /// </summary>
     [Fact]

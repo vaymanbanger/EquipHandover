@@ -8,6 +8,11 @@ namespace EquipHandover.Services.Contracts;
 public interface ISenderService
 {
     /// <summary>
+    /// Возвращает <see cref="SenderModel"/> по идентификатору
+    /// </summary>
+    Task<SenderModel> GetByIdAsync(Guid id, CancellationToken cancellationToken);
+    
+    /// <summary>
     /// Возвращает список <see cref="SenderModel"/>
     /// </summary>
     Task<IReadOnlyCollection<SenderModel>> GetAllAsync(CancellationToken cancellationToken);

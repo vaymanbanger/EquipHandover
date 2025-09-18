@@ -1,9 +1,9 @@
 ﻿namespace EquipHandover.Web.Models.Receiver;
 
 /// <summary>
-/// API модель для создания получателя
+/// API модель для создания/редактирования получателя
 /// </summary>
-public class ReceiverRequestApiModel
+public class ReceiverCreateApiModel
 {
     /// <summary>
     /// Полное имя принимающего
