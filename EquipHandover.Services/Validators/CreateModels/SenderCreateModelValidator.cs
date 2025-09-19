@@ -29,7 +29,7 @@ public class SenderCreateModelValidator : AbstractValidator<SenderCreateModel>
         RuleFor(x => x.TaxPayerNum)
             .NotEmpty()
             .WithMessage("Идентификационный номер налогоплательщика не может быть пустым")
-            .Must(x => x.Length == EntitiesConstants.TaxPayerNumLength)
+            .Length(EntitiesConstants.TaxPayerNumLength)
             .WithMessage($"Идентификационный номер налогоплательщика должен иметь {EntitiesConstants.TaxPayerNumLength} чисел");
     }
 }

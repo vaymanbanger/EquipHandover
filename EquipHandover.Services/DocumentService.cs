@@ -68,16 +68,7 @@ public class DocumentService : IDocumentService, IServiceAnchor
     async Task<DocumentModel> IDocumentService.CreateAsync(DocumentCreateModel model,
         CancellationToken cancellationToken)
     {
-        var receiver = await receiverReadRepository.GetByIdAsync(model.ReceiverId, cancellationToken) ?? 
-                       throw new EquipHandoverNotFoundException($"Не удалось найти принимающего с идентификатором {model.ReceiverId}");
-        var sender = await senderReadRepository.GetByIdAsync(model.SenderId, cancellationToken) ?? 
-                     throw new EquipHandoverNotFoundException($"Не удалось найти отправителя с идентификатором {model.SenderId}");
-        var equipment =
-            await equipmentReadRepository.GetByIdsAsync(model.EquipmentIds, cancellationToken);
-        if (equipment.Count != model.EquipmentIds.Count)
-        {
-            throw new EquipHandoverNotFoundException($"Не удалось найти оборудование с идентификатором {string.Join(", ", model.EquipmentIds)}");
-        }
+        var linkedEntities = await ThrowIfNotFoundLinkedEntitiesAsync(model, cancellationToken);
         
         var result = new Document
         {
@@ -103,18 +94,18 @@ public class DocumentService : IDocumentService, IServiceAnchor
         
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        result.Receiver = receiver;
-        result.Sender = sender;
+        result.Receiver = linkedEntities.Receiver;
+        result.Sender = linkedEntities.Sender;
         
         var document = mapper.Map<DocumentModel>(result);
-        document.Equipment = mapper.Map<List<EquipmentModel>>(equipment);
+        document.Equipment = mapper.Map<List<EquipmentModel>>(linkedEntities.Equipment);
         return document;
     }
 
     async Task<DocumentModel> IDocumentService.EditAsync(Guid id, DocumentCreateModel model, CancellationToken cancellationToken)
     {
         var documentDbModel = await GetDocumentOrThrowIfNotFoundAsync(id,cancellationToken);
-        var linkedEntites = await ThrowIfNotFoundLinkedEntitiesAsync(model, cancellationToken);
+        var linkedEntities = await ThrowIfNotFoundLinkedEntitiesAsync(model, cancellationToken);
         var dbDocumentEquipments = 
             await documentEquipmentReadRepository.GetByDocumentIdAsync(id, cancellationToken);
         var dbDocumentEquipmentIds = dbDocumentEquipments.Select(eq => eq.EquipmentId).ToList();
@@ -153,11 +144,11 @@ public class DocumentService : IDocumentService, IServiceAnchor
         documentWriteRepository.Update(document);
         await unitOfWork.SaveChangesAsync(cancellationToken);
         
-        document.Receiver = linkedEntites.Receiver;
-        document.Sender = linkedEntites.Sender;
+        document.Receiver = linkedEntities.Receiver;
+        document.Sender = linkedEntities.Sender;
         
         var result = mapper.Map<DocumentModel>(document);
-        result.Equipment = mapper.Map<List<EquipmentModel>>(linkedEntites.Equipment);
+        result.Equipment = mapper.Map<List<EquipmentModel>>(linkedEntities.Equipment);
         return result;
     }
 
