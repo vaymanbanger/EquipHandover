@@ -33,12 +33,15 @@ public class ServiceProfile : Profile
                     .Select(x => x.Equipment))).ReverseMap();
         
         CreateMap<EquipmentModel, EquipmentCreateModel>(MemberList.Destination).ReverseMap();
+        CreateMap<EquipmentCreateModel, Equipment>(MemberList.Destination).ReverseMap();
         CreateMap<Equipment, EquipmentModel>(MemberList.Destination).ReverseMap();
 
         CreateMap<ReceiverModel, ReceiverCreateModel>(MemberList.Destination).ReverseMap();
+        CreateMap<ReceiverCreateModel, Receiver>(MemberList.Destination).ReverseMap();
         CreateMap<Receiver, ReceiverModel>(MemberList.Destination).ReverseMap();
 
         CreateMap<SenderModel, SenderCreateModel>(MemberList.Destination).ReverseMap();
+        CreateMap<SenderCreateModel, Sender>(MemberList.Destination).ReverseMap();
         CreateMap<Sender, SenderModel>(MemberList.Destination).ReverseMap();
     }
 }

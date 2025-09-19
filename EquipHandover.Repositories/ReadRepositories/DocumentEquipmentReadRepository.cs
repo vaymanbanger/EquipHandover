@@ -19,7 +19,7 @@ public class DocumentEquipmentReadRepository : IDocumentEquipmentReadRepository,
         this.reader = reader;
     }
 
-    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByEquipmentIdAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
+    Task<IReadOnlyCollection<DocumentEquipment>> IDocumentEquipmentReadRepository.GetByEquipmentIdsAsync(IReadOnlyCollection<Guid> ids, CancellationToken cancellationToken)
         => reader.Read<DocumentEquipment>()
             .NotDeletedAt()
             .Where(ByEquipmentIds(ids))

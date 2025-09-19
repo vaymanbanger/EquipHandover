@@ -18,7 +18,7 @@ public static class DependencyRegistrationHelper
         var interfaceType = typeof(TInterface);
         var allTypes = interfaceType.Assembly.GetTypes()
             .Where(x => interfaceType.IsAssignableFrom(x)
-                        && x.IsClass && !x.IsAbstract);
+                        && x is { IsClass: true, IsAbstract: false });
 
         foreach (var type in allTypes)
         {

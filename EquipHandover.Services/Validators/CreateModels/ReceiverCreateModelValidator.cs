@@ -29,7 +29,7 @@ public class ReceiverCreateModelValidator : AbstractValidator<ReceiverCreateMode
         RuleFor(x => x.RegistrationNumber)
             .NotEmpty()
             .WithMessage("Основной государственный регистрационный номер не может быть пустым")
-            .Must(x => x.ToString().Length == EntitiesConstants.RegistrationNumberLength)
+            .Must(x => x.Length == EntitiesConstants.RegistrationNumberLength)
             .WithMessage($"Основной государственный регистрационный номер должен иметь {EntitiesConstants.RegistrationNumberLength} чисел");
     }
 }

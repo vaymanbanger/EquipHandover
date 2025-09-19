@@ -19,7 +19,7 @@ erDiagram
         uuid Id
         string FullName
         string Enterprise
-        string TaxPayerId
+        string TaxPayerNum
     }
     
     Receiver {

@@ -109,7 +109,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         await UnitOfWork.SaveChangesAsync();
 
         // Act
-        var result = await documentEquipmentReadRepository.GetByEquipmentIdAsync(
+        var result = await documentEquipmentReadRepository.GetByEquipmentIdsAsync(
             new List<Guid> { documentsEquipment.Id }, CancellationToken.None);
 
         // Assert
@@ -131,7 +131,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
         
         // Act
         var result =
-            await documentEquipmentReadRepository.GetByEquipmentIdAsync(
+            await documentEquipmentReadRepository.GetByEquipmentIdsAsync(
                 new List<Guid>{ equipmentIds }, CancellationToken.None);
 
         // Assert
@@ -164,7 +164,7 @@ public class DocumentEquipmentReadRepositoryTests : EquipHandoverContextInMemory
 
         // Act
         var result =
-            await documentEquipmentReadRepository.GetByEquipmentIdAsync(
+            await documentEquipmentReadRepository.GetByEquipmentIdsAsync(
                 new List<Guid> { equipmentIds }, CancellationToken.None);
 
         // Assert

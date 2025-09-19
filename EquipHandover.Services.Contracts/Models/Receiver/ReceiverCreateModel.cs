@@ -6,7 +6,7 @@
 public class ReceiverCreateModel
 {
     /// <summary>
-    /// Полное имя принимащшего
+    /// Полное имя принимающего
     /// </summary>
     public string FullName { get; set; } = string.Empty;
 
