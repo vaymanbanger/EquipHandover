@@ -173,4 +173,3 @@ erDiagram
     RegistrationNumber: "1147847423899"
 }
 ```
-### Автор: Колобов Виктор
