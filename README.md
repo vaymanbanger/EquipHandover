@@ -19,7 +19,7 @@ erDiagram
         uuid Id
         string FullName
         string Enterprise
-        string TaxPayerId
+        string TaxPayerNum
     }
     
     Receiver {
@@ -74,7 +74,7 @@ erDiagram
             FullName: "Иванов Иннокентий Иванович",
             Enterprise: "ООО Михалыч",
             RegistrationNumber: "1147847423899",   
-        }
+        },
     Equipment: [
         {
             EquipmentId: "a624c88b-178c-4b9f-a67a-4541d5797f15",
@@ -136,7 +136,7 @@ erDiagram
 {
     Id: "1fba52c2-17c5-4731-aca0-e52247f2629",
     FullName: "Иванов Иван Иванович",
-    Enterprise: "ООО ПЕТРОВИЧ"
+    Enterprise: "ООО ПЕТРОВИЧ",
     TaxPayerNum: "520205004556"
 }
 ```
@@ -144,7 +144,7 @@ erDiagram
 // SenderCreateApiModel
 {
     FullName: "Иванов Иван Иванович",
-    Enterprise: "ООО ПЕТРОВИЧ"
+    Enterprise: "ООО ПЕТРОВИЧ",
     TaxPayerNum: "520205004556"
 }
 ```
@@ -161,7 +161,7 @@ erDiagram
 {
     Id: "1fba52c2-17c5-4731-aca0-e52247f2629",
     FullName: "Иванов Иван Иванович",
-    Enterprise: "ООО ПЕТРОВИЧ"
+    Enterprise: "ООО ПЕТРОВИЧ",
     RegistrationNumber: "1147847423899"
 }
 ```
@@ -169,7 +169,7 @@ erDiagram
 // ReceiverCreateApiModel
 {
     FullName: "Иванов Иван Иванович",
-    Enterprise: "ООО ПЕТРОВИЧ"
+    Enterprise: "ООО ПЕТРОВИЧ",
     RegistrationNumber: "1147847423899"
 }
 ```

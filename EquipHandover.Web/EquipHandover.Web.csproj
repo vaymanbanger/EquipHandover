@@ -4,14 +4,20 @@
         <TargetFramework>net8.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="12.0.1" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.6.2"/>
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Controllers\" />
+      <ProjectReference Include="..\EquipHandover.Common.Contracts\EquipHandover.Common.Contracts.csproj" />
+      <ProjectReference Include="..\EquipHandover.Common\EquipHandover.Common.csproj" />
+      <ProjectReference Include="..\EquipHandover.Context\EquipHandover.Context.csproj" />
+      <ProjectReference Include="..\EquipHandover.Repositories\EquipHandover.Repositories.csproj" />
+      <ProjectReference Include="..\EquipHandover.Services\EquipHandover.Services.csproj" />
     </ItemGroup>
-
+ 
 </Project>

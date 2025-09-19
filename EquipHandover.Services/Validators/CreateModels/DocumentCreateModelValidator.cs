@@ -1,0 +1,43 @@
+﻿using EquipHandover.Services.Contracts.Models.Document;
+using FluentValidation;
+
+namespace EquipHandover.Services.Validators.CreateModels;
+
+/// <summary>
+/// Валидация <see cref="DocumentCreateModel"/>
+/// </summary>
+public class DocumentCreateModelValidator : AbstractValidator<DocumentCreateModel>
+{
+    /// <summary>
+    /// Инициализирует новый экземпляр <see cref="DocumentCreateModelValidator"/>
+    /// </summary>
+    public DocumentCreateModelValidator()
+    {
+        RuleFor(x => x.RentalDate)
+            .NotEmpty().WithMessage("Дата аренды оборудования не может быть пустым")
+            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now))
+            .WithMessage("Дата аренды оборудования не может быть в прошлом");
+        
+        RuleFor(x => x.SignatureNumber)
+            .NotEmpty().WithMessage("Номер подписания договора не может быть пустым")
+            .GreaterThanOrEqualTo(DateOnly.FromDateTime(DateTime.Now))
+            .WithMessage("Номер подписания договора не может быть в прошлом");
+    
+        RuleFor(x => x.City)
+            .NotEmpty()
+            .WithMessage("Город не может быть пустым");
+
+        RuleFor(x => x.ReceiverId)
+            .NotEmpty()
+            .WithMessage("Поле с принимающем не может быть пустым");
+
+        RuleFor(x => x.EquipmentIds)
+            .NotEmpty()
+            .WithMessage("Поле с оборудованием не может быть пустым");
+
+        RuleFor(x => x.SenderId)
+            .NotEmpty()
+            .WithMessage("Поле с отправителем не может быть пустым");
+
+    }
+}
